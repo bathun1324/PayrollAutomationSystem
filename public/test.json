@@ -1,0 +1,37 @@
+{
+    "company": {
+      "companyId": 1,
+      "companyName": "(주)포어링크",
+      "manager": "홍길동",
+      "contact": "010-1234-1234",
+      "email": "abc@abcd.co.kr",
+      "companyAddress": "서울시 동작구 흑석동 123-123",
+      "contractType": "년간 갱신",
+      "contractDate": "2023-03-10",
+      "expirationDate": "2024-03-10",
+      "status": "회원"
+    }
+  }
+
+
+
+  {
+    "employee": {
+      "employeeId": 1,
+      "employeeName": "홍길동",
+      "employeeNum": "104",
+      "socialNum": "860912-1234567",
+      "department": "관리부",
+      "position": "사원",
+      "employType": "계약직",
+      "joinDate": "입사일",
+      "contact": "010-1234-1234",
+      "email": "abc@abcd.co.kr",
+      "employeeAddress": "서울시 동작구 흑석동 123-123",
+      "contractType": "년간 갱신",
+      "contractDate": "2023-03-10",
+      
+      "expirationDate": "2024-03-10",
+      "status": "회원"
+    }
+  }
