@@ -613,7 +613,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
               <td>주민등록 주소</td>
               <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange}/></td>
               <td>실거주지 주소</td>
-              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlrsdnc_addr || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange}/></td>
             </tr>
             <tr>
               <td>이메일</td>
@@ -663,7 +663,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
               </td>
               <td>고용형태</td>
               <td>              
-              <select size={1} name="exctv_yn" value={employeeInfo.exctvemplym_form_yn || ""} onChange={employeeInputChange}>
+              <select size={1} name="emplym_form" value={employeeInfo.emplym_form || ""} onChange={employeeInputChange}>
                 <option value="상용">상용</option>
                 <option value="계약">계약</option>
                 <option value="일용">일용</option>

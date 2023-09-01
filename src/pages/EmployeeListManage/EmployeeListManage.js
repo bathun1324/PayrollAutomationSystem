@@ -174,6 +174,7 @@ const EmployeeListManage = () => {
     // 백엔드에서 부서 데이터 가져오기
     axios.get("http://127.0.0.1:8000/get_departments/")
       .then((response) => {
+        console.log(response.data);
         setDepartments(response.data);
       })
       .catch((error) => {
