@@ -83,13 +83,13 @@ const PaginationButton = styled.button`
   color:  ${({ theme }) => theme.colors.blue090};
 `;
 
-const EmployeeListTable = ({ employeesmanage }) => {
+const EmployeeListTable = ({ searchResults }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = employeesmanage.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -97,7 +97,7 @@ const EmployeeListTable = ({ employeesmanage }) => {
 
   const renderTableRows = () => {
     return currentItems.map((companydata) => (
-      <tr key={companydata.no}>
+      <tr key={companydata.empl_no}>
         <td><input type="checkbox" /></td>
         <td>{companydata.no}</td>
         <td>{companydata.empl_no}</td>
@@ -113,15 +113,12 @@ const EmployeeListTable = ({ employeesmanage }) => {
         <td>{companydata.empl_bank}</td>
         <td>{companydata.empl_acc}</td>
         <td>{companydata.empl_ssid_addr}</td>
-        <td></td>
-        <td></td>
-        <td></td>
       </tr>
     ));
   };
 
   const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(employeesmanage.length / itemsPerPage);
+    const pageNumbers = Math.ceil(searchResults.length / itemsPerPage);
 
     const handlePrevPage = () => {
       if (currentPage > 1) {

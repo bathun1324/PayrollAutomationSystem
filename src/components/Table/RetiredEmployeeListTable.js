@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+// import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 
 
 const TableContainer = styled.div`
@@ -12,7 +13,7 @@ const TableContainer = styled.div`
   width: 90%;
   height: 90%;
 
-  font-size: 1.1em;
+  font-size: 0.9em;
   text-align: left;
   line-height: 2.8;
   border-collapse: collaps;
@@ -42,7 +43,9 @@ const TableContainer = styled.div`
     font-weight: 200;u
     color: rgb(40, 40, 40);
     cursor: pointer;
-    hover:
+    :hover {
+      color: ${({ theme }) => (theme.colors.blue090)}
+    }
   }
 
   
@@ -81,38 +84,47 @@ const PaginationButton = styled.button`
   color:  ${({ theme }) => theme.colors.blue090};
 `;
 
-const EmployeeTable = ({ employees }) => {
+const RetiredEmployeeListTable = ({ retirelist }) => {
+
   const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = employees.slice(indexOfFirstItem, indexOfLastItem);
+  // 더미데이터 들어옴
+  const currentItems = retirelist.slice(indexOfFirstItem, indexOfLastItem);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+
   const renderTableRows = () => {
     return currentItems.map((companydata) => (
       <tr key={companydata.empl_no}>
-        <td>{companydata.no}</td>
+        <td><input type="checkbox" /></td>
         <td>{companydata.empl_no}</td>
-        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
-        <td>{companydata.empl_rspofc}</td>
-        <td>{companydata.empl_frgnr_yn}</td>
-        <td>{companydata.empl_gender}</td>
+        {/* 클릭시 해당 퇴직자의 사원정보로 이동
+        퇴직자 표시 만기일 설정 가능해야함 ex) 30일  */}
+        {/* <td onClick={() => navigate(`./${companydata.empl_no}`)}>{companydata.empl_no}</td> */}
+        <td>{companydata.empl_nm}</td>
         <td>{companydata.empl_dept_nm}</td>
-        <td>{companydata.empl_emplym_form}</td>
-        <td>{companydata.empl_encpnd}</td>
-        <td>{companydata.empl_hffc_state}</td>
+        <td>{companydata.empl_telno}</td>
         <td>{companydata.empl_retire_date}</td>
+        <td>{companydata.empl_period}</td>
+        <td>{companydata.empl_emplym_form}</td>
+        <td>{companydata.empl_salary_form}</td>
+        <td>{companydata.empl_bank}</td>
+        <td>{companydata.empl_acc}</td>
+        <td>{companydata.empl_email}</td>
       </tr>
     ));
   };
 
   const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(employees.length / itemsPerPage);
+    const pageNumbers = Math.ceil(retirelist.length / itemsPerPage);
 
     const handlePrevPage = () => {
       if (currentPage > 1) {
@@ -148,17 +160,18 @@ const EmployeeTable = ({ employees }) => {
       <table>
         <thead>
           <tr>
+            <th><input type="checkbox" /></th>
             <th>번호</th>
-            <th>사원번호</th>
             <th>사원명</th>
-            <th>직책</th>
-            <th>외국인여부</th>
-            <th>성별</th>
-            <th>부서명</th>
-            <th>고용형태</th>
-            <th>입사일자</th>
-            <th>재직상태</th>
+            <th>부서</th>
+            <th>연락처</th>
             <th>퇴사일자</th>
+            <th>재직기간</th>
+            <th>고용형태</th>
+            <th>급여형태</th>
+            <th>은행</th>
+            <th>계좌번호</th>
+            <th>이메일</th>
           </tr>
         </thead>
         <tbody>
@@ -179,5 +192,4 @@ const EmployeeTable = ({ employees }) => {
 };
 
 
-export default EmployeeTable;
-
+export default RetiredEmployeeListTable;

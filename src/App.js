@@ -35,7 +35,7 @@ import {
   PremiumManage,
   RateManage,
   RetirePension,
-  RetiredEmployeeList,
+  RetiredEmployeeListManage,
   TransferHistory,
   UserAttendance,
   UserAttendanceCheck,
@@ -72,7 +72,7 @@ function App() {
                 <Route path="/admin/depart" element={<DepartmentManage />} />
                 <Route path="/admin/employee" element={<EmployeeManage />} />
                 <Route path="/admin/employeelist" element={<EmployeeListManage />} />
-                <Route path="/admin/retirelist" element={<RetiredEmployeeList />} />
+                <Route path="/admin/retirelist" element={<RetiredEmployeeListManage />} />
                 <Route path="/admin/annual" element={<AnnualManage />} />
                 <Route path="/admin/attendance" element={<AttendanceManage />} />
                 <Route path="/admin/defaultworktime" element={<WorkTimeManage />} />

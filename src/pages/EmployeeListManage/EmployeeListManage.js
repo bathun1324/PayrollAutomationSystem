@@ -126,55 +126,32 @@ const SCompanyTable = styled.div`
 `
 
 const EmployeeListManage = () => {
-  const [employeesmanage, setAemployeesmanage] = useState([]);
-  // const [searchtext, setSearchtext] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
-  const [employees, setEmployees] = useState([]);
-  const [encpnd, setEncpnd] = useState(''); // 입사일
-  const [deptno, setDeptno] = useState(''); // 부서번호
-  const [rspofc, setRspofc] = useState(''); // 직급
+  const [searchtext, setSearchtext] = useState([]); // 
+  const [departments, setDepartments] = useState([]); // 부서
+  const [role, setRole] = useState([]); // 직급
 
-  const handleEncpndChange = (e) => {
-    setEncpnd(e.target.value);
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-
-  const handleDeptnoChange = (event) => {
-    setDeptno(event.target.value);
-  };
-
-  const handleRspofcChange = (event) => {
-    setRspofc(event.target.value);
-  }
 
   useEffect(() => {
     // 시작할때 테이블 가져오기
     axios.get("http://127.0.0.1:8000/get_employees/")
       .then((response) => {
-        setAemployeesmanage(response.data);
+        setSearchResults(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  useEffect(() => {
-    // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_employees/")
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
   }, []);
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
     axios.get("http://127.0.0.1:8000/get_departments/")
       .then((response) => {
-        console.log(response.data);
         setDepartments(response.data);
       })
       .catch((error) => {
@@ -183,13 +160,11 @@ const EmployeeListManage = () => {
 
   }, []);
 
-  const [role, setRole] = useState([]);
   useEffect(() => {
-    // 백엔드에서 직책 데이터 가져오기
+    // 백엔드에서 직급 데이터 가져오기
     axios.get('http://127.0.0.1:8000/get_role/')
       .then((response) => {
         setRole(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -200,15 +175,15 @@ const EmployeeListManage = () => {
   const handleSearchClick = () => {
     let url
 
-    if (encpnd || deptno || rspofc) {   // 입사일 부서번호 직급
-      url = `http://127.0.0.1:8000/search_employeelist/?employee_encpnd=${encpnd}&department_no=${deptno}&employee_rspofc=${rspofc}`
+    if (searchtext.encpnd || searchtext.deptno || searchtext.rspofc) {   // 입사일 부서번호 직급
+      url = `http://127.0.0.1:8000/search_employeelist/?employee_encpnd=${searchtext.encpnd}&department_no=${searchtext.deptno}&employee_rspofc=${searchtext.rspofc}`
     } else {
       url = "http://127.0.0.1:8000/get_employeelist/"
     }
 
     axios.get(url)
       .then((response) => {
-        setAemployeesmanage(response.data);
+        setSearchResults(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -226,11 +201,12 @@ const EmployeeListManage = () => {
           <SContentHeader>
             <SInputContainer>
               <div>기준일 : </div>
-              <input size={200} type="date" onChange={handleEncpndChange} />
+              <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
             </SInputContainer>
             <SInputContainer>
               <div>부서명 : </div>
-              <select size={1} onChange={handleDeptnoChange}>
+              <select size={1} name="deptno" onChange={handleSelectChange}>
+                <option value="">선택</option>
                 {departments.map((dept) => (
                   <option key={dept.id} value={dept.id}>
                     {dept.name}
@@ -240,7 +216,8 @@ const EmployeeListManage = () => {
             </SInputContainer>
             <SInputContainer>
               <div>직급 : </div>
-              <select size={1} onChange={handleRspofcChange} >
+              <select size={1} name="rspofc" onChange={handleSelectChange} >
+                <option value="">선택</option>
                 {role.map((roles) => (
                   <option key={roles.lcode} value={roles.lcode_nm}>
                     {roles.lcode_nm}
@@ -255,7 +232,7 @@ const EmployeeListManage = () => {
             </SButtonContainer>
           </SContentHeader>
           <SCompanyTable>
-            <EmployeeListTable employeesmanage={employeesmanage} />
+            <EmployeeListTable searchResults={searchResults} />
           </SCompanyTable>
         </SContentContainer>
       </SContentWrapper>

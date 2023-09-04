@@ -1,10 +1,10 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
-import { EmployeeListTable } from "../../components";
 import { Header } from "../../components";
-import RetiredEmployeeListManageTable from "../../components/Table/RetiredEmployeeListManageTable";
-import { managerMenuItems, managerIconMapping } from "../../utils/userRollMenuItems";
+import SideNav from "../../components/SideNav/SideNav";
+import RetiredEmployeeListTable from "../../components/Table/RetiredEmployeeListTable";
+import { managerIconMapping, managerMenuItems } from "../../utils/userRollMenuItems";
 
 const SWrapper = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -83,7 +83,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -99,7 +99,7 @@ const SNewButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -126,47 +126,99 @@ const SCompanyTable = styled.div`
   border-radius: 5px;
 `
 
-const RetiredEmployeeListManage = ({ userRole, menuItems, iconMapping }) => {
+const RetiredEmployeeListManage = () => {
+  const [departments, setDepartments] = useState([]);
+  const [searchtext, setSearchtext] = useState([]);
+  const [searchresult, setSearchResult] = useState([]);
+
+  useEffect(() => {
+    // 백엔드에서 퇴직자 데이터 가져오기
+    axios.get("http://127.0.0.1:8000/get_retireemployeelist/")
+      .then((response) => {
+        setSearchResult(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://127.0.0.1:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSearchClick = () => {
+    let url
+
+    if (searchtext.encpnd || searchtext.retire_date || searchtext.dept_id) {   // 입사일 부서번호 직급
+      url = `http://127.0.0.1:8000/search_retireemployeelist/?encpnd=${searchtext.encpnd}&retire_date=${searchtext.retire_date}&dept_id=${searchtext.dept_id}`
+    } else {
+      url = "http://127.0.0.1:8000/get_retireemployeelist/"
+    }
+
+    axios.get(url)
+      .then((response) => {
+        setSearchResult(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav userRole={"admin"} menuItems={managerMenuItems} iconMapping={managerIconMapping} />
-      <SContentContainer>
-        <SCategory>
-          <div>퇴직자명부조회</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>입사일 : </div>
-            <input size={200} type="date" />
-          </SInputContainer>
-          <SInputContainer>
-            <div>퇴직일 : </div>
-            <input size={200} type="date" />
-          </SInputContainer>
-          <SInputContainer>
-            <div>부서명 : </div>
-            <select size={1}>
-              <option value="1">전체</option>
-              <option value="2">생산부</option>
-              <option value="3">인사부</option>
-              <option value="4">영업부</option>
-              <option value="5">관리부</option>
-            </select>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <RetiredEmployeeListManageTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <SWrapper>
+      <Header />
+      <SContentWrapper>
+        <SideNav userRole={"admin"} menuItems={managerMenuItems} iconMapping={managerIconMapping} />
+        <SContentContainer>
+          <SCategory>
+            <div>퇴직자명부조회</div>
+          </SCategory>
+          <SContentHeader>
+            <SInputContainer>
+              <div>입사일 : </div>
+              <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
+            </SInputContainer>
+            <SInputContainer>
+              <div>퇴직일 : </div>
+              <input size={200} type="date" name="retire_date" onChange={handleSelectChange} />
+            </SInputContainer>
+            <SInputContainer>
+              <div>부서명 : </div>
+              <select size={1} name="dept_id" onChange={handleSelectChange}>
+                <option value="">선택</option>
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
+              </select>
+            </SInputContainer>
+            <SButtonContainer>
+              <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
+              <SPrintButton>인쇄</SPrintButton>
+            </SButtonContainer>
+          </SContentHeader>
+          <SCompanyTable>
+            <RetiredEmployeeListTable retirelist={searchresult} />
+          </SCompanyTable>
+        </SContentContainer>
+      </SContentWrapper>
+    </SWrapper>
   )
 
 }

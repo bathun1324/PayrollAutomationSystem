@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams} from "react-router-dom";
+import axios from 'axios'; // axios를 임포트하여 API 호출에 사용
+import { useEffect, useState } from "react";
 import { GoPrimitiveDot } from "react-icons/go";
-import axios from 'axios';  // axios를 임포트하여 API 호출에 사용
+import { useLocation, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 
 const SWrapper = styled.div`
@@ -22,7 +22,7 @@ const SWrapper = styled.div`
   margin: 20px 10px;
   padding-top: 40px;
   
-  border-top: 2.5px solid ${({theme}) => theme.colors.black050};
+  border-top: 2.5px solid ${({ theme }) => theme.colors.black050};
 
   gap: 2em;
 
@@ -44,7 +44,7 @@ const SWrapper = styled.div`
   td {
     width: 25%;
     padding: 0 15px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.black050};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
  
     > select {
       width: 100%;
@@ -208,7 +208,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -284,7 +284,7 @@ width: 80px;
 height: 30px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -306,7 +306,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -322,18 +322,18 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme}) => theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 `
 
 
 
-const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} ) => {
+const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }) => {
 
   const navigate = useNavigate();
 
@@ -342,36 +342,36 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
   const isUserPath = location.pathname.startsWith('/user');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   //정규식필요
 
   const [employeeInfo, setEmployeeInfo] = useState({
-      dept_no: '',
-      empl_no: '',
-      empl_nm: '',
-      ssid: '',
-      gender: '남',
-      brthdy: '',
-      lunisolar: '양',
-      mrig_yn: 'X',
-      mrig_anvsry: '',
-      tel_no: '',
-      mobile_no: '',
-      ssid_addr: '',
-      rlsdnc_addr: '',
-      email: '',
-      prsl_email: '',
-      exctv_yn: '',
-      rspofc: '',
-      emplym_form: '상용',
-      salary_form: '시급',
-      encpnd: '',
-      hffc_state: '재직',
-      retire_date: '',
-      frgnr_yn: 'X',
+    dept_no: '',
+    empl_no: '',
+    empl_nm: '',
+    ssid: '',
+    gender: '남',
+    brthdy: '',
+    lunisolar: '양',
+    mrig_yn: 'X',
+    mrig_anvsry: '',
+    tel_no: '',
+    mobile_no: '',
+    ssid_addr: '',
+    rlsdnc_addr: '',
+    email: '',
+    prsl_email: '',
+    exctv_yn: '',
+    rspofc: '',
+    emplym_form: '상용',
+    salary_form: '시급',
+    encpnd: '',
+    hffc_state: '재직',
+    retire_date: '',
+    frgnr_yn: 'X',
   });
 
   useEffect(() => {
@@ -428,7 +428,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
     remark: '',
   });
 
-  
+
   useEffect(() => {
     if (tablefrgnr && tablefrgnr[0]) {
       setFrgnrInfo({ ...tablefrgnr[0] });
@@ -451,7 +451,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
     });
   };
 
-  const [rate, setRate] = useState([]); 
+  const [rate, setRate] = useState([]);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/get_rate/')
@@ -491,7 +491,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
     });
   };
 
-  const [departments, setDepartments] = useState([]); 
+  const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/get_departments/')
@@ -503,7 +503,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
       });
   }, []);
 
-  const [role, setRole] = useState([]); 
+  const [role, setRole] = useState([]);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/get_role/')
@@ -534,16 +534,31 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
       });
   };
 
+  const handleUpdate = () => {
+    axios.post('http://127.0.0.1:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+      .then(response => {
+        console.log('부서 정보 수정 성공:', response.data);
+        navigate('/admin/employee');
+      })
+      .catch(error => {
+        console.log('error');
+        console.error('API 호출 에러:', error);
+      });
+  };
 
   return (
     <SWrapper>
       <SCompanyInfo>
-          <SButtonContainer>
-            <SCancleBtn onClick={()=>navigate(`/admin/employee`)}>취소</SCancleBtn>
+        <SButtonContainer>
+          <SCancleBtn onClick={() => navigate(`/admin/employee`)}>취소</SCancleBtn>
+          {id ? (
+            <SSaveBtn onClick={handleUpdate}>수정</SSaveBtn>
+          ) : (
             <SSaveBtn onClick={handleSave}>저장</SSaveBtn>
-          </SButtonContainer>
+          )}
+        </SButtonContainer>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>기본 정보</h3>
         </SCategoryContainer>
         <table>
@@ -552,17 +567,17 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
               <td>사원번호</td>
               <td>
                 {id ? (
-                  <input type="text" name="empl_no" value={employeeInfo.empl_no || ""} readOnly/>
+                  <input type="text" name="empl_no" value={employeeInfo.empl_no || ""} readOnly />
                 ) : (
                   "자동채번됩니다."
                 )}
               </td>
               <td>사원명</td>
-              <td><input type="text" name="empl_nm" value={employeeInfo.empl_nm || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="empl_nm" value={employeeInfo.empl_nm || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
               <td>주민등록번호</td>
-              <td><input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요"/></td>
+              <td><input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요" /></td>
               <td>성별</td>
               <td>
                 <select size={1} name="gender" value={employeeInfo.gender || ""} onChange={employeeInputChange}>
@@ -573,7 +588,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
             </tr>
             <tr>
               <td>생년월일</td>
-              <td><input type="date" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange}/></td>
+              <td><input type="date" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} /></td>
               <td>양력/음력</td>
               <td>
                 <select size={1} name="lunisolar" value={employeeInfo.lunisolar || ""} onChange={employeeInputChange}>
@@ -591,42 +606,42 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                 </select>
               </td>
               <td>결혼기념일</td>
-              <td><input type="date" name="mrig_anvsry" value={employeeInfo.mrig_anvsry || ""} onChange={employeeInputChange}/></td>
+              <td><input type="date" name="mrig_anvsry" value={employeeInfo.mrig_anvsry || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SCompanyInfo>
       <SManagerInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>연락처 및 주소</h3>
         </SCategoryContainer>
         <table>
           <tbody>
             <tr>
               <td>회사 전화번호</td>
-              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요"/></td>
+              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
               <td>휴대폰 번호</td>
-              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요"/></td>
+              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
             </tr>
             <tr>
               <td>주민등록 주소</td>
-              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange} /></td>
               <td>실거주지 주소</td>
-              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
               <td>이메일</td>
-              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
               <td>개인이메일</td>
-              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange}/></td>
+              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SManagerInfo>
       <SContractInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>부서정보</h3>
         </SCategoryContainer>
         <table>
@@ -640,14 +655,14 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                       {dept.name}
                     </option>
                   ))}
-                  </select>
-                </td>
+                </select>
+              </td>
               <td>임원여부</td>
-              <td>              
-              <select size={1} name="exctv_yn" value={employeeInfo.exctv_yn || ""} onChange={employeeInputChange}>
-                <option value="X">X</option>
-                <option value="O">O</option>
-              </select>
+              <td>
+                <select size={1} name="exctv_yn" value={employeeInfo.exctv_yn || ""} onChange={employeeInputChange}>
+                  <option value="X">X</option>
+                  <option value="O">O</option>
+                </select>
               </td>
             </tr>
             <tr>
@@ -659,66 +674,66 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                       {roles.lcode_nm}
                     </option>
                   ))}
-                  </select>
+                </select>
               </td>
               <td>고용형태</td>
-              <td>              
-              <select size={1} name="emplym_form" value={employeeInfo.emplym_form || ""} onChange={employeeInputChange}>
-                <option value="상용">상용</option>
-                <option value="계약">계약</option>
-                <option value="일용">일용</option>
-              </select>
+              <td>
+                <select size={1} name="exctv_yn" value={employeeInfo.exctvemplym_form_yn || ""} onChange={employeeInputChange}>
+                  <option value="상용">상용</option>
+                  <option value="계약">계약</option>
+                  <option value="일용">일용</option>
+                </select>
               </td>
             </tr>
             <tr>
               <td>급여형태</td>
               <td>
-              <select size={1} name="salary_form" value={employeeInfo.salary_form || ""} onChange={employeeInputChange}>
-                <option value="시급">시급</option>
-                <option value="월급">월급</option>
-                <option value="연봉">연봉</option>
-              </select>
+                <select size={1} name="salary_form" value={employeeInfo.salary_form || ""} onChange={employeeInputChange}>
+                  <option value="시급">시급</option>
+                  <option value="월급">월급</option>
+                  <option value="연봉">연봉</option>
+                </select>
               </td>
               <td>입사일</td>
-              <td><input type="date" name="encpnd" value={employeeInfo.encpnd || ""} onChange={employeeInputChange}/></td>
+              <td><input type="date" name="encpnd" value={employeeInfo.encpnd || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
               <td>재직상태</td>
-              <td>            
+              <td>
                 <select size={1} name="hffc_state" value={employeeInfo.hffc_state || ""} onChange={employeeInputChange}>
-                <option value="재직">재직</option>
-                <option value="퇴사">퇴사</option>
-                <option value="휴직">휴직</option>
-              </select>
+                  <option value="재직">재직</option>
+                  <option value="퇴사">퇴사</option>
+                  <option value="휴직">휴직</option>
+                </select>
               </td>
               <td>퇴사일자</td>
-              <td><input type="date" name="retire_date" value={employeeInfo.retire_date || ""} onChange={employeeInputChange}/></td>
+              <td><input type="date" name="retire_date" value={employeeInfo.retire_date || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SContractInfo>
       <SAttendanceInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>근태정보</h3>
         </SCategoryContainer>
         <table>
           <tbody>
             <tr>
               <td>기본출근시간</td>
-              <td><input type="time" name="base_attendtime" value={attendInfo.base_attendtime || ""} onChange={attendInputChange}/></td>
+              <td><input type="time" name="base_attendtime" value={attendInfo.base_attendtime || ""} onChange={attendInputChange} /></td>
               <td>기본퇴근시간</td>
-              <td><input type="time" name="base_lvofctime" value={attendInfo.base_lvofctime || ""} onChange={attendInputChange}/></td>
+              <td><input type="time" name="base_lvofctime" value={attendInfo.base_lvofctime || ""} onChange={attendInputChange} /></td>
             </tr>
             <tr>
               <td>주중근무일</td>
-              <td><input type="text" name="mdwk_workday" value={attendInfo.mdwk_workday || ""} onChange={attendInputChange} maxLength={1} placeholder="7일 이내로 적어주세요"/></td>
+              <td><input type="text" name="mdwk_workday" value={attendInfo.mdwk_workday || ""} onChange={attendInputChange} maxLength={1} placeholder="7일 이내로 적어주세요" /></td>
               <td>주휴일</td>
-              <td><input type="text" name="whday" value={attendInfo.whday || ""} onChange={attendInputChange}/></td>
+              <td><input type="text" name="whday" value={attendInfo.whday || ""} onChange={attendInputChange} /></td>
             </tr>
             <tr>
               <td>소정근로시간(일)</td>
-              <td><input type="text" name="crtlwh" value={attendInfo.crtlwh || ""} onChange={attendInputChange}/></td>
+              <td><input type="text" name="crtlwh" value={attendInfo.crtlwh || ""} onChange={attendInputChange} /></td>
               <td></td>
               <td></td>
             </tr>
@@ -727,46 +742,46 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
       </SAttendanceInfo>
       <SSalaryInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>급여정보</h3>
         </SCategoryContainer>
         <table>
           <tbody>
             <tr>
               <td>기본급여</td>
-              <td><input type="text" name="base_salary" value={salaryInfo.base_salary || ""} onChange={salaryInputChange} placeholder="세전으로 적어주세요"/></td>
+              <td><input type="text" name="base_salary" value={salaryInfo.base_salary || ""} onChange={salaryInputChange} placeholder="세전으로 적어주세요" /></td>
               <td></td>
               <td></td>
             </tr>
             <tr>
               <td>이체은행</td>
-              <td>              
+              <td>
                 <select size={1} name="trn_bank" value={salaryInfo.trn_bank || ""} onChange={salaryInputChange}>
-                <option value="은행선택">은행선택</option>
-                <option value="국민은행">국민은행</option>
-                <option value="신한은행">신한은행</option>
-                <option value="하나은행">하나은행</option>
-                <option value="우리은행">우리은행</option>
-                <option value="IBK기업은행">IBK기업은행</option>
-                <option value="SC제일은행">SC제일은행</option>
-                <option value="우체국">우체국</option>
-                <option value="농협은행">농협은행</option>
-                <option value="신협은행">신협은행</option>
-                <option value="수협은행">수협은행</option>
-                <option value="새마을금고">새마을금고</option>
-                <option value="대구은행">대구은행</option>
-                <option value="부산은행">부산은행</option>
-                <option value="광주은행">광주은행</option>
-                <option value="경남은행">경남은행</option>
-                <option value="전북은행">전북은행</option>
-                <option value="제주은행">제주은행</option>
-                <option value="산업은행">산업은행</option>
-                <option value="씨티은행">씨티은행</option>
-                <option value="산림조합">산림조합</option>
-                <option value="저축은행">저축은행</option>
-              </select></td>
+                  <option value="은행선택">은행선택</option>
+                  <option value="국민은행">국민은행</option>
+                  <option value="신한은행">신한은행</option>
+                  <option value="하나은행">하나은행</option>
+                  <option value="우리은행">우리은행</option>
+                  <option value="IBK기업은행">IBK기업은행</option>
+                  <option value="SC제일은행">SC제일은행</option>
+                  <option value="우체국">우체국</option>
+                  <option value="농협은행">농협은행</option>
+                  <option value="신협은행">신협은행</option>
+                  <option value="수협은행">수협은행</option>
+                  <option value="새마을금고">새마을금고</option>
+                  <option value="대구은행">대구은행</option>
+                  <option value="부산은행">부산은행</option>
+                  <option value="광주은행">광주은행</option>
+                  <option value="경남은행">경남은행</option>
+                  <option value="전북은행">전북은행</option>
+                  <option value="제주은행">제주은행</option>
+                  <option value="산업은행">산업은행</option>
+                  <option value="씨티은행">씨티은행</option>
+                  <option value="산림조합">산림조합</option>
+                  <option value="저축은행">저축은행</option>
+                </select></td>
               <td>계좌번호</td>
-              <td><input type="text" name="acc_no" value={salaryInfo.acc_no || ""} onChange={salaryInputChange} maxLength={14} placeholder="'-'를 빼고 적어주세요"/></td>
+              <td><input type="text" name="acc_no" value={salaryInfo.acc_no || ""} onChange={salaryInputChange} maxLength={14} placeholder="'-'를 빼고 적어주세요" /></td>
             </tr>
             <tr>
               <td>국민연금납부</td>
@@ -777,7 +792,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                 </select>
               </td>
               <td>국민연금신고 월보수액</td>
-              <td><input type="text" name="npn_mrmrtn" value={salaryInfo.npn_mrmrtn || ""} onChange={salaryInputChange}/></td>
+              <td><input type="text" name="npn_mrmrtn" value={salaryInfo.npn_mrmrtn || ""} onChange={salaryInputChange} /></td>
             </tr>
             <tr>
               <td>건강보험납부</td>
@@ -788,7 +803,7 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                 </select>
               </td>
               <td>건강보험 월보수액</td>
-              <td><input type="text" name="hlthins_mrmrtn" value={salaryInfo.hlthins_mrmrtn || ""} onChange={salaryInputChange}/></td>
+              <td><input type="text" name="hlthins_mrmrtn" value={salaryInfo.hlthins_mrmrtn || ""} onChange={salaryInputChange} /></td>
             </tr>
             <tr>
               <td>고용보험납부</td>
@@ -799,28 +814,28 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                 </select>
               </td>
               <td>고용보험 월보수액</td>
-              <td><input type="text" name="empins_mrmrtn" value={salaryInfo.empins_mrmrtn || ""} onChange={salaryInputChange}/></td>
+              <td><input type="text" name="empins_mrmrtn" value={salaryInfo.empins_mrmrtn || ""} onChange={salaryInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SSalaryInfo>
       <SForeignerInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-          <h3>외국인정보</h3>  
+          <GoPrimitiveDot color="#548AFF" />
+          <h3>외국인정보</h3>
         </ SCategoryContainer>
         <table>
           <tbody>
             <tr>
               <td>외국인여부</td>
-              <td>              
+              <td>
                 <select size={1} name="frgnr_yn" value={employeeInfo.frgnr_yn || ""} onChange={employeeInputChange}>
                   <option value="X">X</option>
                   <option value="O">O</option>
                 </select>
               </td>
               <td>출국만기일자</td>
-              <td><input type="date" name="dtrmcexp_date" value={frgnrInfo.dtrmcexp_date || ""} onChange={frgnrInputChange}/></td>
+              <td><input type="date" name="dtrmcexp_date" value={frgnrInfo.dtrmcexp_date || ""} onChange={frgnrInputChange} /></td>
             </tr>
             <tr>
               <td>출국만기보험사</td>
@@ -831,21 +846,21 @@ const EmployeeDetailTable = ( {table, id, tableattend, tablesalary, tablefrgnr} 
                 </select>
               </td>
               <td>출국만기보험금액</td>
-              <td><input type="text" name="dtrmcexp_insrnc_amt" value={frgnrInfo.dtrmcexp_insrnc_amt || ""} onChange={frgnrInputChange}/></td>
+              <td><input type="text" name="dtrmcexp_insrnc_amt" value={frgnrInfo.dtrmcexp_insrnc_amt || ""} onChange={frgnrInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SForeignerInfo>
       {/* user권한 페이지일경우 추가버튼 숨김 */}
       {isUserPath ? null : (
-                <>
-      <SFamilyInfo>
-      <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-          <h3>가족사항</h3>
-        </SCategoryContainer>
-      </SFamilyInfo>
-      </>
+        <>
+          <SFamilyInfo>
+            <SCategoryContainer>
+              <GoPrimitiveDot color="#548AFF" />
+              <h3>가족사항</h3>
+            </SCategoryContainer>
+          </SFamilyInfo>
+        </>
       )}
     </SWrapper>
   )

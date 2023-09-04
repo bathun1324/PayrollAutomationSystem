@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { Header, SideNav, EmployeeDetailTable, EmployeeDetailFamilyTable } from "../../components";
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { EmployeeDetailFamilyTable, EmployeeDetailTable, Header, SideNav } from "../../components";
 
 
 
@@ -40,7 +40,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 const SButtonContainer = styled.div`
@@ -56,7 +56,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -72,12 +72,12 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme}) => theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 `
 
@@ -96,7 +96,7 @@ const EmployeeDetail = () => {
   const [tablefmly, setTablefmly] = useState([]);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       axios.get(`http://127.0.0.1:8000/get_detailtable/?empl_id_detail=${id}`)
         .then((response) => {
           setTable(response.data);
@@ -106,9 +106,9 @@ const EmployeeDetail = () => {
         });
     }
   }, []);
-  
+
   useEffect(() => {
-    if(id){
+    if (id) {
       axios.get(`http://127.0.0.1:8000/get_detailattend/?empl_id_detail=${id}`)
         .then((response) => {
           setTableAtend(response.data);
@@ -120,7 +120,7 @@ const EmployeeDetail = () => {
   }, []);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       axios.get(`http://127.0.0.1:8000/get_detailsalary/?empl_id_detail=${id}`)
         .then((response) => {
           setTableSalary(response.data);
@@ -132,7 +132,7 @@ const EmployeeDetail = () => {
   }, []);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       axios.get(`http://127.0.0.1:8000/get_detailfrgnr/?empl_id_detail=${id}`)
         .then((response) => {
           setTableFrgnr(response.data);
@@ -144,7 +144,7 @@ const EmployeeDetail = () => {
   }, []);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       axios.get(`http://127.0.0.1:8000/get_detailtablefmly/?empl_id_detail=${id}`)
         .then((response) => {
           setTablefmly(response.data);
@@ -164,11 +164,11 @@ const EmployeeDetail = () => {
         <SideNav />
         <SContentContainer>
           <SCategory>사원정보 상세</SCategory>
-          <EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr}/>
-          <EmployeeDetailFamilyTable tablefmly={tablefmly}/>
+          <EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />
+          <EmployeeDetailFamilyTable tablefmly={tablefmly} />
         </SContentContainer>
       </SContentWrapper>
-    </SWrapper>    
+    </SWrapper>
 
   )
 
