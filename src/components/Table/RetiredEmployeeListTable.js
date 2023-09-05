@@ -92,7 +92,6 @@ const RetiredEmployeeListTable = ({ retirelist }) => {
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // 더미데이터 들어옴
   const currentItems = retirelist.slice(indexOfFirstItem, indexOfLastItem);
 
 

@@ -327,7 +327,7 @@ const SSaveBtn = styled.button`
   border: none;
 
   &:hover{  
-    background-color : ${({ theme }) => theme.colors.blue010};
+    background-color : skyblue;
   }
 `
 
@@ -678,7 +678,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               </td>
               <td>고용형태</td>
               <td>
-                <select size={1} name="exctv_yn" value={employeeInfo.exctvemplym_form_yn || ""} onChange={employeeInputChange}>
+                <select size={1} name="emplym_form" value={employeeInfo.emplym_form || ""} onChange={employeeInputChange}>
                   <option value="상용">상용</option>
                   <option value="계약">계약</option>
                   <option value="일용">일용</option>

@@ -43,10 +43,10 @@ const SContentHeader = styled.div`
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
 
-  font-size: 0.9em;
+  font-size: 1.2em;
 
 & > input {
-  border: ${({ theme }) => theme.colors.black110};
+  border: none;
   font-size: 1em;
   width: 5%;
 
@@ -114,6 +114,13 @@ const SCompanyTable = styled.div`
   background-color: white;
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+`
+const SInputContainer = styled.div`
+  display: flex;
+  width: auto;
+  // min-width: 30%;
+  gap: 1.1em;
+  font-size: 0.9em;
 `
 
 const EmployeeManage = () => {
@@ -190,41 +197,43 @@ const EmployeeManage = () => {
             <div>사원정보</div>
           </SCategory>
           <SContentHeader>
-            <div>부서명 : </div>
-            <select size={1} name="department" onChange={handleSelectChange}>
-              <option value="">선택</option>
-              {departments.map((dept) => (
-                <option key={dept.id} value={dept.nm}>
-                  {dept.name}
-                </option>
-              ))}
-            </select>
+            <SInputContainer>
+              <div>부서명 : </div>
+              <select size={1} name="department" onChange={handleSelectChange}>
+                <option value="">선택</option>
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.nm}>
+                    {dept.name}
+                  </option>
+                ))}
+              </select>
 
-            <div>사원명 : </div>
-            <input type="text" placeholder="입력" name="employeeName" onChange={handleSelectChange} />
+              <div>사원명 : </div>
+              <input type="text" placeholder="내용을 입력해 주세요" name="employeeName" onChange={handleSelectChange} />
 
-            <div>외국인여부 : </div>
-            <select size={1} name="foreigner" onChange={handleSelectChange}>
-              <option value="">선택</option>
-              <option value="X">X</option>
-              <option value="O">O</option>
-            </select>
+              <div>외국인여부 : </div>
+              <select size={1} name="foreigner" onChange={handleSelectChange}>
+                <option value="">선택</option>
+                <option value="X">X</option>
+                <option value="O">O</option>
+              </select>
 
-            <div>고용형태 : </div>
-            <select size={1} name="employmentType" onChange={handleSelectChange}>
-              <option value="">선택</option>
-              <option value="상용">상용</option>
-              <option value="계약">계약</option>
-              <option value="일용">일용</option>
-            </select>
+              <div>고용형태 : </div>
+              <select size={1} name="employmentType" onChange={handleSelectChange}>
+                <option value="">선택</option>
+                <option value="상용">상용</option>
+                <option value="계약">계약</option>
+                <option value="일용">일용</option>
+              </select>
 
-            <div>재직여부 : </div>
-            <select size={1} name="employmentStatus" onChange={handleSelectChange}>
-              <option value="">선택</option>
-              <option value="재직">재직</option>
-              <option value="퇴사">퇴사</option>
-              <option value="휴직">휴직</option>
-            </select>
+              <div>재직여부 : </div>
+              <select size={1} name="employmentStatus" onChange={handleSelectChange}>
+                <option value="">선택</option>
+                <option value="재직">재직</option>
+                <option value="퇴사">퇴사</option>
+                <option value="휴직">휴직</option>
+              </select>
+            </SInputContainer>
             <SButtonContainer>
               <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
 

@@ -90,16 +90,15 @@ const EmployeeListTable = ({ searchResults }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   const renderTableRows = () => {
-    return currentItems.map((companydata) => (
+    return currentItems.map((companydata, index) => (
       <tr key={companydata.empl_no}>
         <td><input type="checkbox" /></td>
-        <td>{companydata.no}</td>
+        <td>{(currentPage - 1) * 10 + index + 1}</td>
         <td>{companydata.empl_no}</td>
         <td onClick={() => navigate(`./${companydata.empl_nm}`)}>{companydata.empl_nm}</td>
         <td>{companydata.empl_ssid}</td>
@@ -114,7 +113,8 @@ const EmployeeListTable = ({ searchResults }) => {
         <td>{companydata.empl_acc}</td>
         <td>{companydata.empl_ssid_addr}</td>
       </tr>
-    ));
+    )
+    );
   };
 
   const renderPaginationButtons = () => {

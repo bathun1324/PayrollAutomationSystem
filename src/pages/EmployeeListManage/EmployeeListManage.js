@@ -30,7 +30,7 @@ const SContentContainer = styled.div`
 
 const SContentHeader = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 90%;
   height: 6%;
@@ -54,7 +54,7 @@ const SContentHeader = styled.div`
 
 const SInputContainer = styled.div`
   display: flex;
-  width: 20%;
+  width: 60%;
   min-width: 20%;
   gap: 1.1em;
 `
@@ -139,7 +139,7 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 시작할때 테이블 가져오기
-    axios.get("http://127.0.0.1:8000/get_employees/")
+    axios.get("http://127.0.0.1:8000/get_employeelist/")
       .then((response) => {
         setSearchResults(response.data);
       })
@@ -202,8 +202,7 @@ const EmployeeListManage = () => {
             <SInputContainer>
               <div>기준일 : </div>
               <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
-            </SInputContainer>
-            <SInputContainer>
+
               <div>부서명 : </div>
               <select size={1} name="deptno" onChange={handleSelectChange}>
                 <option value="">선택</option>
@@ -213,8 +212,7 @@ const EmployeeListManage = () => {
                   </option>
                 ))}
               </select>
-            </SInputContainer>
-            <SInputContainer>
+
               <div>직급 : </div>
               <select size={1} name="rspofc" onChange={handleSelectChange} >
                 <option value="">선택</option>
@@ -227,7 +225,7 @@ const EmployeeListManage = () => {
             </SInputContainer>
             <SButtonContainer>
               <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-              <SNewButton>신규</SNewButton>
+              <SNewButton>내보내기</SNewButton>
               <SPrintButton>인쇄</SPrintButton>
             </SButtonContainer>
           </SContentHeader>

@@ -94,9 +94,9 @@ const EmployeeTable = ({ employees }) => {
   };
 
   const renderTableRows = () => {
-    return currentItems.map((companydata) => (
+    return currentItems.map((companydata, index) => (
       <tr key={companydata.empl_no}>
-        <td>{companydata.no}</td>
+        <td>{(currentPage - 1) * 10 + index + 1}</td>
         <td>{companydata.empl_no}</td>
         <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
         <td>{companydata.empl_rspofc}</td>

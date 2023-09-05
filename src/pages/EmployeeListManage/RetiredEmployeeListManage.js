@@ -31,7 +31,7 @@ const SContentContainer = styled.div`
 
 const SContentHeader = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 90%;
   height: 6%;
@@ -55,14 +55,14 @@ const SContentHeader = styled.div`
 
 const SInputContainer = styled.div`
   display: flex;
-  width: 20%;
+  width: 60%;
   min-width: 20%;
   gap: 1.1em;
+
 `
 
 const SCategory = styled.div`
   width: 90%;
-
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
@@ -192,12 +192,11 @@ const RetiredEmployeeListManage = () => {
             <SInputContainer>
               <div>입사일 : </div>
               <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
-            </SInputContainer>
-            <SInputContainer>
+
+
               <div>퇴직일 : </div>
               <input size={200} type="date" name="retire_date" onChange={handleSelectChange} />
-            </SInputContainer>
-            <SInputContainer>
+
               <div>부서명 : </div>
               <select size={1} name="dept_id" onChange={handleSelectChange}>
                 <option value="">선택</option>
