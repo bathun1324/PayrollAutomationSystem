@@ -139,7 +139,7 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 시작할때 테이블 가져오기
-    axios.get("http://127.0.0.1:8000/get_employeelist/")
+    axios.get("http://13.125.117.184:8000/get_employeelist/")
       .then((response) => {
         setSearchResults(response.data);
       })
@@ -150,7 +150,7 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -162,7 +162,7 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 직급 데이터 가져오기
-    axios.get('http://127.0.0.1:8000/get_role/')
+    axios.get('http://13.125.117.184:8000/get_role/')
       .then((response) => {
         setRole(response.data);
       })
@@ -176,9 +176,9 @@ const EmployeeListManage = () => {
     let url
 
     if (searchtext.encpnd || searchtext.deptno || searchtext.rspofc) {   // 입사일 부서번호 직급
-      url = `http://127.0.0.1:8000/search_employeelist/?employee_encpnd=${searchtext.encpnd}&department_no=${searchtext.deptno}&employee_rspofc=${searchtext.rspofc}`
+      url = `http://13.125.117.184:8000/search_employeelist/?employee_encpnd=${searchtext.encpnd}&department_no=${searchtext.deptno}&employee_rspofc=${searchtext.rspofc}`
     } else {
-      url = "http://127.0.0.1:8000/get_employeelist/"
+      url = "http://13.125.117.184:8000/get_employeelist/"
     }
 
     axios.get(url)

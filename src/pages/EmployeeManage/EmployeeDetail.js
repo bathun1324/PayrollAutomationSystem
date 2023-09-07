@@ -97,7 +97,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/get_detailtable/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailtable/?empl_id_detail=${id}`)
         .then((response) => {
           setTable(response.data);
         })
@@ -109,7 +109,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/get_detailattend/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailattend/?empl_id_detail=${id}`)
         .then((response) => {
           setTableAtend(response.data);
         })
@@ -121,7 +121,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/get_detailsalary/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailsalary/?empl_id_detail=${id}`)
         .then((response) => {
           setTableSalary(response.data);
         })
@@ -133,7 +133,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/get_detailfrgnr/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailfrgnr/?empl_id_detail=${id}`)
         .then((response) => {
           setTableFrgnr(response.data);
         })
@@ -145,7 +145,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://127.0.0.1:8000/get_detailtablefmly/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailtablefmly/?empl_id_detail=${id}`)
         .then((response) => {
           setTablefmly(response.data);
         })

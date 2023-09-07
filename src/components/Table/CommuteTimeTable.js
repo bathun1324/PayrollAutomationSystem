@@ -162,7 +162,7 @@ const CommuteTimeTable = () => {
 
   // const [tests, setTest] = useState( [] );
   // useEffect( () =>{
-  //   fetch('http://127.0.0.1:8000/test/')
+  //   fetch('http://13.125.117.184:8000/test/')
   //     .then( res => res.json())
   //     .then( data => console.log(data))
   // }, [])

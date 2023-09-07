@@ -133,7 +133,7 @@ const RetiredEmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 퇴직자 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_retireemployeelist/")
+    axios.get("http://13.125.117.184:8000/get_retireemployeelist/")
       .then((response) => {
         setSearchResult(response.data);
       })
@@ -145,7 +145,7 @@ const RetiredEmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -165,9 +165,9 @@ const RetiredEmployeeListManage = () => {
     let url
 
     if (searchtext.encpnd || searchtext.retire_date || searchtext.dept_id) {   // 입사일 부서번호 직급
-      url = `http://127.0.0.1:8000/search_retireemployeelist/?encpnd=${searchtext.encpnd}&retire_date=${searchtext.retire_date}&dept_id=${searchtext.dept_id}`
+      url = `http://13.125.117.184:8000/search_retireemployeelist/?encpnd=${searchtext.encpnd}&retire_date=${searchtext.retire_date}&dept_id=${searchtext.dept_id}`
     } else {
-      url = "http://127.0.0.1:8000/get_retireemployeelist/"
+      url = "http://13.125.117.184:8000/get_retireemployeelist/"
     }
 
     axios.get(url)

@@ -454,7 +454,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const [rate, setRate] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/get_rate/')
+    axios.get('http://13.125.117.184:8000/get_rate/')
       .then((response) => {
         setRate(response.data);
       })
@@ -494,7 +494,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/get_departments/')
+    axios.get('http://13.125.117.184:8000/get_departments/')
       .then((response) => {
         setDepartments(response.data);
       })
@@ -506,7 +506,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const [role, setRole] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/get_role/')
+    axios.get('http://13.125.117.184:8000/get_role/')
       .then((response) => {
         setRole(response.data);
       })
@@ -523,7 +523,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   };
 
   const handleSave = () => {
-    axios.post('http://127.0.0.1:8000/post_employees/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_employees/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 저장 성공:', response.data);
         navigate('/admin/employee');
@@ -535,7 +535,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   };
 
   const handleUpdate = () => {
-    axios.post('http://127.0.0.1:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 수정 성공:', response.data);
         navigate('/admin/employee');

@@ -135,7 +135,7 @@ const DepartmentManage = () => {
   
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -147,7 +147,7 @@ const DepartmentManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setSearchResults(response.data);
       })
@@ -161,9 +161,9 @@ const DepartmentManage = () => {
     let url
 
     if (searchtext) {
-      url = `http://127.0.0.1:8000/search_departments/?department_id=${searchtext}`
+      url = `http://13.125.117.184:8000/search_departments/?department_id=${searchtext}`
     }else{
-      url = "http://127.0.0.1:8000/get_departments/"
+      url = "http://13.125.117.184:8000/get_departments/"
     }
   
     axios.get(url)
