@@ -138,7 +138,7 @@ const EmployeeManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -150,7 +150,7 @@ const EmployeeManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_employees/")
+    axios.get("http://13.125.117.184:8000/get_employees/")
       .then((response) => {
         setSearchResult(response.data);
       })
@@ -165,9 +165,9 @@ const EmployeeManage = () => {
     let url
 
     if (searchtext) {
-      url = `http://127.0.0.1:8000/search_employees/?department=${searchtext.department}&employeeName=${searchtext.employeeName}&foreigner=${searchtext.foreigner}&employmentType=${searchtext.employmentType}&employmentStatus=${searchtext.employmentStatus}`
+      url = `http://13.125.117.184:8000/search_employees/?department=${searchtext.department}&employeeName=${searchtext.employeeName}&foreigner=${searchtext.foreigner}&employmentType=${searchtext.employmentType}&employmentStatus=${searchtext.employmentStatus}`
     } else {
-      url = "http://127.0.0.1:8000/get_employees/"
+      url = "http://13.125.117.184:8000/get_employees/"
     }
 
     axios.get(url)

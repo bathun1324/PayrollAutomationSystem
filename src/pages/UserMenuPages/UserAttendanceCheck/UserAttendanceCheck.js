@@ -199,15 +199,22 @@ const SFooterContainer = styled.div`
 
 
 const UserAttendanceCheck = () => {
+
+  
   // 출근,퇴근시간 기록을 위한 상태변수
   const [attendanceTime, setAttendanceTime] = useState(null);
   const [leaveTime, setLeaveTime] = useState(null);
 
   //출근 버튼과 퇴근 버튼을 클릭했을 때 
   // 해당 버튼에 맞는 시간을 상태 변수에 저장하는 이벤트핸들러
-  const handleAttendance = () => {
-    const currentTime = new Date();
-    setAttendanceTime(currentTime);
+  const handleAttendance = async () => {
+    const isBeaconDetected = await connectToBeacon();
+    if (isBeaconDetected) {
+      const currentTime = new Date();
+      setAttendanceTime(currentTime);
+    } else {
+      alert("근처에 출근을 인증할 수 있는 비콘을 찾을 수 없습니다.");
+    }
   };
   
   const handleLeave = () => {
@@ -276,22 +283,37 @@ const UserAttendanceCheck = () => {
   ];
 
   const connectToBeacon = async () => {
-
-    navigator.bluetooth.requestLEScan({
-      filters: [{ services: ['e2c56db5-dffb-48d2-b060-d0f5a71096e0'] }],
-      keepRepeatedDevices: true
-    })
-    .then(() => {
-      console.log('스캔 시작...');
-      navigator.bluetooth.addEventListener('advertisementreceived', event => {
-        console.log('발견된 장치:', event.device, '신호 강도:', event.rssi);
+    return new Promise((resolve) => {
+      navigator.bluetooth.requestLEScan({
+        filters: [{ services: ['e2c56db5-dffb-48d2-b060-d0f5a71096e0'] }],
+        keepRepeatedDevices: true
+      })
+      .then(() => {
+        console.log('스캔 시작...');
+        
+        // 이벤트 리스너 추가
+        navigator.bluetooth.addEventListener('advertisementreceived', event => {
+          console.log('발견된 장치:', event.device, '신호 강도:', event.rssi);
+          
+          // 신호 강도가 일정 수준 이상이면 출근으로 인식
+          if (event.rssi > -70) {
+            navigator.bluetooth.stopLEScan(); // 스캔 중지
+            resolve(true);
+          }
+        });
+        
+        // 10초 후에 스캔 중지
+        setTimeout(() => {
+          navigator.bluetooth.stopLEScan();
+          resolve(false);
+        }, 10000);
+      })
+      .catch(error => {
+        console.log('스캔 오류:', error);
+        resolve(false);
       });
-    })
-    .catch(error => {
-      console.log('스캔 오류:', error);
     });
-    
-  }
+  };
   
 
 

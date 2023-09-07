@@ -138,7 +138,7 @@ const NewDepartModal = ({isOpen, closeModal}) => {
   };
 
   const handleSave = () => {
-    axios.post('http://127.0.0.1:8000/post_departments/', departmentInfo)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_departments/', departmentInfo)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 저장 성공:', response.data);
         closeModal();

@@ -145,7 +145,7 @@ const AttendanceManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -161,7 +161,7 @@ const AttendanceManage = () => {
   
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_attendace/")
+    axios.get("http://13.125.117.184:8000/get_attendace/")
       .then((response) => {
         setAttendanceManage(response.data);
       })
@@ -173,7 +173,7 @@ const AttendanceManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_attendace/")
+    axios.get("http://13.125.117.184:8000/get_attendace/")
       .then((response) => {
         setSearchResults(response.data);
       })

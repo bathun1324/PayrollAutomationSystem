@@ -154,9 +154,9 @@ const EmployeeCommuteManage = () => {
     let url
 
     if (employeename || employeeno) {
-      url = `http://127.0.0.1:8000/search_commutemanage/?employee_name=${employeename}&employee_no=${employeeno}`
+      url = `http://13.125.117.184:8000/search_commutemanage/?employee_name=${employeename}&employee_no=${employeeno}`
     } else {
-      url = "http://127.0.0.1:8000/get_commutemanage/"
+      url = "http://13.125.117.184:8000/get_commutemanage/"
     }
 
     axios.get(url)
@@ -169,7 +169,7 @@ const EmployeeCommuteManage = () => {
   };
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://127.0.0.1:8000/get_commutemanage/")
+    axios.get("http://13.125.117.184:8000/get_commutemanage/")
       .then((response) => {
         setACommutemanage(response.data);
       })
