@@ -1,6 +1,20 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
+import {
+  CSidebar,
+  CSidebarBrand,
+  CSidebarNav,
+  CSidebarToggler,
+  CContainer,
+  CHeader,
+  CHeaderBrand,
+  CHeaderNav,
+  CHeaderToggler,
+  CNavLink,
+  CNavItem,
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilUser, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 // import CIcon from '@coreui/icons-react'
 import { AppSidebarNav } from './AppSidebarNav'
 import SimpleBar from 'simplebar-react'
@@ -26,34 +40,69 @@ const SCompanyWrapper = styled.div`
 `)}
 `
 
+
 const AppSidebar = () => {
   const [unfoldable, setUnfoldable] = useState(false)
-  // 작동안함
-  const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
-  console.log('sidebarshow:', sidebarShow)
+  const [visible, setVisible] = useState(true); // 초기에 사이드바를 보이도록 설정합니다.
+
   return (
-    <CSidebar
-      position="fixed"
-      unfoldable={unfoldable}
-      visible={sidebarShow}
-      onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
-      }}    >
-      {/* 사이드바의 로고출력 */}
-      <CSidebarBrand className="d-none d-md-flex" to="/">
-        <SCompanyWrapper className="sidebar-brand-full">Payroll Auto</SCompanyWrapper>
-      </CSidebarBrand>
-      {/* 내용 */}
-      <CSidebarNav>
-        <SimpleBar>
-          <AppSidebarNav items={navigation} />
-        </SimpleBar>
-      </CSidebarNav>
-      <CSidebarToggler
-        className="d-none d-lg-flex"
-        onClick={() => setUnfoldable(!unfoldable)} />
-    </CSidebar>
+    <div>
+      {/* Sidebar 사이드바 부분 */}
+      <CSidebar
+        position="fixed"
+        unfoldable={unfoldable}
+        visible={visible}
+        onVisibleChange={(val) => setVisible(val)}>
+        {/* 사이드바의 로고출력 */}
+        <CSidebarBrand className="d-none d-md-flex" to="/">
+          <SCompanyWrapper className="sidebar-brand-full">Payroll Auto</SCompanyWrapper>
+        </CSidebarBrand>
+        <CSidebarNav>
+          <SimpleBar>
+            <AppSidebarNav items={navigation} />
+          </SimpleBar>
+        </CSidebarNav>
+        <CSidebarToggler
+          className="d-none d-lg-flex"
+          onClick={() => setUnfoldable(!unfoldable)} />
+      </CSidebar>
+      {/* Header 헤더부분 */}
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <CHeader position="sticky" className="mb-4">
+          <CContainer fluid>
+            <CHeaderToggler className="ps-1"
+              onClick={() => setVisible(!visible)}
+            >
+              <CIcon icon={cilMenu} size="lg" />
+            </CHeaderToggler>
+            <CHeaderBrand className="mx-auto d-md-none" to="/">
+              <SCompanyWrapper>Payroll Auto</SCompanyWrapper>
+            </CHeaderBrand>
+            <CHeaderNav className="d-none d-md-flex me-auto">
+            </CHeaderNav>
+            <CHeaderNav className="d-none d-md-flex">
+              <CNavItem>
+                <CNavLink href="#">
+                  계약 만료일: 2025-12-31
+                </CNavLink>
+              </CNavItem>
+            </CHeaderNav>
+            <CHeaderNav>
+              <CNavItem>
+                <CNavLink href="#">
+                  <CIcon icon={cilUser} />UserName
+                </CNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CNavLink href="#">
+                  로그아웃
+                </CNavLink>
+              </CNavItem>
+            </CHeaderNav>
+          </CContainer>
+        </CHeader>
+      </div>
+    </div>
   )
 }
 

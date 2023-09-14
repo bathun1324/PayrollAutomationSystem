@@ -14,9 +14,6 @@ const DepartmentManage = () => {
   return (
     <div>
       <AppSidebar />
-      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
-      </div>
     </div>
   )
 

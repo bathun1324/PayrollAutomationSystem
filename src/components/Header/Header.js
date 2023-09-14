@@ -55,12 +55,14 @@ const Header = () => {
         <CHeaderNav className="d-none d-md-flex me-auto">
         </CHeaderNav>
         {/* 상단아이콘 */}
-        <CHeaderNav>
+        <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink href="#">
               계약 만료일: 2025-12-31
             </CNavLink>
           </CNavItem>
+        </CHeaderNav>
+        <CHeaderNav>
           <CNavItem>
             <CNavLink href="#">
               <CIcon icon={cilUser} />UserName

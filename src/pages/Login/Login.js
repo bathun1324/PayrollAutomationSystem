@@ -41,8 +41,8 @@ const SInputContainer = styled.div`
   height: 60%;
   
   `
-  
-  const SInputs = styled.div`
+
+const SInputs = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -66,13 +66,13 @@ const Login = () => {
     <SWrapper>
       <SContainer>
         <STitle>Payroll Automaion System</STitle>
-          <SInputContainer>
-            <SInputs>
-              <IconInput placeholder={'아이디'} />
-              <IconInput placeholder={'비밀번호'} />
-            </SInputs>
-            <BlueButton>로그인</BlueButton>
-          </SInputContainer>
+        <SInputContainer>
+          <SInputs>
+            <IconInput placeholder={'아이디'} />
+            <IconInput placeholder={'비밀번호'} />
+          </SInputs>
+          <BlueButton>로그인</BlueButton>
+        </SInputContainer>
       </SContainer>
     </SWrapper>
   );
