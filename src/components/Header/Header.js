@@ -1,35 +1,25 @@
 import styled from "styled-components";
-import {FaUserCircle} from 'react-icons/fa';
-import {BsArrowBarRight} from 'react-icons/bs';
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
-
-
-const SHeader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 60px;
-  background-color: white;
-  color:  ${({theme}) => theme.colors.blue090};
-  font-size: 1.1em;
-  font-weight: 500;
-  box-shadow: 0 2px 18px -2px rgba(0, 0, 0, 0.5);
-
-  ${mobile(css`
-  display: none;
-`)}
-
-`
-
-const SWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-
-`
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  CContainer,
+  CHeader,
+  CHeaderBrand,
+  CHeaderDivider,
+  CHeaderNav,
+  CHeaderToggler,
+  CNavLink,
+  CNavItem,
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilUser, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+// import { ex_visible, set_ex } from '../SideNav/AppSidebar'
+// import { AppBreadcrumb } from './index'
+// import { AppHeaderDropdown } from './header/index'
+// import { logo } from 'src/assets/brand/logo'
 
 const SCompanyWrapper = styled.div`
   display: flex;
@@ -43,52 +33,58 @@ const SCompanyWrapper = styled.div`
   ${mobile(css`
   font-size: 0.8em;
 `)}
-
-`
-
-const SUserWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: flex-end;
-  padding: 0px 30px;
-  gap: 20px;
-
-  ${mobile(css`
-  font-size: 0.7em;
-`)}
-`
-
-const SUserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  ${mobile(css`
-  font-size: 0.8em;
-`)}
 `
 
 const Header = () => {
-
+  const dispatch = useDispatch()
+  const sidebarShow = useSelector((state) => state.sidebarShow)
   return (
-    <SWrapper>
-      <SHeader>
-        <SCompanyWrapper>
-          <div>Payroll Auto</div>
-          <BsArrowBarRight size={25}/>
-        </SCompanyWrapper>
-        <SUserWrapper>
-          <div>계약 만료일 : 2025-12-31</div>
-          <SUserInfo>
-            <FaUserCircle size={32}/>
-            <div>Username</div>
-          </SUserInfo>
-          <div>로그아웃</div>
-        </SUserWrapper>
-      </SHeader>
-    </SWrapper>
+    <CHeader position="sticky" className="mb-4">
+      <CContainer fluid>
+        {/* 메뉴버튼 */}
+        <CHeaderToggler className="ps-1"
+          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+        >
+          <CIcon icon={cilMenu} size="lg" />
+        </CHeaderToggler>
+        {/* 화면작아졌을 떄, 로고출력 */}
+        <CHeaderBrand className="mx-auto d-md-none" to="/">
+          <SCompanyWrapper>Payroll Auto</SCompanyWrapper>
+        </CHeaderBrand>
+        {/* 상단메뉴 */}
+        <CHeaderNav className="d-none d-md-flex me-auto">
+        </CHeaderNav>
+        {/* 상단아이콘 */}
+        <CHeaderNav>
+          <CNavItem>
+            <CNavLink href="#">
+              계약 만료일: 2025-12-31
+            </CNavLink>
+          </CNavItem>
+          <CNavItem>
+            <CNavLink href="#">
+              <CIcon icon={cilUser} />UserName
+            </CNavLink>
+          </CNavItem>
+          <CNavItem>
+            <CNavLink href="#">
+              로그아웃
+            </CNavLink>
+          </CNavItem>
+        </CHeaderNav>
+        {/* 드롭다운, 얼굴 클릭하면 드롭다운 내려오는 것 */}
+        {/* <CHeaderNav className="ms-3">
+          <AppHeaderDropdown />
+        </CHeaderNav> */}
+      </CContainer>
+      {/* <CHeaderDivider />
+      상단 경로표시 
+      <CContainer fluid>
+        <AppBreadcrumb />
+      </CContainer> */}
+    </CHeader>
   )
 }
+
 
 export default Header;

@@ -1,0 +1,27 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printableArea,
+  #printableArea * {
+    visibility: visible;
+  }
+
+  #printableArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 90%;
+    height: 90%;
+
+    font-size: 0.9em;
+    text-align: left;
+    line-height: 2.8;
+    border-collapse: collaps;
+
+    margin: 20px 10px;
+
+  }
+}

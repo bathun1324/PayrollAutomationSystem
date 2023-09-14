@@ -1,4 +1,5 @@
 import React, { createContext } from "react";
+import './scss/style.scss'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import {
   AnnualManage,
@@ -50,8 +51,6 @@ import { managerIconMapping, managerMenuItems, operatorIconMapping, operatorMenu
 export const UserRoleContext = createContext();
 export const MenuItemsContext = createContext();
 export const IconMappingContext = createContext();
-
-
 
 function App() {
 

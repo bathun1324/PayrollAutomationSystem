@@ -6,10 +6,13 @@ import { FaClock } from "react-icons/fa";
 import { HiDocumentText, HiDocumentDuplicate } from "react-icons/hi";
 import { TbReportMoney, TbPigMoney, TbDeviceMobileVibration } from "react-icons/tb";
 import { ImProfile, ImCalendar } from "react-icons/im";
-import { RiGroup2Fill, RiUserSettingsLine,  } from "react-icons/ri";
+import { RiGroup2Fill, RiUserSettingsLine, } from "react-icons/ri";
 import { MdOutlineFreeCancellation, MdTableView, MdLibraryBooks, MdLocalAirport } from "react-icons/md";
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
+import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+
 
 const SWrapper = styled.div`
   display: flex;
@@ -73,7 +76,7 @@ const SMenuContainer = styled.div`
     font-size: 0.8em;
 
     &:hover, &:active {
-      color: ${({theme}) => theme.colors.blue010};
+      color: ${({ theme }) => theme.colors.blue010};
       text-decoration: none;
     }
   }
@@ -98,7 +101,7 @@ const SAccordion = styled.div`
   justify-content: center;
 
   &:hover, &:active {
-    color: ${({theme}) => theme.colors.blue010};
+    color: ${({ theme }) => theme.colors.blue010};
     text-decoration: none;
     cursor: pointer;
   }
@@ -120,13 +123,13 @@ const SAccordionContent = styled.div`
   transition: height 0.35s ease;
   
   `
-  
-  const IconWrapper = styled.span`
+
+const IconWrapper = styled.span`
   font-size: 1.5em;
 
   `;
-  
-  const Title = styled.span`
+
+const Title = styled.span`
   font-size: 0.9em; 
   ${mobile(css`
 /
@@ -136,7 +139,17 @@ const SAccordionContent = styled.div`
 
 
 const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIconMapping }) => {
+  // admin
+  // const managerMenuItems = [
+  //   {
+  //     component: CNavItem,
+  //     name: '부서관리',
+  //     to: '/admin/depart',
+  //     icon: <CIcon icon={RiGroup2Fill} />,
 
+
+  //   }
+  // ];
   const managerMenuItems = [
     {
       title: "부서관리",
@@ -155,8 +168,8 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     },
     {
       title: "근태관리",
-      content: ["출퇴근 확인 및 조회","근태조회","출퇴근관리"],
-      innerLink: ["/admin/emplcommute","/admin/attendance","/admin/commute"],
+      content: ["출퇴근 확인 및 조회", "근태조회", "출퇴근관리"],
+      innerLink: ["/admin/emplcommute", "/admin/attendance", "/admin/commute"],
     },
     {
       title: "연차사용내역",
@@ -165,8 +178,8 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     },
     {
       title: "근로시간관리",
-      content: ["기본근로시간관리","소정근로시간관리","휴일관리"],
-      innerLink: ["/admin/defaultworktime","/admin/fixworktime","/admin/dayoff"],
+      content: ["기본근로시간관리", "소정근로시간관리", "휴일관리"],
+      innerLink: ["/admin/defaultworktime", "/admin/fixworktime", "/admin/dayoff"],
     },
     {
       title: "급여관리",
@@ -176,7 +189,7 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     {
       title: "급여항목 및 요율관리",
       content: ["보험료관리", "급여항목관리"],
-      innerLink: ["/admin/premium","/admin/ratemanage"],
+      innerLink: ["/admin/premium", "/admin/ratemanage"],
     },
     {
       title: "급여대장",
@@ -203,13 +216,13 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
       content: ["보험적취내역"],
       innerLink: ["/admin/insurunce"],
     },
-  
+
     {
       title: "기기관리",
       content: ["비콘단말기관리"],
       innerLink: ["/admin/device"],
     },
-  
+
   ];
   // 결재권자 메뉴아이템
   const superadminMenuItems = [
@@ -230,8 +243,8 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     },
     {
       title: "근태관리",
-      content: ["출퇴근 확인 및 조회","근태조회","출퇴근관리"],
-      innerLink: ["/admin/emplcommute","/admin/attendance","/admin/commute"],
+      content: ["출퇴근 확인 및 조회", "근태조회", "출퇴근관리"],
+      innerLink: ["/admin/emplcommute", "/admin/attendance", "/admin/commute"],
     },
     {
       title: "신청서결재",
@@ -245,8 +258,8 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     },
     {
       title: "근로시간관리",
-      content: ["기본근로시간관리","소정근로시간관리","휴일관리"],
-      innerLink: ["/admin/defaultworktime","/admin/fixworktime","/admin/dayoff"],
+      content: ["기본근로시간관리", "소정근로시간관리", "휴일관리"],
+      innerLink: ["/admin/defaultworktime", "/admin/fixworktime", "/admin/dayoff"],
     },
     {
       title: "급여관리",
@@ -256,7 +269,7 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     {
       title: "급여항목 및 요율관리",
       content: ["보험료관리", "급여항목관리"],
-      innerLink: ["/admin/premium","/admin/ratemanage"],
+      innerLink: ["/admin/premium", "/admin/ratemanage"],
     },
     {
       title: "급여대장",
@@ -283,16 +296,16 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
       content: ["보험적취내역"],
       innerLink: ["/admin/insurunce"],
     },
-  
+
     {
       title: "기기관리",
       content: ["비콘단말기관리"],
       innerLink: ["/admin/device"],
     },
   ]
-  
-  
-// 사용자 메뉴 아이템
+
+
+  // 사용자 메뉴 아이템
   const userMenuItems = [
     {
       title: "사원정보",
@@ -307,7 +320,7 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     {
       title: "신청서",
       content: ["신청서조회", "휴가신청서작성", "출장신청서작성", "연장근로신청서작성", "휴직신청서작성"],
-      innerLink: ["/user/userdocsubmit","/user/vacation/vacationform", "/user/businesstrip/businesstripform", "/user/overtimework/overtimeworkform","/user/overtimework/overtimeworkform",],
+      innerLink: ["/user/userdocsubmit", "/user/vacation/vacationform", "/user/businesstrip/businesstripform", "/user/overtimework/overtimeworkform", "/user/overtimework/overtimeworkform",],
     },
   ];
 
@@ -320,14 +333,14 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     },
     {
       title: "운영자관리",
-      content: [ "운영자정보"],
+      content: ["운영자정보"],
       innerLink: ["/operator/operatorinfo"],
     },
-  
+
   ];
-  
-  
-  
+
+
+
   const managerIconMapping = {
     0: RiGroup2Fill,
     1: RiUserSettingsLine,
@@ -345,7 +358,7 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     12: TbReportMoney,
     13: TbDeviceMobileVibration,
   };
-  
+
   const superadminIconMapping = {
     0: RiGroup2Fill,
     1: RiUserSettingsLine,
@@ -376,25 +389,25 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
     0: RiGroup2Fill,
     1: RiUserSettingsLine,
   };
-  
-  
+
+
 
 
   //권한에 따라 매핑 아이템 달라짐
   const menuItems =
-  userRole === "user" ? userMenuItems : 
-  userRole === "operator" ? operatorMenuItems : 
-  userRole === "superadmin" ? superadminMenuItems :
-  managerMenuItems;
-  
+    userRole === "user" ? userMenuItems :
+      userRole === "operator" ? operatorMenuItems :
+        userRole === "superadmin" ? superadminMenuItems :
+          managerMenuItems;
+
   const iconMapping =
-  userRole === "user"
-    ? userIconMapping
-    : userRole === "operator"
-    ? operatorIconMapping
-    : userRole === "superadmin"
-    ? superadminIconMapping
-    : managerIconMapping;
+    userRole === "user"
+      ? userIconMapping
+      : userRole === "operator"
+        ? operatorIconMapping
+        : userRole === "superadmin"
+          ? superadminIconMapping
+          : managerIconMapping;
 
   const parentRefs = useRef([]);
   const childRefs = useRef([]);

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { EmployeeListTable, Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
-
+import '../../print.css';
 
 const SWrapper = styled.div`
   display: flex;
@@ -130,7 +130,7 @@ const EmployeeListManage = () => {
   const [searchtext, setSearchtext] = useState([]); // 
   const [departments, setDepartments] = useState([]); // 부서
   const [role, setRole] = useState([]); // 직급
-
+  const gridRef = useRef();
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
@@ -172,6 +172,7 @@ const EmployeeListManage = () => {
   }, []);
 
 
+
   const handleSearchClick = () => {
     let url
 
@@ -189,15 +190,27 @@ const EmployeeListManage = () => {
         console.log(error);
       });
   };
+  // 출력
+  const handlePrint = () => {
+    const printableArea = document.getElementById('printableArea');
+    if (printableArea) {
+      window.print();
+    }
+  };
+
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
+    }
+  }, []);
+
   return (
     <SWrapper>
       <Header />
       <SContentWrapper>
         <SideNav />
         <SContentContainer>
-          <SCategory>
-            <div>직원명부조회</div>
-          </SCategory>
           <SContentHeader>
             <SInputContainer>
               <div>기준일 : </div>
@@ -225,8 +238,8 @@ const EmployeeListManage = () => {
             </SInputContainer>
             <SButtonContainer>
               <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-              <SNewButton>내보내기</SNewButton>
-              <SPrintButton>인쇄</SPrintButton>
+              <SNewButton onClick={onBtnExport}>내보내기</SNewButton>
+              <SNewButton onClick={handlePrint}>인쇄</SNewButton>
             </SButtonContainer>
           </SContentHeader>
           <SCompanyTable>

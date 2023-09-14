@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import { useCallback, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -59,7 +61,7 @@ const SNoDataMsg = styled.td`
   justify-content: center;
   margin-top: 100px;
 `;
-
+// 페이징 div
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -84,110 +86,112 @@ const PaginationButton = styled.button`
 `;
 
 const EmployeeListTable = ({ searchResults }) => {
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
-  const renderTableRows = () => {
-    return currentItems.map((companydata, index) => (
-      <tr key={companydata.empl_no}>
-        <td><input type="checkbox" /></td>
-        <td>{(currentPage - 1) * 10 + index + 1}</td>
-        <td>{companydata.empl_no}</td>
-        <td onClick={() => navigate(`./${companydata.empl_nm}`)}>{companydata.empl_nm}</td>
-        <td>{companydata.empl_ssid}</td>
-        <td>{companydata.empl_telno}</td>
-        <td>{companydata.empl_dept_nm}</td>
-        <td>{companydata.empl_encpnd}</td>
-        <td>{companydata.empl_retire_date}</td>
-        <td>{companydata.empl_emplym_form}</td>
-        <td>{companydata.empl_salary_form}</td>
-        <td>{companydata.empl_rspofc}</td>
-        <td>{companydata.empl_bank}</td>
-        <td>{companydata.empl_acc}</td>
-        <td>{companydata.empl_ssid_addr}</td>
-      </tr>
-    )
-    );
-  };
+  const gridRef = useRef();
 
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(searchResults.length / itemsPerPage);
+  const [columnDefs] = useState([
+    {
+      field: 'empl_no', headerName: '사원번호', headerCheckboxSelection: true, checkboxSelection: true,
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 150, // 열 너비
+    },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
+    { field: 'empl_ssid', headerName: '주민번호', initialWidth: 170 },
+    { field: 'empl_telno', headerName: '연락처', initialWidth: 170 },
+    { field: 'empl_dept_nm', headerName: '부서', initialWidth: 100 },
+    { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 170 },
+    { field: 'empl_retire_date', headerName: '재직기간', initialWidth: 170 },
+    { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 140 },
+    { field: 'empl_salary_form', headerName: '급여형태', initialWidth: 140 },
+    { field: 'empl_rspofc', headerName: '직급', initialWidth: 100 },
+    { field: 'empl_bank', headerName: '은행', initialWidth: 120 },
+    { field: 'empl_acc', headerName: '계좌번호', initialWidth: 170 },
+    { field: 'empl_ssid_addr', headerName: '주소', initialWidth: 170 },
+  ]);
+  // const onBtExport = useCallback(() => {
+  //   // gridRef.current.api.exportDataAsExcel(); 상용버전 구매필요
+  // }, []);
 
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
     };
+  }, []);
 
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
-      </>
-    );
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
   };
+
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
+    }
+  }, []);
+
+
+  const onSelectionChanged = (() => {
+    //setSelectRowData(gridRef.current.api.getSelectedRows());
+  });
+
+  var autoGroupColumnDef = {
+    headerName: 'Group',
+    minWidth: 170,
+    field: 'athlete',
+    valueGetter: (params) => {
+      if (params.node.group) {
+        return params.node.key;
+      } else {
+        return params.data[params.colDef.field];
+      }
+    },
+    headerCheckboxSelection: true,
+    // headerCheckboxSelectionFilteredOnly: true,
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true,
+    },
+  };
+
 
   return (
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th><input type="checkbox" /></th>
-            <th>번호</th>
-            <th>사원번호</th>
-            <th>사원명</th>
-            <th>주민번호</th>
-            <th>연락처</th>
-            <th>부서</th>
-            <th>입사일자</th>
-            <th>재직기간</th>
-            <th>고용형태</th>
-            <th>급여형태</th>
-            <th>직급</th>
-            <th>은행</th>
-            <th>계좌번호</th>
-            <th>주소</th>
-            {/* <th>이메일</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <PaginationContainer>
-        {renderPaginationButtons()}
-      </PaginationContainer>
+    <TableContainer id='printableArea'>
+      <div>
+        <button onClick={onBtnExport}>Download CSV export file</button>
+      </div>
+
+      <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={searchResults}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          gridOptions={gridOptions}
+          style={{ textAlign: 'center' }}
+          pagination={true}
+          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+        >
+        </AgGridReact>
+      </div>
     </TableContainer>
   );
-};
 
+};
 
 export default EmployeeListTable;
