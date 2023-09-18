@@ -41,20 +41,17 @@ const Header = () => {
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
-        {/* 메뉴버튼 */}
-        <CHeaderToggler className="ps-1"
+        <CHeaderToggler
+          className="ps-1"
           onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        {/* 화면작아졌을 떄, 로고출력 */}
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           <SCompanyWrapper>Payroll Auto</SCompanyWrapper>
         </CHeaderBrand>
-        {/* 상단메뉴 */}
         <CHeaderNav className="d-none d-md-flex me-auto">
         </CHeaderNav>
-        {/* 상단아이콘 */}
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink href="#">
@@ -74,16 +71,7 @@ const Header = () => {
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
-        {/* 드롭다운, 얼굴 클릭하면 드롭다운 내려오는 것 */}
-        {/* <CHeaderNav className="ms-3">
-          <AppHeaderDropdown />
-        </CHeaderNav> */}
       </CContainer>
-      {/* <CHeaderDivider />
-      상단 경로표시 
-      <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer> */}
     </CHeader>
   )
 }

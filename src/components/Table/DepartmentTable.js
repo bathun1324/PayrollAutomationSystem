@@ -1,10 +1,13 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { DepartmentDummy } from "../../pages/DepartmentManage/DepartmentDummy";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import axios from "axios";
-
-
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
+import { CTable } from "@coreui/react";
 
 const TableContainer = styled.div`
   display: flex;
@@ -76,107 +79,106 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 export const DepartmentTable = ({ departments, selectedDepartmentIds, setSelectedDepartmentIds, searchtext }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = departments.slice(indexOfFirstItem, indexOfLastItem);
+  const gridRef = useRef();
 
-  const handleCheckboxChange = (departmentId) => {
-    if (selectedDepartmentIds.includes(departmentId)) {
-      setSelectedDepartmentIds(selectedDepartmentIds.filter(id => id !== departmentId));
-    } else {
-      setSelectedDepartmentIds([...selectedDepartmentIds, departmentId]);
+  const [columnDefs] = useState([
+    {
+      field: 'id', headerName: '번호', headerCheckboxSelection: true, checkboxSelection: true,
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 130, // 열 너비
+    },
+    { field: 'name', headerName: '부서명', initialWidth: 100 },
+    { field: 'state', headerName: '상태', initialWidth: 150 },
+    { field: 'reg_dtime', headerName: '등록일시', initialWidth: 200 },
+    { field: 'reg_id', headerName: '등록자', initialWidth: 100 },
+    { field: 'upt_dtime', headerName: '변경일시', initialWidth: 200 },
+    { field: 'upt_id', headerName: '수정자', initialWidth: 160 },
+  ]);
+
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+
+
+    };
+  }, []);
+
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
+  };
+
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
     }
-  };
-  
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  }, []);
 
-  const renderTableRows = () => {
-    return currentItems.map((department) => (
-      <tr key={department.id}>
-        <td>
-          <input type="checkbox" onChange={() => handleCheckboxChange(department.id)}
-            checked={selectedDepartmentIds.includes(department.id)}/>
-        </td>
-        <td>{department.id}</td>
-        <td><a>{department.name}</a></td>
-        <td>{department.state}</td>
-        <td>{department.reg_dtime}</td>
-        <td>{department.reg_id}</td>
-        <td>{department.upt_dtime}</td>
-        <td>{department.upt_id}</td>
-      </tr>
-    ));
-  };
 
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(departments.length / itemsPerPage);
+  const onSelectionChanged = (() => {
+    //setSelectRowData(gridRef.current.api.getSelectedRows());
+  });
 
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
+  var autoGroupColumnDef = {
+    headerName: 'Group',
+    minWidth: 170,
+    field: 'athlete',
+    valueGetter: (params) => {
+      if (params.node.group) {
+        return params.node.key;
+      } else {
+        return params.data[params.colDef.field];
       }
-    };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
-    );
+    },
+    headerCheckboxSelection: true,
+    // headerCheckboxSelectionFilteredOnly: true,
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true,
+    },
   };
 
   return (
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>선택</th>
-            <th>번호</th>
-            <th>부서명</th>
-            <th>상태</th>
-            <th>등록일시</th>
-            <th>등록자</th>
-            <th>변경일시</th>
-            <th>수정자</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
-              
+    <TableContainer id='printableArea'>
+      <div>
+        {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+      </div>
+      <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+        <AgGridReact
+
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={departments}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          gridOptions={gridOptions}
+          style={{ textAlign: 'center' }}
+          pagination={true}
+          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
+    </TableContainer>
+  );
+};
+
