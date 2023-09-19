@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { EmployeeListTable, Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
 import '../../print.css';
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import { useSelector, useDispatch } from 'react-redux'
 
 const SWrapper = styled.div`
   display: flex;
@@ -136,6 +139,8 @@ const EmployeeListManage = () => {
     console.log(name, value);
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
+  const dispatch = useDispatch()
+  const sidebarShow = useSelector((state) => state.sidebarShow)
 
   useEffect(() => {
     // 시작할때 테이블 가져오기
@@ -190,64 +195,58 @@ const EmployeeListManage = () => {
         console.log(error);
       });
   };
-  // 출력
-  const handlePrint = () => {
-    const printableArea = document.getElementById('printableArea');
-    if (printableArea) {
-      window.print();
-    }
-  };
 
-  const onBtnExport = useCallback(() => {
-    if (gridRef.current) {
-      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
-      gridRef.current.exportDataAsCsv();
-    }
-  }, []);
+
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SContentHeader>
-            <SInputContainer>
-              <div>기준일 : </div>
-              <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
-
-              <div>부서명 : </div>
-              <select size={1} name="deptno" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                {departments.map((dept) => (
-                  <option key={dept.id} value={dept.id}>
-                    {dept.name}
-                  </option>
-                ))}
-              </select>
-
-              <div>직급 : </div>
-              <select size={1} name="rspofc" onChange={handleSelectChange} >
-                <option value="">선택</option>
-                {role.map((roles) => (
-                  <option key={roles.lcode} value={roles.lcode_nm}>
-                    {roles.lcode_nm}
-                  </option>
-                ))}
-              </select>
-            </SInputContainer>
-            <SButtonContainer>
-              <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-              <SNewButton onClick={onBtnExport}>내보내기</SNewButton>
-              <SNewButton onClick={handlePrint}>인쇄</SNewButton>
-            </SButtonContainer>
-          </SContentHeader>
-          <SCompanyTable>
-            <EmployeeListTable searchResults={searchResults} />
-          </SCompanyTable>
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', display: "flex", alignItems: "center" }} className="justify-content-start">
+                    <span>부서명:&nbsp;</span>
+                    <select size={1} name="deptno" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;&nbsp;직급:&nbsp;</span>
+                    <select size={1} name="rspofc" onChange={handleSelectChange} >
+                      <option value="">선택</option>
+                      {role.map((roles) => (
+                        <option key={roles.lcode} value={roles.lcode_nm}>
+                          {roles.lcode_nm}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-md-flex justify-content-end">
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                    <CButton color="dark" variant="outline" >내보내기</CButton>
+                    <CButton color="dark" variant="outline" >인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <EmployeeListTable searchResults={searchResults} />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div>
   )
 
 }

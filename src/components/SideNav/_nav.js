@@ -24,6 +24,11 @@ const _nav = [
         name: '사원정보',
         to: '/admin/employee',
       },
+      {
+        component: CNavItem,
+        name: '직원명부조회',
+        to: '/admin/employeelist'
+      }
     ],
   },
 ]

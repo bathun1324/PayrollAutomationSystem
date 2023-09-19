@@ -1,0 +1,44 @@
+@media print {
+    body {
+        overflow: visible;
+
+    }
+
+    /* AG-Grid 컨테이너 스타일 */
+    .ag-grid-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* AG-Grid 헤더 및 셀 스타일 */
+    .ag-header-cell,
+    .ag-cell {
+        font-size: 10px;
+        /* 폰트 크기를 조절합니다. */
+    }
+
+    /* AG-Grid 열 너비 설정 (A4에 맞게 조정) */
+    .ag-cell {
+        width: 20px;
+        /* A4 폭 210mm / 열 수(예: 5) = 42mm */
+    }
+
+    /* AG-Grid 행 높이 설정 (A4에 맞게 조정) */
+    .ag-row {
+        height: 10px;
+
+        /* A4 높이 297mm / 행 수(예: 30) = 9.9mm */
+    }
+
+}
+
+.ag-cell {
+    page-break-inside: avoid !important;
+}
+
+@page {
+    /* A4용지 가로모드 */
+    size: A4 landscape;
+    margin: 0;
+
+}
