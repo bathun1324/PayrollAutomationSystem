@@ -61,11 +61,11 @@ const SHeaderContainer = styled.div`
 const SSubHeader = styled.div`
   font-size: 36px;
   padding: 3rem 1rem 1rem 1rem;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
   
   ${mobile(css`
   font-size: 1.8em;
-  color: ${({theme}) => theme.colors.black110}
+  color: ${({ theme }) => theme.colors.black110}
   `)}
 
 `
@@ -145,7 +145,7 @@ const SCheckbox = styled.div`
 `
 
 
-const Home = ({type}) => {
+const Home = ({ type }) => {
 
   // 모달
   const [isNoAccountModalOpen, setIsNoAccountModalOpen] = useState(false);
@@ -170,11 +170,12 @@ const Home = ({type}) => {
 
     try {
       const response = await axios.post('http://13.125.117.184:8000/login/', {
-        username: username, 
-        password: password, 
+        username: username,
+        password: password,
       });
 
       if (response.status === 200) {
+        console.log("username", username)
         navigate('./admin/depart');
       } else {
         // 로그인 실패 처리
@@ -194,33 +195,33 @@ const Home = ({type}) => {
 
   return (
     <SWrapper>
-    <SCompanyName>(주)케이이노텍</SCompanyName>
-    <SContainer>
-      <SContentWrapper>
-        <SHeaderContainer>
-          <SSubHeader>Payroll Automatic System</SSubHeader>
-          <SHeader>급여자동화 시스템</SHeader>
-        </SHeaderContainer>
-        <SLoginContainer>
-          <SInputContainer>
-            <div>
-              <IconInput type="text" icon={<FaUser />} onChange={handleUsernameChange} />
-              <IconInput type="password" icon={<FaLock />} onChange={handlePasswordChange} />
-            </div>
-          <SLoginButton onClick={handleLogin}>로그인</SLoginButton>
-          <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} />
-          </SInputContainer>
-          <SCheckboxContainer>
+      <SCompanyName>(주)케이이노텍</SCompanyName>
+      <SContainer>
+        <SContentWrapper>
+          <SHeaderContainer>
+            <SSubHeader>Payroll Automatic System</SSubHeader>
+            <SHeader>급여자동화 시스템</SHeader>
+          </SHeaderContainer>
+          <SLoginContainer>
+            <SInputContainer>
+              <div>
+                <IconInput type="text" icon={<FaUser />} onChange={handleUsernameChange} />
+                <IconInput type="password" icon={<FaLock />} onChange={handlePasswordChange} />
+              </div>
+              <SLoginButton onClick={handleLogin}>로그인</SLoginButton>
+              <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} />
+            </SInputContainer>
+            <SCheckboxContainer>
               <SCheckbox>
                 <input type="checkbox" />
                 <div>아이디 저장</div>
               </SCheckbox>
               <div onClick={() => navigate('')}>비밀번호 찾기</div>
-          </SCheckboxContainer>
-        </SLoginContainer>
-      </SContentWrapper>
-      <Footer />
-    </SContainer>
+            </SCheckboxContainer>
+          </SLoginContainer>
+        </SContentWrapper>
+        <Footer />
+      </SContainer>
     </SWrapper>
   )
 

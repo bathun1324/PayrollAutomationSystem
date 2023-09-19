@@ -83,8 +83,8 @@ const PaginationButton = styled.button`
 `;
 
 export const DepartmentTable = ({ departments, selectedDepartmentIds, setSelectedDepartmentIds, searchtext }) => {
+  // 그리드
   const gridRef = useRef();
-
   const [columnDefs] = useState([
     {
       field: 'id', headerName: '번호', headerCheckboxSelection: true, checkboxSelection: true,

@@ -114,6 +114,9 @@ const DepartmentManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
+              <NewDepartModal isOpen={isModalOpen} closeModal={closeModal} />
+              <DeleteModal isOpen={isDeleteModalOpen} closeModal={closeDeleteModal} selectedDepartmentIds={selectedDepartmentIds} />
+
               <DepartmentTable departments={searchResults} selectedDepartmentIds={selectedDepartmentIds} setSelectedDepartmentIds={setSelectedDepartmentIds} />
             </CCard>
           </CContainer>
