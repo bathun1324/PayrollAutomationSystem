@@ -105,6 +105,7 @@ const DepartmentManage = () => {
         <Header />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
+            <h2 className="gap-2 mb-4">기초정보관리&nbsp;{'>'}&nbsp;조직정보&nbsp;{'>'}&nbsp;부서정보</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>
