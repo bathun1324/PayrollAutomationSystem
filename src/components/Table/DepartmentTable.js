@@ -7,7 +7,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 import '../../print.css';
-import { CTable } from "@coreui/react";
+
 
 const TableContainer = styled.div`
   display: flex;

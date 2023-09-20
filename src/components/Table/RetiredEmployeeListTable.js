@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -86,106 +90,108 @@ const PaginationButton = styled.button`
 
 const RetiredEmployeeListTable = ({ retirelist }) => {
 
-  const navigate = useNavigate();
+  // 그리드
+  const gridRef = useRef();
+  const [columnDefs] = useState([
+    {
+      field: 'empl_no', headerName: '번호', headerCheckboxSelection: true, checkboxSelection: true,
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 130, // 열 너비
+    },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
+    { field: 'empl_dept_nm', headerName: '부서', initialWidth: 150 },
+    { field: 'empl_telno', headerName: '연락처', initialWidth: 200 },
+    { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 100 },
+    { field: 'empl_period', headerName: '재직기간', initialWidth: 200 },
+    { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 160 },
+    { field: 'empl_salary_form', headerName: '급여형태', initialWidth: 160 },
+    { field: 'empl_bank', headerName: '은행', initialWidth: 160 },
+    { field: 'empl_acc', headerName: '계좌번호', initialWidth: 160 },
+    { field: 'empl_email', headerName: '이메일', initialWidth: 160 },
+  ]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = retirelist.slice(indexOfFirstItem, indexOfLastItem);
+
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
 
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-
-  const renderTableRows = () => {
-    return currentItems.map((companydata) => (
-      <tr key={companydata.empl_no}>
-        <td><input type="checkbox" /></td>
-        <td>{companydata.empl_no}</td>
-        {/* 클릭시 해당 퇴직자의 사원정보로 이동
-        퇴직자 표시 만기일 설정 가능해야함 ex) 30일  */}
-        {/* <td onClick={() => navigate(`./${companydata.empl_no}`)}>{companydata.empl_no}</td> */}
-        <td>{companydata.empl_nm}</td>
-        <td>{companydata.empl_dept_nm}</td>
-        <td>{companydata.empl_telno}</td>
-        <td>{companydata.empl_retire_date}</td>
-        <td>{companydata.empl_period}</td>
-        <td>{companydata.empl_emplym_form}</td>
-        <td>{companydata.empl_salary_form}</td>
-        <td>{companydata.empl_bank}</td>
-        <td>{companydata.empl_acc}</td>
-        <td>{companydata.empl_email}</td>
-      </tr>
-    ));
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(retirelist.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
     };
+  }, []);
 
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
-      </>
-    );
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
   };
+
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
+    }
+  }, []);
+
+
+  const onSelectionChanged = (() => {
+    //setSelectRowData(gridRef.current.api.getSelectedRows());
+  });
+
+  var autoGroupColumnDef = {
+    headerName: 'Group',
+    minWidth: 170,
+    field: 'athlete',
+    valueGetter: (params) => {
+      if (params.node.group) {
+        return params.node.key;
+      } else {
+        return params.data[params.colDef.field];
+      }
+    },
+    headerCheckboxSelection: true,
+    // headerCheckboxSelectionFilteredOnly: true,
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true,
+    },
+  };
+
 
   return (
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th><input type="checkbox" /></th>
-            <th>번호</th>
-            <th>사원명</th>
-            <th>부서</th>
-            <th>연락처</th>
-            <th>퇴사일자</th>
-            <th>재직기간</th>
-            <th>고용형태</th>
-            <th>급여형태</th>
-            <th>은행</th>
-            <th>계좌번호</th>
-            <th>이메일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <PaginationContainer>
-        {renderPaginationButtons()}
-      </PaginationContainer>
+    <TableContainer id='printableArea'>
+      <div>
+        {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+      </div>
+      <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+        <AgGridReact
+
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={retirelist}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          gridOptions={gridOptions}
+          style={{ textAlign: 'center' }}
+          pagination={true}
+          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
     </TableContainer>
   );
 };

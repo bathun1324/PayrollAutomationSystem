@@ -49,60 +49,7 @@ const TableContainer = styled.div`
       color: ${({ theme }) => (theme.colors.blue090)}
     }
   }
-
-  
-
 `;
-
-const SNoDataMsg = styled.td`
-  height: 500px;
-  padding: 150px;
-
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
-`;
-// 페이징 div
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-`;
-
-const PaginationButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  width: 1.5em;
-  height: 1.5em;
-
-  border: 0;
-  border-radius: 5px;
-  background-color: transparent;
-  font-size: 1.1em;
-  font-weight: 550;
-  color:  ${({ theme }) => theme.colors.blue090};
-`;
-
-
-
-const SNewButton = styled.button`
-  flex-wrap: wrap;
-  width: 80px;
-  height: 40px;
-  color: white;
-  font-size: 0.8em;
-  background-color: ${({ theme }) => theme.colors.blue090};
-  border-radius: 3px;
-  border: none;
-
-  &:hover{  
-    background-color : skyblue;
-  }
-
-`
 
 const EmployeeListTable = ({ searchResults }) => {
   const dispatch = useDispatch()
@@ -231,9 +178,9 @@ const EmployeeListTable = ({ searchResults }) => {
   return (
     <TableContainer id='printableArea'>
       <div>
-        <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
         <SNewButton onClick={onBtPrint}>print</SNewButton>
-        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton>
+        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
       </div>
 
       <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>

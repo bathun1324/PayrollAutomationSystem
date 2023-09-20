@@ -1,10 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
 import EmployeeTable from "../../components/Table/EmployeeTable";
+
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 
 const SWrapper = styled.div`
@@ -188,65 +192,67 @@ const EmployeeManage = () => {
   };
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SCategory>
-            <div>사원정보</div>
-          </SCategory>
-          <SContentHeader>
-            <SInputContainer>
-              <div>부서명 : </div>
-              <select size={1} name="department" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                {departments.map((dept) => (
-                  <option key={dept.id} value={dept.nm}>
-                    {dept.name}
-                  </option>
-                ))}
-              </select>
-
-              <div>사원명 : </div>
-              <input type="text" placeholder="내용을 입력해 주세요" name="employeeName" onChange={handleSelectChange} />
-
-              <div>외국인여부 : </div>
-              <select size={1} name="foreigner" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                <option value="X">X</option>
-                <option value="O">O</option>
-              </select>
-
-              <div>고용형태 : </div>
-              <select size={1} name="employmentType" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                <option value="상용">상용</option>
-                <option value="계약">계약</option>
-                <option value="일용">일용</option>
-              </select>
-
-              <div>재직여부 : </div>
-              <select size={1} name="employmentStatus" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                <option value="재직">재직</option>
-                <option value="퇴사">퇴사</option>
-                <option value="휴직">휴직</option>
-              </select>
-            </SInputContainer>
-            <SButtonContainer>
-              <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-
-              <SNewButton onClick={() => handleNewEmployeeClick()}>신규</SNewButton>
-
-            </SButtonContainer>
-          </SContentHeader>
-          <SCompanyTable>
-            <EmployeeTable employees={searchresult} />
-          </SCompanyTable>
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;사원정보</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-10 d-flex justify-content-start">
+                    <span>부서명:&nbsp;</span>
+                    <select size={1} name="department" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.nm}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;&nbsp;사원명:&nbsp;</span>
+                    <input size={200} type="date" name="employeeName" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;외국인여부:&nbsp;</span>
+                    <select size={1} name="foreigner" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      <option value="X">X</option>
+                      <option value="O">O</option>
+                    </select>
+                    <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
+                    <select size={1} name="employmentType" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      <option value="상용">상용</option>
+                      <option value="계약">계약</option>
+                      <option value="일용">일용</option>
+                    </select>
+                    <span>&nbsp;&nbsp;재직여부:&nbsp;</span>
+                    <select size={1} name="employmentStatus" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      <option value="재직">재직</option>
+                      <option value="퇴사">퇴사</option>
+                      <option value="휴직">휴직</option>
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end ">
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                    <CButton color="dark" variant="outline" onClick={() => handleNewEmployeeClick()}>신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <EmployeeTable employees={searchresult} />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div>
   )
 
 }
