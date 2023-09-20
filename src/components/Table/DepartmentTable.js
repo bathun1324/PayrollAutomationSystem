@@ -174,6 +174,7 @@ export const DepartmentTable = ({ departments, selectedDepartmentIds, setSelecte
           style={{ textAlign: 'center' }}
           pagination={true}
           paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+
         // domLayout="autoHeight"
         >
         </AgGridReact>

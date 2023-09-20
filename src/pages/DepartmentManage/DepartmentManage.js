@@ -80,6 +80,24 @@ const DepartmentManage = () => {
     setSearchtext(e.target.value);
   };
 
+  // // 출력, 사이드바를 닫고 출력
+  // const timesleep = () => {
+  //   if (sidebarShow) {
+  //     dispatch({ type: 'set', sidebarShow: !sidebarShow })
+  //   }
+  //   const timer = setTimeout(() => {
+  //     handlePrint();
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+
+  // }
+  // const handlePrint = () => {
+  //   const printableArea = document.getElementById('printableArea');
+  //   if (printableArea) {
+  //     window.print();
+  //   }
+  // };
+
   return (
     <div>
       <AppSidebar />
@@ -114,6 +132,7 @@ const DepartmentManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
+              {/* 신규 삭제 */}
               <NewDepartModal isOpen={isModalOpen} closeModal={closeModal} />
               <DeleteModal isOpen={isDeleteModalOpen} closeModal={closeDeleteModal} selectedDepartmentIds={selectedDepartmentIds} />
 

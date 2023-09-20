@@ -4,7 +4,8 @@ import { AgGridReact } from 'ag-grid-react';
 import { useCallback, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import '../../print.css';
-
+import './styles.css'
+import { useSelector, useDispatch } from 'react-redux'
 
 const TableContainer = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const TableContainer = styled.div`
   justify-content: center;
 
   width: 90%;
-  height: 90%;
+  height: 100%;
 
   font-size: 0.9em;
   text-align: left;
@@ -85,8 +86,27 @@ const PaginationButton = styled.button`
   color:  ${({ theme }) => theme.colors.blue090};
 `;
 
-const EmployeeListTable = ({ searchResults }) => {
 
+
+const SNewButton = styled.button`
+  flex-wrap: wrap;
+  width: 80px;
+  height: 40px;
+  color: white;
+  font-size: 0.8em;
+  background-color: ${({ theme }) => theme.colors.blue090};
+  border-radius: 3px;
+  border: none;
+
+  &:hover{  
+    background-color : skyblue;
+  }
+
+`
+
+const EmployeeListTable = ({ searchResults }) => {
+  const dispatch = useDispatch()
+  const sidebarShow = useSelector((state) => state.sidebarShow)
   const gridRef = useRef();
 
   const [columnDefs] = useState([
@@ -127,9 +147,9 @@ const EmployeeListTable = ({ searchResults }) => {
   }, []);
 
   const gridOptions = {
-    rowSelection: 'multiple', // 채크박스 여러개선택
-    paginationAutoPageSize: true,
-    pagination: true,
+    rowSelection: 'multiple',
+    //paginationAutoPageSize: true,
+    //pagination: true,
   };
 
 
@@ -144,6 +164,19 @@ const EmployeeListTable = ({ searchResults }) => {
     }
   }, []);
 
+  const setPrinterFriendly = (api) => {
+    const eGridDiv = document.querySelector('#myGrid');
+    eGridDiv.style.width = '';
+    eGridDiv.style.height = '';
+    gridRef.current.setDomLayout('print');
+  };
+
+  const setNormal = (api) => {
+    const eGridDiv = document.querySelector('#myGrid');
+    eGridDiv.style.width = '100%';
+    eGridDiv.style.height = '550px';
+    gridRef.current.setDomLayout();
+  };
 
   const onSelectionChanged = (() => {
     //setSelectRowData(gridRef.current.api.getSelectedRows());
@@ -167,15 +200,43 @@ const EmployeeListTable = ({ searchResults }) => {
       checkbox: true,
     },
   };
+  // 너비 맞추기
+  const autoSizeAll = useCallback((skipHeader) => {
+    const allColumnIds = [];
+    gridRef.current.dragAndDropService.columnApi.getColumns().forEach((column) => {
+      allColumnIds.push(column.getId());
+    });
+    gridRef.current.dragAndDropService.columnApi.autoSizeColumns(allColumnIds, skipHeader);
+  }, []);
 
+
+  const onFirstDataRendered = useCallback((params) => {
+    gridRef.current.api.expandAll();
+  }, []);
+
+  // 출력할 때 사이드 바 접고 출력
+  const onBtPrint = useCallback(() => {
+    if (sidebarShow) {
+      dispatch({ type: 'set', sidebarShow: !sidebarShow })
+    }
+    const api = gridRef.current.api;
+    setPrinterFriendly(api);
+    setTimeout(function () {
+      autoSizeAll(false);
+      window.print();
+      setNormal(api);
+    }, 2000);
+  }, [window.print]);
 
   return (
     <TableContainer id='printableArea'>
       <div>
-        <button onClick={onBtnExport}>Download CSV export file</button>
+        <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        <SNewButton onClick={onBtPrint}>print</SNewButton>
+        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton>
       </div>
 
-      <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+      <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
         <AgGridReact
           onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
           defaultColDef={defaultColDef}
@@ -184,8 +245,7 @@ const EmployeeListTable = ({ searchResults }) => {
           onSelectionChanged={onSelectionChanged}
           gridOptions={gridOptions}
           style={{ textAlign: 'center' }}
-          pagination={true}
-          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+        // paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
         >
         </AgGridReact>
       </div>
