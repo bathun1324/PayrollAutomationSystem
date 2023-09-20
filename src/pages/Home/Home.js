@@ -175,8 +175,19 @@ const Home = ({ type }) => {
       });
 
       if (response.status === 200) {
+        const{ user_info }= response.data;
+        localStorage.setItem('user_info', JSON.stringify(user_info));
+        const infos = JSON.parse(localStorage.getItem('user_info'));
+        const login_id = infos.login_id;
         console.log("username", username)
-        navigate('./admin/depart');
+        if(login_id == 'admin'){
+          navigate('./admin/depart');
+        }else if(login_id == 'superadmin'){
+          navigate('./superadmin/doc');
+        }else{
+          navigate('./user/employeefamilycheck');
+        }
+        
       } else {
         // 로그인 실패 처리
         openNoAccountModal(); //일치하는 계정이 없을경우 모달 열기
@@ -190,8 +201,6 @@ const Home = ({ type }) => {
 
     }
   };
-
-
 
   return (
     <SWrapper>
