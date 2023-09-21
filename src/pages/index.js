@@ -51,6 +51,7 @@ export { default as DocApprovalPage } from "./SuperAdminMenuPage/DocApprovalPage
 
 // operator 운영자메뉴 페이지
 export { default as OperatorInfoManage } from "./OperatorMenuPage/OperatorInfoManage/OperatorInfoManage"
-
 export { default as NotFound } from "./NotFound/NotFound"
 
+// 더미 페이지
+export { default as Dummypage } from "./Dummypage/Dummypage"

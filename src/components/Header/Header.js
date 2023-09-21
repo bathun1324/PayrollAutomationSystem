@@ -36,6 +36,9 @@ const SCompanyWrapper = styled.div`
 `
 
 const Header = () => {
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
+
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
   return (
@@ -62,7 +65,7 @@ const Header = () => {
         <CHeaderNav>
           <CNavItem>
             <CNavLink href="#">
-              <CIcon icon={cilUser} />UserName
+              <CIcon icon={cilUser} />{login_id}
             </CNavLink>
           </CNavItem>
           <CNavItem>

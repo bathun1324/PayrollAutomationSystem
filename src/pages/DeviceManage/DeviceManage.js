@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Header } from "../../components";
 import { DeviceManageTable } from "../../components";
 import { useNavigate } from "react-router-dom";
+
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 
 const SWrapper = styled.div`
   display: flex;
@@ -76,7 +79,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -93,7 +96,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -109,7 +112,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -134,40 +137,55 @@ const SCompanyTable = styled.div`
 
 const DeviceManage = () => {
 
-  const navigate = useNavigate();
+  const [searchtext, setSearchtext] = useState([]);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>비콘단말기 관리</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>설치위치 : </div>
-            <input size={20} type="text" />
-            <div>모델명 : </div>
-            <input size={20} type="text" />
-            <div>상태 : </div>
-            <select size={1}>
-              <option value="1">사용</option>
-              <option value="2">미사용</option>
-            </select>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton onClick={()=>navigate(`/admin/device/devicedetail`)}>신규</SOutButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <DeviceManageTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">기기관리&nbsp;{'>'}&nbsp;비콘단말기 관리</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                    <span>설치위치:&nbsp;</span>
+                    <input size={200} name="loc" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;모델명:&nbsp;</span>
+                    <input size={200} type="model_nm" name="start_reg_dtime" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;상태:&nbsp;&nbsp;</span>
+                    <select size={1} name="state">
+                      <option value="">선택</option>
+                      <option value="1">사용</option>
+                      <option value="2">미사용</option>
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <DeviceManageTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

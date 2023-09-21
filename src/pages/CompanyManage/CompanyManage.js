@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CompanyTable } from "../../components/Table/CompanyTable";
 import { Header, Footer } from "../../components";
-import { RiGroup2Fill, RiUserSettingsLine,  } from "react-icons/ri";
+import { RiGroup2Fill, RiUserSettingsLine, } from "react-icons/ri";
+
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 
 
 const SWrapper = styled.div`
@@ -60,7 +63,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -77,7 +80,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -93,7 +96,7 @@ const SNewButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -116,54 +119,54 @@ const SCompanyTable = styled.div`
   border-radius: 5px;
 `
 const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
-  const operatorIconMapping = {
-    0: RiGroup2Fill,
-    1: RiUserSettingsLine,
+
+  const [searchtext, setSearchtext] = useState([]);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const operatorMenuItems = [
-    {
-      title: "회사관리",
-      content: ["회사정보"],
-      innerLink: ["/operator/com"],
-    },
-    {
-      title: "운영자관리",
-      content: ["운영자정보"],
-      innerLink: ["/operator/operatorinfo"],
-    },
-  ];
-
-  
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav userRole={"operator"} menuItems={operatorMenuItems} iconMapping={operatorIconMapping}
-        />
-        <SContentContainer>
-          <SCategory>
-            <div>회사정보</div>
-          </SCategory>
-          <SContentHeader>
-            <div>회사명 : </div>
-            <input placeholder="내용을 입력해주세요" />
-            <div>등록일 : </div>
-            <input size={10} type="date" />
-            <div>~</div>
-            <input size={10} type="date" />
-            <SButtonContainer>
-              <SSerchButton>검색</SSerchButton>
-              <SNewButton>신규</SNewButton>
-            </SButtonContainer>
-          </SContentHeader>
-          <SCompanyTable>
-            <CompanyTable />
-          </SCompanyTable>
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">회사관리&nbsp;{'>'}&nbsp;회사정보</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                    <span>회사명:&nbsp;</span>
+                    <input size={200} name="corp_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;등록일:&nbsp;</span>
+                    <input size={200} type="date" name="start_reg_dtime" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+                    <input size={200} type="date" name="end_reg_dtime" style={{ width: '110px' }} onChange={handleSelectChange} />
+
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <CompanyTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   );
 };
 

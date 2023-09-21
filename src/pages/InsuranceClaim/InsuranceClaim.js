@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import InsuranceClaimTable from "../../components/Table/InsuranceClaimTable";
 import { Header } from "../../components";
+
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import axios from "axios";
 
 
 const SWrapper = styled.div`
@@ -85,7 +89,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -102,7 +106,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -118,7 +122,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -133,7 +137,7 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -160,62 +164,109 @@ const SCompanyTable = styled.div`
 `
 
 const InsuranceClaim = () => {
+  const [searchtext, setSearchtext] = useState([]);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // 옵션 목록
+  const options = [
+    '국민연금',
+    '고용보험',
+    '건강보험,장기요양보험',
+    '정산항목',
+    '소득세',
+  ];
+
+  const handleCheckboxChange = (event) => {
+    const value = event.target.value;
+    setSelectedOptions((prevSelectedOptions) => {
+      if (prevSelectedOptions.includes(value)) {
+        // 이미 선택된 경우 선택 해제
+        return prevSelectedOptions.filter((option) => option !== value);
+      } else {
+        // 선택되지 않은 경우 선택
+        return [...prevSelectedOptions, value];
+      }
+    });
+  };
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>보험 및 세금 적취내역 조회</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <SInputInnerContainer>            
-              <div>검색년도 : </div>
-              <input size={200} type="date" />
-              <br></br>
-              <div>부서 : </div>
-              <select size={1}>
-                <option value={1}>전체</option>
-                <option value={2}>인사부</option>
-                <option value={3}>생산부</option>
-                <option value={3}>경영부</option>
-              </select>
-              <br></br>
-              <div>분류기준</div>
-              <select size={1}>
-                <option value={1}></option>
-                <option value={1}></option>
-                <option value={1}></option>
-              </select>
-              <br></br>
-              <div>퇴직연금 : </div>
-              <input id="1" type="checkbox" />
-              <div>국민연금</div>
-              <input id="2" type="checkbox"/>
-              <div>고용보험</div>
-              <input id="3" type="checkbox"/>
-              <div>건강보험,장기요양보험</div>
-              <input id="4" type="checkbox"/>
-              <div>정산항목</div>
-              <input id="5" type="checkbox"/>
-              <div>소득세</div>
-            </SInputInnerContainer>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton>내보내기</SOutButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <InsuranceClaimTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">급여관리&nbsp;{'>'}&nbsp;보험 및 세금&nbsp;{'>'}&nbsp;보험적취내역</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
+                    <span>검색년도:&nbsp;</span>
+                    <input size={200} type="date" name="pay_month" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    {/* name값주기 */}
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">내보내기</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
+                    <span>퇴직연금:&nbsp;</span>
+                    {options.map((option, index) => (
+                      <label key={index}>
+                        <input
+                          type="checkbox"
+                          value={option}
+                          checked={selectedOptions.includes(option)}
+                          onChange={handleCheckboxChange}
+                        />
+                        {option}&nbsp;&nbsp;
+                      </label>))}
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <InsuranceClaimTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

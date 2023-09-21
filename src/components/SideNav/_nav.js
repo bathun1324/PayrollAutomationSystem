@@ -18,39 +18,44 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0부서정보',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0직급정보',
-            to: '/admin/device' // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0근태정보',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
+          },
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0\u00A0\u00A0보험요율정보',
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0급여정보',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0휴일정보',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
       {
         component: CNavItem,
         name: '\u00A0\u00A0회사정보',
-        to: '/admin/device', // 수정
+        to: '/admin/company',
       },
       {
         component: CNavItem,
         name: '\u00A0\u00A0운영자정보',
-        to: '/admin/device', // 수정
+        to: '/admin/operatorinfo',
       },
     ],
   },
@@ -74,7 +79,7 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0직급정보',
-            to: '/admin/device' // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
@@ -86,12 +91,7 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0기본근로시간',
-            to: '/admin/device',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0소정근로시간',
-            to: '/admin/device' // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
@@ -102,20 +102,20 @@ const _nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험료현황',
-            to: '/admin/device',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0보험요율',
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여항목관리',
-            to: '/admin/device', // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0급여항목',
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
       {
         component: CNavItem,
         name: '\u00A0\u00A0휴일정보',
-        to: '/admin/device', // 수정
+        to: '/admin/dummy',  // 수정
       },
     ],
   },
@@ -128,7 +128,7 @@ const _nav = [
       {
         component: CNavItem,
         name: '\u00A0\u00A0사원정보',
-        to: '/admin/employee', // 수정
+        to: '/admin/employee',
       },
       {
         component: CNavGroup,
@@ -163,19 +163,26 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회',
-            to: '/admin/device' // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
       {
-        component: CNavItem,
-        name: '\u00A0\u00A0사원별근태관리',
-        to: '/admin/device', // 수정
+        component: CNavGroup,
+        name: '\u00A0\u00A0근태관리',
+        to: '/employee', // 수정
+        items: [
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리',
+            to: '/admin/dummy',  // 수정
+          },
+        ],
       },
     ],
   },
@@ -193,12 +200,12 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0급여관리',
-            to: '/admin/device',  // 수정
+            to: '/admin/payrollmanage',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0급여대장 조회',
-            to: '/admin/device' // 수정
+            to: '/admin/payrollcheck',
           },
         ],
       },
@@ -210,30 +217,30 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0출국만기보험내역 조회',
-            to: '/admin/device',  // 수정
+            to: '/admin/departins',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0퇴직연금 조회',
-            to: '/admin/device', // 수정
+            to: '/admin/retire',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0보험적취내역',
-            to: '/admin/device', // 수정
+            to: '/admin/insurunce',
           },
         ],
       },
       {
         component: CNavItem,
-        name: '\u00A0\u00A0이체내역서',
-        to: '/admin/device', // 수정
+        name: '\u00A0\u00A0이체내역서 조회',
+        to: '/admin/transferhistory',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: '전자결제',
+    name: '전자결재',
     to: '/employee', // 수정
     icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
     items: [
@@ -245,17 +252,17 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0휴가신청 현황',
-            to: '/admin/device',  // 수정
+            to: '/admin/vacation',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0휴가신청서 작성',
-            to: '/admin/device', // 수정
+            to: '/admin/vacation/vacationform',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0연차사용내역 조회',
-            to: '/admin/device', // 수정
+            to: '/admin/annualusestatus',
           },
         ],
       },
@@ -267,12 +274,12 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0출장신청 현황',
-            to: '/admin/device',  // 수정
+            to: '/admin/businesstrip',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0출장신청서 작성',
-            to: '/admin/device', // 수정
+            to: '/admin/businesstrip/businesstripform',
           },
         ],
       },
@@ -284,12 +291,12 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성',
-            to: '/admin/device' // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
@@ -301,12 +308,12 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황',
-            to: '/admin/device',  // 수정
+            to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 및 결재',
-            to: '/admin/device', // 수정
+            to: '/admin/dummy',  // 수정
           },
         ],
       },
@@ -321,14 +328,9 @@ const _nav = [
       {
         component: CNavItem,
         name: '\u00A0\u00A0비콘단말기 관리',
-        to: '/admin/device', // 수정
+        to: '/admin/device',
       },
     ],
-  },
-  {
-    component: CNavItem,
-    name: '초기사이트 이동',
-    to: '/admin/device' // 수정
   },
 
   // {

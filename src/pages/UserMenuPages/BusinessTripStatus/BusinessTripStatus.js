@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SideNav from "../../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BusinessTripStatusTable } from "../../../components";
 import { Header } from "../../../components";
 import { GoPrimitiveDot } from "react-icons/go";
@@ -8,7 +8,10 @@ import { RiUserSettingsLine, RiGroup2Fill, } from "react-icons/ri";
 import { ImProfile } from "react-icons/im";
 import { MdLibraryBooks } from "react-icons/md";
 
-
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import { useSelector, useDispatch } from 'react-redux'
+import AppSidebar from "../../../components/SideNav/AppSidebar";
+import axios from "axios";
 
 const SWrapper = styled.div`
   display: flex;
@@ -81,7 +84,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -98,7 +101,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -114,7 +117,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -129,7 +132,7 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -188,85 +191,109 @@ const SEmployeeSearchContainer = styled.div`
 
 
 const BusinessTripStatus = ({ userRole, menuItems, iconMapping }) => {
-
-
-
-  const userIconMapping = {
-    0: RiUserSettingsLine,
-    1: RiGroup2Fill,
-    2: ImProfile,
-    3: MdLibraryBooks,
+  const [searchtext, setSearchtext] = useState([]);
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-  
-  const userMenuItems = [
-    {
-      title: "사원정보",
-      content: ["사원정보조회", "가족정보조회"],
-      innerLink: ["/user/employeeinfocheck", "/user/employeefamilycheck"],
-    },
-    {
-      title: "근태조회",
-      content: ["휴가사용현황", "출장사용현황", "근태기록조회", "급여명세서조회"],
-      innerLink: ["/user/vacation", "/user/businesstrip", "/admin/attendance", ""],
-    },
-    {
-      title: "신청서",
-      content: ["휴가신청서", "출장신청서"],
-      innerLink: ["/user/vacation/vacationform", "/user/businesstrip/businesstripform"],
-    },
-  ];
 
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+  const [role, setRole] = useState([]); // 직급
+  useEffect(() => {
+    // 백엔드에서 직급 데이터 가져오기
+    axios.get('http://13.125.117.184:8000/get_role/')
+      .then((response) => {
+        setRole(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav userRole={"user"} menuItems={userMenuItems} iconMapping={userIconMapping}/>
-      <SContentContainer>
-        <SCategory>
-          <div>출장 사용 현황</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>출장일자 : </div>
-            <input type="date" />
-            <span>~</span>
-            <input type="date" />
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton>내보내기</SOutButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <SCategoryContainer>
-            <GoPrimitiveDot color = "#548AFF" />
-              <h3>개인정보</h3>
-              <SEmployeeSearchContainer>
-                <div>
-                  <span>사원번호:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>사원명:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>부서명:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>직책:</span>
-                  <input type="text"></input>
-                </div>
-              </SEmployeeSearchContainer>
-            </SCategoryContainer>
-            <BusinessTripStatusTable/>
-          </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">전자결재&nbsp;{'>'}&nbsp;출장&nbsp;{'>'}&nbsp;출장신청 현황</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-6 d-flex justify-content-start">
+                    <span>출장일자:&nbsp;</span>
+                    <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+                    <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" >내보내기</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <h3 className="mb-1">개인정보</h3>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-13 d-flex justify-content-start">
+                    <span>사원번호:&nbsp;</span>
+                    <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;사원명:&nbsp;</span>
+                    <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;부서명:&nbsp;</span>
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;직급:&nbsp;</span>
+                    <select size={1} name="rspofc" onChange={handleSelectChange} >
+                      <option value="">선택</option>
+                      {role.map((roles) => (
+                        <option key={roles.lcode} value={roles.lcode_nm}>
+                          {roles.lcode_nm}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <BusinessTripStatusTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
+
+
+
+
   )
 
 }

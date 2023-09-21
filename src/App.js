@@ -44,6 +44,7 @@ import {
   VacationForm,
   VacationUseStatus,
   WorkTimeManage,
+  Dummypage,
 } from "./pages";
 import { managerIconMapping, managerMenuItems, operatorIconMapping, operatorMenuItems, superadminIconMapping, superadminMenuItems, userIconMapping, userMenuItems } from './utils/userRollMenuItems';
 
@@ -88,13 +89,25 @@ function App() {
                 <Route path="/admin/fixworktime" element={<FixedWorkTimeManage />} />
                 <Route path="/admin/dayoff" element={<DayOffManage />} />
                 <Route path="/admin/premium" element={<PremiumManage />} />
-
                 <Route path="/admin/employee/employeedetail" element={<EmployeeDetail />} />
                 <Route path="/admin/employee/employeedetail/:id" element={<EmployeeDetail />} />
                 <Route path="/admin/commute/commutedetail" element={<CommuteDetail />} />
                 <Route path="/admin/device/devicedetail" element={<DeviceDetail />} />
 
+                <Route path="/admin/company" element={<CompanyManage />} />
+                <Route path="/admin/company/:companyId" element={<CompanyDetail />} />
+                <Route path="/admin/operatorinfo" element={<OperatorInfoManage />} />
+
+                <Route path="/admin/vacation" element={<VacationUseStatus />} />
+                <Route path="/admin/vacation/vacationform" element={<VacationForm />} />
+                <Route path="/admin/annualusestatus" element={<AnnualUseStatus />} />
+                <Route path="/admin/businesstrip" element={<BusinessTripStatus />} />
+                <Route path="/admin/businesstrip/businesstripform" element={<BusinessTripForm />} />
+
+
                 <Route path="*" element={<NotFound />} />
+                {/* 더미페이지-임시 */}
+                <Route path="/admin/dummy" element={<Dummypage />} />
               </Routes>
             </IconMappingContext.Provider>
           </MenuItemsContext.Provider>

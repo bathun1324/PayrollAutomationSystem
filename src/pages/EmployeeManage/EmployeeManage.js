@@ -213,12 +213,12 @@ const EmployeeManage = () => {
                       ))}
                     </select>
                     <span>&nbsp;&nbsp;사원명:&nbsp;</span>
-                    <input size={200} type="date" name="employeeName" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <input size={200} name="employeeName" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;외국인여부:&nbsp;</span>
                     <select size={1} name="foreigner" onChange={handleSelectChange}>
                       <option value="">선택</option>
-                      <option value="X">X</option>
-                      <option value="O">O</option>
+                      <option value="X">내국인</option>
+                      <option value="O">외국인</option>
                     </select>
                     <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
                     <select size={1} name="employmentType" onChange={handleSelectChange}>

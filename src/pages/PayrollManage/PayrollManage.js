@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PayrollManageTable from "../../components/Table/PayrollManageTable";
 import { Header } from "../../components";
 
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import axios from "axios";
 
 const SWrapper = styled.div`
   display: flex;
@@ -58,7 +61,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -75,7 +78,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -91,7 +94,7 @@ const SNewButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -126,43 +129,77 @@ const SInputContainer = styled.div`
 
 const PayrollManage = () => {
 
+  const [searchtext, setSearchtext] = useState([]);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>급여 관리</div>
-        </SCategory>
-        <SContentHeader>
-        <SInputContainer>
-          <div>검색기간 : </div>
-            <input size={200} type="date" />
-          <div>부서명 : </div>
-          <select size={1}>
-            <option value="1">생산부</option>
-            <option value="2">인사부</option>
-            <option value="3">관리부</option>
-            <option value="4">경영부</option>
-          </select>
-          <div>급여종류 : </div>
-          <select size={1}>
-            <option value="1">월급여</option>
-            <option value="2">시급여</option>
-            <option value="3">일급여</option>
-          </select>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <PayrollManageTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">급여관리&nbsp;{'>'}&nbsp;급여관리&nbsp;{'>'}&nbsp;급여관리</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                    <span>검색기간:&nbsp;</span>
+                    <input size={200} type="date" name="date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    {/* name값주기 */}
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;&nbsp;급여종류&nbsp;&nbsp;</span>
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      <option value="1">월급여</option>
+                      <option value="2">시급여</option>
+                      <option value="3">일급여</option>
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <PayrollManageTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

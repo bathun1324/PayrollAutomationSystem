@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SideNav from "../../../components/SideNav/SideNav";
-import React, { useContext } from "react";
-import { UserRoleContext, MenuItemsContext} from "../../../App";
+import React, { useState, useContext, useEffect } from "react";
+import { UserRoleContext, MenuItemsContext } from "../../../App";
 import { VacationUseStatusTable } from "../../../components";
 import { Header } from "../../../components";
 import { RiUserSettingsLine, RiGroup2Fill, } from "react-icons/ri";
@@ -9,6 +9,9 @@ import { ImProfile } from "react-icons/im";
 import { GoPrimitiveDot } from "react-icons/go";
 import { MdLibraryBooks } from "react-icons/md";
 
+import AppSidebar from "../../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import axios from "axios";
 
 
 const SWrapper = styled.div`
@@ -76,7 +79,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -93,7 +96,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -109,7 +112,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -124,7 +127,7 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -184,93 +187,83 @@ const SEmployeeSearchContainer = styled.div`
 
 const VacationUseStatus = ({ userRole, menuItems, iconMapping }) => {
 
-  
-    // 권한 컨텍스트와 메뉴 아이템 컨텍스트를 가져옵니다.
-    // const userRole = useContext(UserRoleContext);
-    // const menuItems = useContext(MenuItemsContext);
-  
-    // 해당 권한에 맞는 메뉴 아이템을 가져옵니다.
-    // const userMenuItems = menuItems[userRole];
+  const [searchtext, setSearchtext] = useState([]);
 
-  //   console.log("navMenuItems:", menuItems);
-  // console.log("navIconMapping:", iconMapping);
-
-
-  const userIconMapping = {
-    0: RiUserSettingsLine,
-    1: RiGroup2Fill,
-    2: ImProfile,
-    3: MdLibraryBooks,
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-  
-  const userMenuItems = [
-    {
-      title: "사원정보",
-      content: ["사원정보조회", "가족정보조회"],
-      innerLink: ["/user/employeeinfocheck", "/user/employeefamilycheck"],
-    },
-    {
-      title: "근태조회",
-      content: ["휴가사용현황", "출장사용현황", "연차사용현황", "근태기록조회", "급여명세서조회"],
-      innerLink: ["/user/vacation", "/user/businesstrip", "/user/annualusestatus", "/admin/attendance", ""],
-    },
-    {
-      title: "신청서",
-      content: ["휴가신청서", "출장신청서"],
-      innerLink: ["/user/vacation/vacationform", "/user/businesstrip/businesstripform"],
-    },
-  ];
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  
-
+  }, []);
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav userRole={"user"} menuItems={userMenuItems} iconMapping={userIconMapping}/>
-      <SContentContainer>
-        <SCategory>
-          <div>휴가 사용 현황</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>검색일자 : </div>
-            <input type="month" />
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton>내보내기</SOutButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <SCategoryContainer>
-            <GoPrimitiveDot color = "#548AFF" />
-              <h3>개인정보</h3>
-              <SEmployeeSearchContainer>
-                <div>
-                  <span>사원번호:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>사원명:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>부서명:</span>
-                  <input type="text"></input>
-                </div>
-                <div>
-                  <span>직책:</span>
-                  <input type="text"></input>
-                </div>
-              </SEmployeeSearchContainer>
-            </SCategoryContainer>
-            <VacationUseStatusTable/>
-          </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">전자결재&nbsp;{'>'}&nbsp;휴가&nbsp;{'>'}&nbsp;휴가신청 현황</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-5 d-flex justify-content-start">
+                    <span>검색일자:&nbsp;</span>
+                    <input size={200} type="date" name="date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">내보내기</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <h3 className="mb-1">개인정보</h3>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-13 d-flex justify-content-start">
+                    <span>사원번호:&nbsp;</span>
+                    <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;사원명:&nbsp;</span>
+                    <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;부서명:&nbsp;</span>
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;직책:&nbsp;</span>
+                    <input size={200} name="empl_rspofc" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <VacationUseStatusTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

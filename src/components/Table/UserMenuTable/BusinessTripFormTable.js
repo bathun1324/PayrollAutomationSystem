@@ -23,7 +23,7 @@ const SWrapper = styled.div`
   margin: 20px 10px;
   padding-top: 40px;
   
-  border-top: 2.5px solid ${({theme}) => theme.colors.black050};
+  // border-top: 2.5px solid ${({ theme }) => theme.colors.black050};
 
   gap: 2em;
 
@@ -45,7 +45,7 @@ const SWrapper = styled.div`
   td {
     width: 25%;
     padding: 0 15px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.black050};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
  
     > select {
       width: 100%;
@@ -147,60 +147,60 @@ const BusinessTripFormTable = () => {
     <SWrapper>
       <SCompanyInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>개인 정보</h3>
         </SCategoryContainer>
         <table>
           <tr>
             <td>사원번호</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
             <td>사원명</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
           </tr>
           <tr>
             <td>부서명</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
             <td>직책</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
           </tr>
         </table>
       </SCompanyInfo>
       <SBusinessTripApply>
         <SManagerInfo>
           <SCategoryContainer>
-            <GoPrimitiveDot color = "#548AFF" />
+            <GoPrimitiveDot color="#548AFF" />
             <h3>출장신청</h3>
           </SCategoryContainer>
           <table>
             <tr>
               <td>신청일자</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
               <td>출장인원</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
             </tr>
             <tr>
               <td>출장 시작일</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
               <td>출장 종료일</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
             </tr>
             <tr>
               <td>출장비(예상)</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
               <td>선지급 금액</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
             </tr>
             <tr>
               <td>출장지</td>
-              <td colSpan={3}><input type="text"/></td>
+              <td colSpan={3}><input type="text" /></td>
             </tr>
             <tr>
               <td>출장목적</td>
-              <td colSpan={3}><input type="text"/></td>
+              <td colSpan={3}><input type="text" /></td>
             </tr>
             <tr>
               <td>출장 신청 내용</td>
-              <td colSpan={3}><input type="text"/></td>
+              <td colSpan={3}><input type="text" /></td>
             </tr>
           </table>
         </SManagerInfo>
