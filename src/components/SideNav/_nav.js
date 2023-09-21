@@ -128,7 +128,7 @@ const _nav = [
       {
         component: CNavItem,
         name: '\u00A0\u00A0사원정보',
-        to: '/admin/device', // 수정
+        to: '/admin/employee', // 수정
       },
       {
         component: CNavGroup,
@@ -143,7 +143,7 @@ const _nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0퇴직자명부 조회',
-            to: '/admin/device' // 수정
+            to: '/admin/retirelist'
           },
         ],
       },

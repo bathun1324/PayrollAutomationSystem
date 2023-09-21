@@ -1,10 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import styled from "styled-components";
 import { Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
+import '../../print.css';
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import { useSelector, useDispatch } from 'react-redux'
 import RetiredEmployeeListTable from "../../components/Table/RetiredEmployeeListTable";
-import { managerIconMapping, managerMenuItems } from "../../utils/userRollMenuItems";
+import '../../components/Table/styles.css'
 
 const SWrapper = styled.div`
   display: flex;
@@ -180,44 +184,49 @@ const RetiredEmployeeListManage = () => {
   };
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav userRole={"admin"} menuItems={managerMenuItems} iconMapping={managerIconMapping} />
-        <SContentContainer>
-          <SCategory>
-            <div>퇴직자명부조회</div>
-          </SCategory>
-          <SContentHeader>
-            <SInputContainer>
-              <div>입사일 : </div>
-              <input size={200} type="date" name="encpnd" onChange={handleSelectChange} />
-
-
-              <div>퇴직일 : </div>
-              <input size={200} type="date" name="retire_date" onChange={handleSelectChange} />
-
-              <div>부서명 : </div>
-              <select size={1} name="dept_id" onChange={handleSelectChange}>
-                <option value="">선택</option>
-                {departments.map((dept) => (
-                  <option key={dept.id} value={dept.id}>
-                    {dept.name}
-                  </option>
-                ))}
-              </select>
-            </SInputContainer>
-            <SButtonContainer>
-              <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-              <SPrintButton>인쇄</SPrintButton>
-            </SButtonContainer>
-          </SContentHeader>
-          <SCompanyTable>
-            <RetiredEmployeeListTable retirelist={searchresult} />
-          </SCompanyTable>
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;직원명부&nbsp;{'>'}&nbsp;퇴직자명부조회</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                    <span>입사일:&nbsp;</span>
+                    <input size={200} type="date" name="encpnd" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;퇴직일:&nbsp;</span>
+                    <input size={200} type="date" name="retire_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    <select size={1} name="dept_id" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <RetiredEmployeeListTable retirelist={searchresult} />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div>
   )
 
 }

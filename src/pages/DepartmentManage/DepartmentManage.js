@@ -120,7 +120,7 @@ const DepartmentManage = () => {
                       ))}
                     </select>
                   </CCol>
-                  <CCol className="gap-2 d-md-flex justify-content-end">
+                  <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
                     <CButton color="dark" variant="outline" onClick={openModal}>신규</CButton>
                     <CButton color="danger" variant="outline" onClick={openDeleteModal}>삭제</CButton>
