@@ -169,7 +169,7 @@ const Home = ({ type }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await axios.post('http://13.125.117.184:8000/login/', {
+      const response = await axios.post('http://127.0.0.1:8000/login/', {
         username: username,
         password: password,
       });
@@ -183,7 +183,7 @@ const Home = ({ type }) => {
         if(login_id == 'admin'){
           navigate('./admin/depart');
         }else if(login_id == 'superadmin'){
-          navigate('./superadmin/doc');
+          navigate('./admin/depart');
         }else{
           navigate('./user/employeefamilycheck');
         }

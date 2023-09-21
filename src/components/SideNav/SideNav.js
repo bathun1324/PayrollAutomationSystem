@@ -391,6 +391,10 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
   };
 
 
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
+
+  userRole = login_id;
 
 
   //권한에 따라 매핑 아이템 달라짐
@@ -399,6 +403,8 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
       userRole === "operator" ? operatorMenuItems :
         userRole === "superadmin" ? superadminMenuItems :
           managerMenuItems;
+  
+  console.log(userRole);
 
   const iconMapping =
     userRole === "user"
