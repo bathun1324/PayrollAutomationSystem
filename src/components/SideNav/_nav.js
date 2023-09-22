@@ -7,42 +7,42 @@ const _nav = [
   {
     component: CNavGroup,
     name: '회사관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilBuilding} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0기초정보',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0부서정보',
+            name: '\u00A0\u00A0\u00A0\u00A0부서정보(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0직급정보',
+            name: '\u00A0\u00A0\u00A0\u00A0직급정보(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0근태정보',
+            name: '\u00A0\u00A0\u00A0\u00A0근태정보(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험요율정보',
+            name: '\u00A0\u00A0\u00A0\u00A0보험요율정보(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여정보',
+            name: '\u00A0\u00A0\u00A0\u00A0급여정보(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0휴일정보',
+            name: '\u00A0\u00A0\u00A0\u00A0휴일정보(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -63,13 +63,13 @@ const _nav = [
   {
     component: CNavGroup,
     name: '기초정보관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0조직정보',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
@@ -78,7 +78,7 @@ const _nav = [
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0직급정보',
+            name: '\u00A0\u00A0\u00A0\u00A0직급정보(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -86,11 +86,11 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0근태정보',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0기본근로시간',
+            name: '\u00A0\u00A0\u00A0\u00A0기본근로시간(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -98,23 +98,23 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0급여정보',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험요율',
+            name: '\u00A0\u00A0\u00A0\u00A0보험요율(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여항목',
+            name: '\u00A0\u00A0\u00A0\u00A0급여항목(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
       },
       {
         component: CNavItem,
-        name: '\u00A0\u00A0휴일정보',
+        name: '\u00A0\u00A0휴일정보(미완)',
         to: '/admin/dummy',  // 수정
       },
     ],
@@ -122,7 +122,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '인사관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
     items: [
       {
@@ -133,7 +133,7 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0직원명부',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
@@ -152,22 +152,22 @@ const _nav = [
   {
     component: CNavGroup,
     name: '근태관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,
-        name: '\u00A0\u00A0근태현황',
-        to: '/employee', // 수정
+        name: '\u00A0\u00A0근태현황(미완)',
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회',
+            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회',
+            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -175,11 +175,11 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0근태관리',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리',
+            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -189,12 +189,12 @@ const _nav = [
   {
     component: CNavGroup,
     name: '급여관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilDollar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,
-        name: '\u00A0\u00A0급여관리',
+        name: '\u00A0\u00A0급여관리(미완)',
         to: '/employee', // 수정
         items: [
           {
@@ -212,7 +212,7 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0보험 및 세금',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
@@ -241,13 +241,13 @@ const _nav = [
   {
     component: CNavGroup,
     name: '전자결재',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
     items: [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0휴가',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
@@ -269,7 +269,7 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0출장',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
@@ -286,16 +286,16 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0교육',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -303,16 +303,16 @@ const _nav = [
       {
         component: CNavGroup,
         name: '\u00A0\u00A0연장근무',
-        to: '/employee', // 수정
+        to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황(미완)',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 및 결재',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 및 결재(미완)',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -322,7 +322,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: '기기관리',
-    to: '/employee', // 수정
+    to: '/employee',
     icon: <CIcon icon={cilMobile} customClassName="nav-icon" />,
     items: [
       {
