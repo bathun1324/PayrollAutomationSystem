@@ -4,6 +4,9 @@ import { useState } from "react";
 import DepartureInsuranceTable from "../../components/Table/DepartureInsuranceTable";
 import { DepartureSumTable, Header } from "../../components";
 
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+
 
 const SWrapper = styled.div`
   display: flex;
@@ -65,7 +68,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -82,7 +85,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -98,7 +101,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -113,7 +116,7 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -138,33 +141,48 @@ const SCompanyTable = styled.div`
 `
 
 const DepartureInsurance = () => {
+  const [searchtext, setSearchtext] = useState([]);
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>출국만기보험내역 조회</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>급여년월 : </div>
-            <input size={200} type="date" />
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton>내보내기</SOutButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <DepartureInsuranceTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">급여관리&nbsp;{'>'}&nbsp;보험 및 세금&nbsp;{'>'}&nbsp;출국만기보험내역 조회</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-5 d-flex justify-content-start">
+                    <span>급여년월:&nbsp;</span>
+                    <input size={200} type="date" name="date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" >내보내기</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <DepartureInsuranceTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

@@ -3,8 +3,11 @@ import SideNav from "../../../components/SideNav/SideNav";
 import { useState } from "react";
 import OperatorInfoTable from "../../../components/Table/OperatorMenuTable/OperatorInfoTable";
 import { Header } from "../../../components";
-import { RiGroup2Fill, RiUserSettingsLine,  } from "react-icons/ri";
+import { RiGroup2Fill, RiUserSettingsLine, } from "react-icons/ri";
 
+// import AppSidebar from "../../components/SideNav/AppSidebar";
+import AppSidebar from "../../../components/SideNav/AppSidebar"
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 
 
 const SWrapper = styled.div`
@@ -61,7 +64,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -78,7 +81,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -94,7 +97,7 @@ const SNewButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -136,55 +139,51 @@ const SInputContainer = styled.div`
 
 const OperatorInfoManage = ({ userRole, menuItems, iconMapping }) => {
 
-  console.log("navMenuItems:", menuItems);
-  console.log("navIconMapping:", iconMapping);
+  const [searchtext, setSearchtext] = useState([]);
 
-
-  const operatorIconMapping = {
-    0: RiGroup2Fill,
-    1: RiUserSettingsLine,
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const operatorMenuItems = [
-    {
-      title: "회사관리",
-      content: ["회사정보"],
-      innerLink: ["/operator/com"],
-    },
-    {
-      title: "운영자관리",
-      content: [ "운영자정보"],
-      innerLink: ["/operator/operatorinfo"],
-    },
-  
-  ];
-  
+
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-    <SideNav userRole={"operator"} menuItems={operatorMenuItems} iconMapping={operatorIconMapping}/>
-      <SContentContainer>
-        <SCategory>
-          <div>운영자 정보</div>
-        </SCategory>
-        <SContentHeader>
-        <SInputContainer>
-          <div>운영자명 : </div>
-            <input size={200} type="text" />
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SNewButton>신규</SNewButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <OperatorInfoTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+
+    <div>
+      {/* <SideNav userRole={"operator"} menuItems={operatorMenuItems} iconMapping={operatorIconMapping}/> */}
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">회사관리&nbsp;{'>'}&nbsp;운영자정보</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-5 d-flex justify-content-start">
+                    <span>운영자명:&nbsp;</span>
+                    <input size={200} name="operator_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <OperatorInfoTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

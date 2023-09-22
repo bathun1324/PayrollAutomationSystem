@@ -23,7 +23,7 @@ const SWrapper = styled.div`
   margin: 20px 10px;
   padding-top: 40px;
   
-  border-top: 2.5px solid ${({theme}) => theme.colors.black050};
+  // border-top: 2.5px solid ${({ theme }) => theme.colors.black050};
 
   gap: 2em;
 
@@ -45,7 +45,7 @@ const SWrapper = styled.div`
   td {
     width: 25%;
     padding: 0 15px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.black050};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
  
     > select {
       width: 100%;
@@ -221,7 +221,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -297,7 +297,7 @@ width: 80px;
 height: 30px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -325,34 +325,34 @@ const VacationFormTable = () => {
     <SWrapper>
       <SCompanyInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>개인 정보</h3>
         </SCategoryContainer>
         <table>
           <tr>
             <td>사원번호</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
             <td>사원명</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
           </tr>
           <tr>
             <td>부서명</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
             <td>직책</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
           </tr>
         </table>
       </SCompanyInfo>
       <SVacationApply>
         <SManagerInfo>
           <SCategoryContainer>
-            <GoPrimitiveDot color = "#548AFF" />
+            <GoPrimitiveDot color="#548AFF" />
             <h3>휴가신청</h3>
           </SCategoryContainer>
           <table>
             <tr>
               <td>휴가 신청일</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
               <td>휴가구분</td>
               <td>
                 <select size={1}>
@@ -363,13 +363,13 @@ const VacationFormTable = () => {
             </tr>
             <tr>
               <td>휴가 시작일</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
               <td>휴가 종료일</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
             </tr>
             <tr>
               <td>휴가일수</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
               <td>전일/반일</td>
               <td>
                 <select size={1}>
@@ -380,7 +380,7 @@ const VacationFormTable = () => {
             </tr>
             <tr>
               <td>실제사용여부</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
               <td></td>
               <td></td>
             </tr>
@@ -389,8 +389,8 @@ const VacationFormTable = () => {
         <SContractInfo>
           <table>
             <tr>
-                <td>휴가사유</td>
-                <td><input type="text"/></td>
+              <td>휴가사유</td>
+              <td><input type="text" /></td>
             </tr>
           </table>
         </SContractInfo>

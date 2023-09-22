@@ -5,7 +5,10 @@ import { VacationFormTable } from "../../../components";
 import { RiUserSettingsLine, RiGroup2Fill, } from "react-icons/ri";
 import { ImProfile } from "react-icons/im";
 import { MdLibraryBooks } from "react-icons/md";
+import React, { useState, useContext, useEffect } from "react";
 
+import AppSidebar from "../../../components/SideNav/AppSidebar";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 
 const SWrapper = styled.div`
   display: flex;
@@ -41,7 +44,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 const SButtonContainer = styled.div`
@@ -57,7 +60,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -73,7 +76,7 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -82,61 +85,51 @@ const SSaveBtn = styled.button`
   }
 `
 const SPrintBtn = styled(SSaveBtn)`
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
 
 `
 
 
 
 const VacationForm = ({ userRole, menuItems, iconMapping }) => {
+  const [searchtext, setSearchtext] = useState([]);
 
-  const navigate = useNavigate();
-
-  const userIconMapping = {
-    0: RiUserSettingsLine,
-    1: RiGroup2Fill,
-    2: ImProfile,
-    3: MdLibraryBooks,
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-  
-  const userMenuItems = [
-    {
-      title: "사원정보",
-      content: ["사원정보조회", "가족정보조회"],
-      innerLink: ["/user/employeeinfocheck", "/user/employeefamilycheck"],
-    },
-    {
-      title: "근태조회",
-      content: ["휴가사용현황", "출장사용현황", "연차사용현황", "근태기록조회", "급여명세서조회"],
-      innerLink: ["/user/vacation", "/user/businesstrip", "/user/annualusestatus", "/admin/attendance", ""],
-    },
-    {
-      title: "신청서",
-      content: ["휴가신청서", "출장신청서"],
-      innerLink: ["/user/vacation/vacationform", "/user/businesstrip/businesstripform"],
-    },
-  ];
-
-  
-
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav userRole={"user"} menuItems={userMenuItems} iconMapping={userIconMapping}/>
-        <SContentContainer>
-          <SCategory>휴가신청서</SCategory>
-          <SButtonContainer>
-            <SCancleBtn onClick={() => navigate(`/user/businesstripform`)}>취소</SCancleBtn>
-            <SSaveBtn onClick={() => navigate(`/user/businesstripform`)}>저장</SSaveBtn>
-            <SPrintBtn onClick={() => navigate(`/user/businesstripform`)}>인쇄</SPrintBtn>
-          </SButtonContainer>
-          <VacationFormTable />
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
-
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">전자결재&nbsp;{'>'}&nbsp;휴가&nbsp;{'>'}&nbsp;휴가신청서 작성</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >취소</CButton>
+                    <CButton color="dark" variant="outline">저장</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <VacationFormTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }
