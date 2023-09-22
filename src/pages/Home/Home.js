@@ -169,25 +169,24 @@ const Home = ({ type }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/login/', {
+      const response = await axios.post('http://13.125.117.184:8000/login/', {
         username: username,
         password: password,
       });
 
       if (response.status === 200) {
-        const{ user_info }= response.data;
+        const { user_info } = response.data;
         localStorage.setItem('user_info', JSON.stringify(user_info));
         const infos = JSON.parse(localStorage.getItem('user_info'));
         const login_id = infos.login_id;
-        console.log("username", username)
-        if(login_id == 'admin'){
-          navigate('./admin/depart');
-        }else if(login_id == 'superadmin'){
-          navigate('./admin/depart');
-        }else{
-          navigate('./user/employeefamilycheck');
+        if (login_id == 'admin') {
+          navigate('./admin/device');
+        } else if (login_id == 'superadmin') {
+          navigate('./superadmin/device');
+        } else if (login_id == 'user') {
+          navigate('./user/employee');
         }
-        
+
       } else {
         // 로그인 실패 처리
         openNoAccountModal(); //일치하는 계정이 없을경우 모달 열기

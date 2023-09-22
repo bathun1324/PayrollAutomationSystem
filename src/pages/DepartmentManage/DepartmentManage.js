@@ -69,13 +69,6 @@ const DepartmentManage = () => {
       });
   };
 
-  // 권한 컨텍스트와 메뉴 아이템 컨텍스트
-  const userRole = useContext(UserRoleContext);
-  const menuItems = useContext(MenuItemsContext);
-
-  // 해당 권한에 맞는 메뉴 아이템 가져오기
-  const userMenuItems = menuItems[userRole];
-
   const handleSelectChange = (e) => {
     setSearchtext(e.target.value);
   };

@@ -3,63 +3,7 @@ import CIcon from '@coreui/icons-react'
 import { cilUserPlus, cilMobile, cilCalendar, cilCreditCard, cilBuilding, cilDescription, cilCash, cilDollar } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
-const _nav = [
-  {
-    component: CNavGroup,
-    name: '회사관리',
-    to: '/employee',
-    icon: <CIcon icon={cilBuilding} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavGroup,
-        name: '\u00A0\u00A0기초정보',
-        to: '/employee',
-        items: [
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0부서정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0직급정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0근태정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험요율정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-          {
-            component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0휴일정보(미완)',
-            to: '/admin/dummy',  // 수정
-          },
-        ],
-      },
-      {
-        component: CNavItem,
-        name: '\u00A0\u00A0회사정보',
-        to: '/admin/company',
-      },
-      {
-        component: CNavItem,
-        name: '\u00A0\u00A0운영자정보',
-        to: '/admin/operatorinfo',
-      },
-    ],
-  },
-
+const admin_nav = [
   {
     component: CNavGroup,
     name: '기초정보관리',
@@ -332,35 +276,6 @@ const _nav = [
       },
     ],
   },
-
-  // {
-  //   component: CNavTitle,
-  //   name: 'Theme',
-  // },
-  // {
-  //   component: CNavItem,
-  //   name: '부서관리',
-  //   to: '/admin/depart',
-  //   icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
-  // },
-  // {
-  //   component: CNavGroup,
-  //   name: '사원정보관리',
-  //   to: '/employee',
-  //   icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
-  //   items: [
-  //     {
-  //       component: CNavItem,
-  //       name: '사원정보',
-  //       to: '/admin/employee',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: '직원명부조회',
-  //       to: '/admin/employeelist'
-  //     }
-  //   ],
-  // },
 ]
 
-export default _nav
+export default admin_nav

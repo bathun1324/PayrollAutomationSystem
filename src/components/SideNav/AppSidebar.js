@@ -21,8 +21,9 @@ import styled from "styled-components";
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
 // sidebar nav config
-import navigation from './_nav'
-
+import superadmin_nav from './superadmin_nav'
+import admin_nav from './admin_nav'
+import user_nav from './user_nav'
 const SCompanyWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -47,6 +48,8 @@ const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
   return (
     <CSidebar
       position="fixed"
@@ -64,7 +67,16 @@ const AppSidebar = () => {
       {/* 사이드바 내용 */}
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          {(login_id === "superadmin") ? (
+            <AppSidebarNav items={superadmin_nav} />
+          ) : (
+            (login_id === "admin") ? (
+              <AppSidebarNav items={admin_nav} />
+            ) : (
+              <AppSidebar items={user_nav} />
+            )
+          )
+          }
         </SimpleBar>
       </CSidebarNav>
       {/* 하단의 화살표 모양, 사이드바를 숨기는거 on off 가능하게 함 */}
