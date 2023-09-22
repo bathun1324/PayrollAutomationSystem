@@ -18,7 +18,7 @@ import CIcon from '@coreui/icons-react'
 import { cilUser, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 // import { ex_visible, set_ex } from '../SideNav/AppSidebar'
 // import { AppBreadcrumb } from './index'
-// import { AppHeaderDropdown } from './header/index'
+import { AppHeaderDropdown } from '../Dropdown/index'
 // import { logo } from 'src/assets/brand/logo'
 
 const SCompanyWrapper = styled.div`
@@ -38,7 +38,7 @@ const SCompanyWrapper = styled.div`
 const Header = () => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
-
+  console.log(login_id)
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
   return (
@@ -57,21 +57,16 @@ const Header = () => {
         </CHeaderNav>
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
-            <CNavLink href="#">
-              계약 만료일: 2025-12-31
-            </CNavLink>
+            계약 만료일: 2025-12-31
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
           <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilUser} />{login_id}
-            </CNavLink>
+            <CHeaderNav>
+              <AppHeaderDropdown />
+            </CHeaderNav>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">
-              로그아웃
-            </CNavLink>
           </CNavItem>
         </CHeaderNav>
       </CContainer>
