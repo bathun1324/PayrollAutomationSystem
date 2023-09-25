@@ -26,18 +26,18 @@ const user_nav = [
     items: [
       {
         component: CNavGroup,
-        name: '\u00A0\u00A0근태현황(미완)',
+        name: '\u00A0\u00A0근태현황',
         to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회(미완)',
-            to: '/admin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회',
+            to: '/user/emplcommute',
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회(미완)',
-            to: '/admin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회',
+            to: '/user/attendance',
           },
         ],
       },
@@ -51,7 +51,7 @@ const user_nav = [
     items: [
       {
         component: CNavGroup,
-        name: '\u00A0\u00A0급여관리(미완)',
+        name: '\u00A0\u00A0급여관리',
         to: '/employee', // 수정
         items: [
           {
@@ -115,12 +115,12 @@ const user_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성',
             to: '/admin/dummy',  // 수정
           },
         ],
@@ -132,12 +132,12 @@ const user_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황',
             to: '/admin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 및 결재(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청서 작성',
             to: '/admin/dummy',  // 수정
           },
         ],

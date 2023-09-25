@@ -18,7 +18,7 @@ const TableContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  width: 90%;
+  width: 100%;
   height: 100%;
 
   font-size: 0.9em;
@@ -26,7 +26,6 @@ const TableContainer = styled.div`
   line-height: 2.8;
   border-collapse: collaps;
 
-  margin: 20px 10px;
 
 
   table {
@@ -245,32 +244,6 @@ const EmployeeListManage = () => {
     }, 2000);
   }, [window.print]);
 
-  // Set the grid to fit the screen when printing
-  useEffect(() => {
-    const onBeforePrint = () => {
-      setPrinterFriendly(gridRef.current.api);
-      autoSizeAll(false);
-    };
-
-    const onAfterPrint = () => {
-      setNormal(gridRef.current.api);
-    };
-
-    window.addEventListener('beforeprint', onBeforePrint);
-    window.addEventListener('afterprint', onAfterPrint);
-
-    return () => {
-      window.removeEventListener('beforeprint', onBeforePrint);
-      window.removeEventListener('afterprint', onAfterPrint);
-    };
-  }, [autoSizeAll]);
-
-  //'onBeforePrint' is not defined  no-undef
-  const onBeforePrint = () => {
-    setPrinterFriendly(gridRef.current.api);
-    autoSizeAll(false);
-  };
-
 
 
 
@@ -280,68 +253,67 @@ const EmployeeListManage = () => {
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <Header />
-        <div className="body flex-grow-1 px-3">
-          <CContainer lg>
-            <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;직원명부&nbsp;{'>'}&nbsp;직원명부조회</h2>
-            <CCard className="mb-4">
-              <CCardBody>
-                <CRow>
-                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="d-flex justify-content-start">
-                    <span>부서명:&nbsp;</span>
-                    <select size={1} name="deptno" onChange={handleSelectChange}>
-                      <option value="">선택</option>
-                      {departments.map((dept) => (
-                        <option key={dept.id} value={dept.id}>
-                          {dept.name}
-                        </option>
-                      ))}
-                    </select>
-                    <span>&nbsp;&nbsp;직급:&nbsp;</span>
-                    <select size={1} name="rspofc" onChange={handleSelectChange} >
-                      <option value="">선택</option>
-                      {role.map((roles) => (
-                        <option key={roles.lcode} value={roles.lcode_nm}>
-                          {roles.lcode_nm}
-                        </option>
-                      ))}
-                    </select>
-                  </CCol>
-                  <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
-                    <CButton color="dark" variant="outline" onClick={onBtnExport}>csv로 다운로드</CButton>
-                    <CButton color="dark" variant="outline" onClick={onBeforePrint}>인쇄</CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-            </CCard>
-            <CCard style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <TableContainer id='printableArea'>
-                <div>
-                  {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        <div className="body flex-grow-1 px-5">
+
+          <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;직원명부&nbsp;{'>'}&nbsp;직원명부조회</h2>
+          <CCard className="mb-4">
+            <CCardBody>
+              <CRow>
+                <CCol style={{ fontSize: '17px', alignItems: "center" }} className="d-flex justify-content-start">
+                  <span>부서명:&nbsp;</span>
+                  <select size={1} name="deptno" onChange={handleSelectChange}>
+                    <option value="">선택</option>
+                    {departments.map((dept) => (
+                      <option key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span>&nbsp;&nbsp;직급:&nbsp;</span>
+                  <select size={1} name="rspofc" onChange={handleSelectChange} >
+                    <option value="">선택</option>
+                    {role.map((roles) => (
+                      <option key={roles.lcode} value={roles.lcode_nm}>
+                        {roles.lcode_nm}
+                      </option>
+                    ))}
+                  </select>
+                </CCol>
+                <CCol className="gap-2 d-flex justify-content-end">
+                  <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                  <CButton color="dark" variant="outline" onClick={onBtnExport}>csv로 다운로드</CButton>
+                  <CButton color="dark" variant="outline" onClick={onBtPrint}>인쇄</CButton>
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </CCard>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+
+          }}>
+            <TableContainer id='printableArea'>
+              <div>
+                {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
         <SNewButton onClick={onBtPrint}>print</SNewButton>
         <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
-                </div>
+              </div>
 
-                <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
-                  <AgGridReact
-                    onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
-                    defaultColDef={defaultColDef}
-                    rowData={searchResults}
-                    columnDefs={columnDefs}
-                    onSelectionChanged={onSelectionChanged}
-                    gridOptions={gridOptions}
-                    style={{ textAlign: 'center' }}
-                  // paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
-                  >
-                  </AgGridReact>
-                </div>
-              </TableContainer>
-            </CCard>
-          </CContainer>
+              <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+                <AgGridReact
+                  onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                  defaultColDef={defaultColDef}
+                  rowData={searchResults}
+                  columnDefs={columnDefs}
+                  onSelectionChanged={onSelectionChanged}
+                  gridOptions={gridOptions}
+                  style={{ textAlign: 'center' }}
+                // paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                >
+                </AgGridReact>
+              </div>
+            </TableContainer>
+          </CCard>
         </div>
       </div>
     </div>

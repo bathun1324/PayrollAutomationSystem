@@ -6,6 +6,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
+import { cilLockLocked, cilUser } from '@coreui/icons'
+import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+
+
 
 const SWrapper = styled.div`
 display: flex;
@@ -180,9 +185,9 @@ const Home = ({ type }) => {
         const infos = JSON.parse(localStorage.getItem('user_info'));
         const login_id = infos.login_id;
         if (login_id == 'admin') {
-          navigate('./admin/device');
+          navigate('./admin/employeelist');
         } else if (login_id == 'superadmin') {
-          navigate('./superadmin/device');
+          navigate('./superadmin/employeelist');
         } else if (login_id == 'user') {
           navigate('./user/employee');
         }
@@ -213,8 +218,24 @@ const Home = ({ type }) => {
           <SLoginContainer>
             <SInputContainer>
               <div>
-                <IconInput type="text" icon={<FaUser />} onChange={handleUsernameChange} />
-                <IconInput type="password" icon={<FaLock />} onChange={handlePasswordChange} />
+                <CForm>
+                  <CInputGroup className="mb-1">
+                    <CInputGroupText>
+                      <CIcon icon={cilUser} />
+                    </CInputGroupText>
+                    <CFormInput placeholder="username" autoComplete="username" onChange={handleUsernameChange} />
+                  </CInputGroup>
+                  <CInputGroup>
+                    <CInputGroupText>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="password"
+                      placeholder="password"
+                      onChange={handlePasswordChange}
+                    />
+                  </CInputGroup>
+                </CForm>
               </div>
               <SLoginButton onClick={handleLogin}>로그인</SLoginButton>
               <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} />

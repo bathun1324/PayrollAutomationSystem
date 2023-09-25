@@ -59,7 +59,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route index element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         {/* superadmin 권한용 컨텍스트 제공 */}
@@ -190,6 +190,8 @@ function App() {
                 <Route path="/user/annualusestatus" element={<AnnualUseStatus />} />
                 <Route path="/user/userattendancecheck" element={<UserAttendanceCheck />} />
                 <Route path="/user/userattendance" element={<UserAttendance />} />
+                <Route path="/user/emplcommute" element={<EmployeeCommuteManage />} />
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </IconMappingContext.Provider>

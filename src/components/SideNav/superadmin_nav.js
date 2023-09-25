@@ -17,32 +17,32 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0부서정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0부서정보',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0직급정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0직급정보',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0근태정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0근태정보',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험요율정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A04대보험요율',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0급여정보',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0휴일정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0휴일정보',
             to: '/superadmin/dummy',  // 수정
           },
         ],
@@ -78,7 +78,7 @@ const superadmin_nav = [
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0직급정보(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0직급정보',
             to: '/superadmin/dummy',  // 수정
           },
         ],
@@ -90,7 +90,7 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0기본근로시간(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0기본근로시간',
             to: '/superadmin/dummy',  // 수정
           },
         ],
@@ -102,19 +102,24 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0보험요율(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A04대보험요율',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0급여항목(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0소득세율',
+            to: '/superadmin/dummy',  // 수정
+          },
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0\u00A0\u00A0급여항목',
             to: '/superadmin/dummy',  // 수정
           },
         ],
       },
       {
         component: CNavItem,
-        name: '\u00A0\u00A0휴일정보(미완)',
+        name: '\u00A0\u00A0휴일정보',
         to: '/superadmin/dummy',  // 수정
       },
     ],
@@ -290,12 +295,12 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청 현황',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0교육신청서 작성',
             to: '/superadmin/dummy',  // 수정
           },
         ],
@@ -307,12 +312,12 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 현황',
             to: '/superadmin/dummy',  // 수정
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청 및 결재(미완)',
+            name: '\u00A0\u00A0\u00A0\u00A0연장근무신청서 작성',
             to: '/superadmin/dummy',  // 수정
           },
         ],
