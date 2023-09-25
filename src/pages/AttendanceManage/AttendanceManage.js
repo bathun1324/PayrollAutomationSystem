@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { AttendanceTable } from "../../components";
 import { Header } from "../../components";
 import axios from "axios";
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 
 const SWrapper = styled.div`
@@ -68,7 +70,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -85,7 +87,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -101,7 +103,7 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -116,7 +118,7 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
@@ -158,7 +160,7 @@ const AttendanceManage = () => {
   const [attendancemanage, setAttendanceManage] = useState([]); // departments 변수를 useState로 정의
   const [searchtext, setSearchtext] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  
+
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
     axios.get("http://13.125.117.184:8000/get_attendace/")
@@ -183,49 +185,58 @@ const AttendanceManage = () => {
 
   }, []);
 
+
   const handleSelectChange = (e) => {
-    //setSearchtext(e.target.value);
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>근태조회</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <div>검색기간 : </div>
-            <input size={200} type="date" />
-            <div>~</div>
-            <input size={200} type="date" />
-          </SInputContainer>
-          <SInputContainer>
-          <div>부서명 : </div>
-          <select size={1} onChange={handleSelectChange}>
-            <option value="">선택해주세요</option>
-              {departments.map((dept) => (
-                <option key={dept.id} value={dept.id}>
-                  {dept.name}
-                </option>
-              ))}
-          </select>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-            <SOutButton>내보내기</SOutButton>
-            <SPrintButton>인쇄</SPrintButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <SCompanyTable>
-          <AttendanceTable attendancemanage={attendancemanage}/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">근태관리&nbsp;{'>'}&nbsp;근태현황&nbsp;{'>'}&nbsp;출퇴근 조회</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
+                    <span>검색기간:&nbsp;</span>
+                    <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;~&nbsp;</span>
+                    <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end ">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" >내보내기</CButton>
+                    <CButton color="dark" variant="outline" >인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <AttendanceTable attendancemanage={attendancemanage} />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div>
   )
 
 }

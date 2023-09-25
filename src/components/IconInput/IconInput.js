@@ -35,7 +35,7 @@ const SIconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px 0px 0px 3px;
   background-color: rgb(237, 237, 237);
 `;
@@ -53,7 +53,7 @@ const getIcon = (type) => {
   }
 };
 
-const StyledInput = ({ type, iconElement, width, height, color, placeholder, onChange }) => {
+const StyledInput = ({ type, iconElement, width, height, color, placeholder, onChange, value }) => {
   const [showSelect, setShowSelect] = useState(false);
 
   const handleInputClick = () => {
@@ -77,7 +77,7 @@ const StyledInput = ({ type, iconElement, width, height, color, placeholder, onC
             onClick={handleInputClick}
           />
         ) : (
-          <input type={type} placeholder={placeholder} onChange={onChange}/>
+          <input type={type} placeholder={placeholder} onChange={onChange} value={value} />
         )}
         {type === "select" && showSelect && (
           <SSelect onBlur={handleSelectBlur}>
@@ -92,8 +92,8 @@ const StyledInput = ({ type, iconElement, width, height, color, placeholder, onC
   );
 };
 
-const IconInput = ({ type, icon, onChange }) => {
-  return <StyledInput type={type} iconElement={icon} onChange={onChange} />; 
+const IconInput = ({ type, icon, onChange, value }) => {
+  return <StyledInput type={type} iconElement={icon} onChange={onChange} value={value} />;
 };
 
 export default IconInput;

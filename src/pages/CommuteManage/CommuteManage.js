@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CommuteTable } from "../../components";
-import { Header } from "../../components";
 import CommuteTimeTable from "../../components/Table/CommuteTimeTable";
 import axios from "axios";
+
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { Header } from "../../components/Header";
 
 const SWrapper = styled.div`
   display: flex;
@@ -65,7 +68,7 @@ const SInputSection = styled.div`
 
   input {
     border-radius: 3px;
-    border: 1px solid ${({theme}) => theme.colors.black050}
+    border: 1px solid ${({ theme }) => theme.colors.black050}
 
   }
 
@@ -77,7 +80,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 
@@ -96,7 +99,7 @@ const SSerchButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -112,12 +115,12 @@ const SOutButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme})=> theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 
 `
@@ -127,12 +130,12 @@ const SPrintButton = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.black110};
+  background-color: ${({ theme }) => theme.colors.black110};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme})=> theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 
 `
@@ -153,89 +156,123 @@ const SCompanyTable = styled.div`
 `
 
 const CommuteManage = () => {
+  const [searchtext, setSearchtext] = useState([]);
 
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_departments/")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+  // 라디오버튼
+  const [selectedOption, setSelectedOption] = useState();
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+
+  };
+  // 체크박스버튼
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleOptionChanges = (e) => {
+    setSelectedOptions(e.target.value);
+  }
   return (
-  <SWrapper>
-    <Header />
-    <SContentWrapper>
-      <SideNav />
-      <SContentContainer>
-        <SCategory>
-          <div>출퇴근 관리</div>
-        </SCategory>
-        <SContentHeader>
-          <SInputContainer>
-            <SInputSection>
-              <div>검색기간(월) : </div>
-              <input size={10} type="month" />
-              <div>부서명 : </div>
-              <select size={1}>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-                <option value="1">관리부</option>
-                <option value="2">경영부</option>
-                <option value="3">인사부</option>
-                <option value="4">시설부</option>
-              </select>
-            </SInputSection>
-            <SInputSection>
-              <div>사원명 : </div>
-              <input size={10} type="text" placeholder="성명"/>
-              <div>사원번호</div>
-              <input size={10} type="text" placeholder="번호"/>
-              <div>직급</div>
-              <input size={10} type="text" placeholder="직급"/>
-            </SInputSection>
-            <SInputSection>
-              <input type="checkbox" />
-              <div>기기근태</div>
-              <input type="checkbox" />
-              <div>종합근태</div>
-              <input type="checkbox" />
-              <div>자동계산</div>
-            </SInputSection>
-          </SInputContainer>
-          <SButtonContainer>
-            <SSerchButton>검색</SSerchButton>
-          </SButtonContainer>
-        </SContentHeader>
-        <CommuteTimeTable/>
-        <SCompanyTable>
-          <CommuteTable/>
-        </SCompanyTable>
-      </SContentContainer>
-    </SContentWrapper>
-  </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">근태관리&nbsp;{'>'}&nbsp;근태관리&nbsp;{'>'}&nbsp;사원별 근태관리</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="mb-3 col-8 d-flex justify-content-start">
+                    <span>검색기간:&nbsp;</span>
+                    <input size={200} type="month" name="pay_month" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    <select size={1} onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                  </CCol>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="mb-1 col-8 d-flex justify-content-start">
+                    <span>사원명:&nbsp;</span>
+                    <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;사원번호:&nbsp;</span>
+                    <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;직급:&nbsp;</span>
+                    <input size={200} name="role" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  </CCol>
+
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
+                    <label>
+                      <input
+                        type="radio"
+                        name="options"
+                        value="option1"
+                        checked={selectedOption === 'option1'}
+                        onChange={handleOptionChange}
+                      />
+                      기기근태&nbsp;
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="options"
+                        value="option2"
+                        checked={selectedOption === 'option2'}
+                        onChange={handleOptionChange}
+                      />
+                      종합근태&nbsp;
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="options"
+                        value="option3"
+                        checked={selectedOptions === 'option3'}
+                        onChange={handleOptionChanges}
+                      />
+                      자동계산
+                    </label>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline">내보내기</CButton>
+                    <CButton color="dark" variant="outline">인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <CommuteTimeTable />
+              <CommuteTable />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div >
   )
 
 }

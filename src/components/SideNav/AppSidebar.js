@@ -67,15 +67,14 @@ const AppSidebar = () => {
       {/* 사이드바 내용 */}
       <CSidebarNav>
         <SimpleBar>
-          {(login_id === "superadmin") ? (
+          {(login_id == "superadmin") ? (
             <AppSidebarNav items={superadmin_nav} />
-          ) : (
-            (login_id === "admin") ? (
-              <AppSidebarNav items={admin_nav} />
-            ) : (
-              <AppSidebarNav items={user_nav} />
-            )
-          )
+          ) : (login_id == "admin") ? (
+            <AppSidebarNav items={admin_nav} />
+          ) : (login_id == "user") ? (
+            <AppSidebarNav items={user_nav} />
+          ) : (<AppSidebar />)
+
           }
         </SimpleBar>
       </CSidebarNav>

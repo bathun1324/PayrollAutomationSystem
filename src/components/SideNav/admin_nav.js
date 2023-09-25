@@ -101,18 +101,18 @@ const admin_nav = [
     items: [
       {
         component: CNavGroup,
-        name: '\u00A0\u00A0근태현황(미완)',
+        name: '\u00A0\u00A0근태현황',
         to: '/employee',
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회(미완)',
-            to: '/admin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회',
+            to: '/admin/emplcommute',
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회(미완)',
-            to: '/admin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회',
+            to: '/admin/attendance',
           },
         ],
       },
@@ -123,8 +123,8 @@ const admin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리(미완)',
-            to: '/admin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리',
+            to: '/admin/commute'
           },
         ],
       },

@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { EmployeeCommuteTable, Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
-
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 const SWrapper = styled.div`
   display: flex;
@@ -179,32 +180,51 @@ const EmployeeCommuteManage = () => {
 
   }, []);
 
+  const [searchtext, setSearchtext] = useState([]);
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
+  };
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SCategory>
-            <div>출퇴근 관리</div>
-          </SCategory>
-          <SContentHeader>
-            <SInputContainer>
-              <div>사원명 : </div>
-              <input size={10} type="text" value={employeename} onChange={handleNameChange} />
-              <div>사원번호</div>
-              <input size={10} type="text" value={employeeno} onChange={handleNoChange} />
-            </SInputContainer>
-            <SButtonContainer>
-              <SSerchButton onClick={handleSearchClick}>검색</SSerchButton>
-            </SButtonContainer>
-          </SContentHeader>
-          <SCompanyTable>
-            <EmployeeCommuteTable commutemanage={commutemanage} />
-          </SCompanyTable>
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header />
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">근태관리&nbsp;{'>'}&nbsp;근태현황&nbsp;{'>'}&nbsp;출퇴근 조회</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
+                    <span>검색기간:&nbsp;</span>
+                    <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;~&nbsp;</span>
+                    <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;사원명:&nbsp;</span>
+                    <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;사원번호:&nbsp;</span>
+                    <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
+                  <CCol className="gap-2 d-flex justify-content-end ">
+                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" >내보내기</CButton>
+                    <CButton color="dark" variant="outline" >인쇄</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <EmployeeCommuteTable commutemanage={commutemanage} />
+            </CCard>
+          </CContainer>
+        </div>
+      </div>
+    </div>
   )
 
 }

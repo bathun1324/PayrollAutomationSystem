@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
-import '../../components/Table/styles.css'
+//import '../../components/Table/styles.css'
 
 const TableContainer = styled.div`
   display: flex;
@@ -245,6 +245,33 @@ const EmployeeListManage = () => {
     }, 2000);
   }, [window.print]);
 
+  // Set the grid to fit the screen when printing
+  useEffect(() => {
+    const onBeforePrint = () => {
+      setPrinterFriendly(gridRef.current.api);
+      autoSizeAll(false);
+    };
+
+    const onAfterPrint = () => {
+      setNormal(gridRef.current.api);
+    };
+
+    window.addEventListener('beforeprint', onBeforePrint);
+    window.addEventListener('afterprint', onAfterPrint);
+
+    return () => {
+      window.removeEventListener('beforeprint', onBeforePrint);
+      window.removeEventListener('afterprint', onAfterPrint);
+    };
+  }, [autoSizeAll]);
+
+  //'onBeforePrint' is not defined  no-undef
+  const onBeforePrint = () => {
+    setPrinterFriendly(gridRef.current.api);
+    autoSizeAll(false);
+  };
+
+
 
 
 
@@ -282,7 +309,7 @@ const EmployeeListManage = () => {
                   <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
                     <CButton color="dark" variant="outline" onClick={onBtnExport}>csv로 다운로드</CButton>
-                    <CButton color="dark" variant="outline" onClick={onBtPrint}>인쇄</CButton>
+                    <CButton color="dark" variant="outline" onClick={onBeforePrint}>인쇄</CButton>
                   </CCol>
                 </CRow>
               </CCardBody>

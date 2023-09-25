@@ -162,13 +162,13 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회(미완)',
-            to: '/superadmin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0출퇴근 조회',
+            to: '/superadmin/emplcommute',
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회(미완)',
-            to: '/superadmin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0일별 근태조회',
+            to: '/superadmin/attendance',
           },
         ],
       },
@@ -179,8 +179,8 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리(미완)',
-            to: '/superadmin/dummy',  // 수정
+            name: '\u00A0\u00A0\u00A0\u00A0사원별 근태관리',
+            to: '/superadmin/commute',
           },
         ],
       },
