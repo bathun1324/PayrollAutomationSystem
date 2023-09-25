@@ -73,7 +73,7 @@ const AppSidebar = () => {
             (login_id === "admin") ? (
               <AppSidebarNav items={admin_nav} />
             ) : (
-              <AppSidebar items={user_nav} />
+              <AppSidebarNav items={user_nav} />
             )
           )
           }
