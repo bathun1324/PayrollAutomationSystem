@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import styled from "styled-components";
 import { EmployeeListTable, Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
@@ -180,19 +180,6 @@ const EmployeeListManage = () => {
     }
   }, []);
 
-  const setPrinterFriendly = (api) => {
-    const eGridDiv = document.querySelector('#myGrid');
-    eGridDiv.style.width = '';
-    eGridDiv.style.height = '';
-    gridRef.current.setDomLayout('print');
-  };
-
-  const setNormal = (api) => {
-    const eGridDiv = document.querySelector('#myGrid');
-    eGridDiv.style.width = '100%';
-    eGridDiv.style.height = '550px';
-    gridRef.current.setDomLayout();
-  };
 
   const onSelectionChanged = (() => {
     //setSelectRowData(gridRef.current.api.getSelectedRows());
@@ -230,8 +217,9 @@ const EmployeeListManage = () => {
     gridRef.current.api.expandAll();
   }, []);
 
-  // 출력할 때 사이드 바 접고 출력
+  // 출력할
   const onBtPrint = useCallback(() => {
+    // 사이드바 접음
     if (sidebarShow) {
       dispatch({ type: 'set', sidebarShow: !sidebarShow })
     }
@@ -244,6 +232,39 @@ const EmployeeListManage = () => {
     }, 2000);
   }, [window.print]);
 
+  const setPrinterFriendly = (api) => {
+    const eGridDiv = document.querySelector('#myGrid');
+    eGridDiv.style.width = '';
+    eGridDiv.style.height = '';
+    gridRef.current.setDomLayout('print');
+  };
+
+  const setNormal = (api) => {
+    const eGridDiv = document.querySelector('#myGrid');
+    eGridDiv.style.width = '100%';
+    eGridDiv.style.height = '550px';
+    gridRef.current.setDomLayout();
+  };
+
+  //선택한 행만 csv로 내보내기
+  const onBtExport = useCallback(() => {
+    const selectedNodes = gridRef.current.getSelectedNodes();
+    const selectedData = selectedNodes.map((node) => node.data);
+    const selectedDataString = selectedData.map((node) => node.make + ' ' + node.model).join('\n');
+    const params = {
+      skipHeader: false,
+      columnGroups: true,
+      skipFooters: true,
+      skipGroups: true,
+      skipPinnedTop: true,
+      skipPinnedBottom: true,
+      allColumns: false,
+      onlySelected: true,
+      fileName: 'export.csv',
+      columnSeparator: ',',
+    };
+    gridRef.current.exportDataAsCsv(params);
+  }, []);
 
 
 
@@ -281,7 +302,7 @@ const EmployeeListManage = () => {
                 </CCol>
                 <CCol className="gap-2 d-flex justify-content-end">
                   <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
-                  <CButton color="dark" variant="outline" onClick={onBtnExport}>csv로 다운로드</CButton>
+                  <CButton color="dark" variant="outline" onClick={onBtExport}>csv로 다운로드</CButton>
                   <CButton color="dark" variant="outline" onClick={onBtPrint}>인쇄</CButton>
                 </CCol>
               </CRow>

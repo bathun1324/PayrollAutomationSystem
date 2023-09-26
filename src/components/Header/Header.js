@@ -17,8 +17,8 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilUser, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 // import { ex_visible, set_ex } from '../SideNav/AppSidebar'
-// import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from '../Dropdown/index'
+// import { AppBreadcrumb } from './index'
 // import { logo } from 'src/assets/brand/logo'
 
 const SCompanyWrapper = styled.div`
@@ -70,6 +70,9 @@ const Header = () => {
           </CNavItem>
         </CHeaderNav>
       </CContainer>
+      {/* <CContainer fluid>
+        <AppBreadcrumb />
+      </CContainer> */}
     </CHeader>
   )
 }
