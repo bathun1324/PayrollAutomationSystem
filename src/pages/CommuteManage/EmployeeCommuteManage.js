@@ -204,7 +204,7 @@ const EmployeeCommuteManage = () => {
                     <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;사원명:&nbsp;</span>
                     <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;사원번호:&nbsp;</span>
+                    <span>&nbsp;&nbsp;Action:&nbsp;</span>
                     <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
                   <CCol className="gap-2 d-flex justify-content-end ">
                     <CButton color="dark" variant="outline" >검색</CButton>

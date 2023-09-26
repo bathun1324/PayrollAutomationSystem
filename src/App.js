@@ -189,6 +189,7 @@ function App() {
                 <Route path="/user/leavework/leaveworkform" element={<LeaveWorkForm />} />
                 <Route path="/user/annualusestatus" element={<AnnualUseStatus />} />
                 <Route path="/user/userattendancecheck" element={<UserAttendanceCheck />} />
+                <Route path="/user/attendance" element={<AttendanceManage />} />
                 <Route path="/user/userattendance" element={<UserAttendance />} />
                 <Route path="/user/emplcommute" element={<EmployeeCommuteManage />} />
 

@@ -230,7 +230,6 @@ const Home = ({ type }) => {
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
-                      type="password"
                       placeholder="password"
                       onChange={handlePasswordChange}
                     />
