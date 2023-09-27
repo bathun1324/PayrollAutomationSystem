@@ -45,6 +45,13 @@ import {
   VacationUseStatus,
   WorkTimeManage,
   Dummypage,
+  SetDepartmentManage,
+  SetAttendanceManage,
+  SetHdayManage,
+  SetInsrncrateManage,
+  SetRoleManage,
+  SetSalaryManage,
+  ServiceInfo,
 } from "./pages";
 import { managerIconMapping, managerMenuItems, operatorIconMapping, operatorMenuItems, superadminIconMapping, superadminMenuItems, userIconMapping, userMenuItems } from './utils/userRollMenuItems';
 
@@ -70,6 +77,13 @@ function App() {
                 {/* (관리자 권한) superadmin 메뉴 페이지 라우팅 */}
                 <Route path="/login" element={<Login />} />
                 {/* 회사관리 */}
+                <Route path="/superadmin/setdepartment" element={<SetDepartmentManage />} />
+                <Route path="/superadmin/setattendance" element={<SetAttendanceManage />} />
+                <Route path="/superadmin/sethday" element={<SetHdayManage />} />
+                <Route path="/superadmin/setinsrncrate" element={<SetInsrncrateManage />} />
+                <Route path="/superadmin/setrole" element={<SetRoleManage />} />
+                <Route path="/superadmin/setsalary" element={<SetSalaryManage />} />
+
                 <Route path="/superadmin/company" element={<CompanyManage />} />
                 <Route path="/superadmin/company/:companyId" element={<CompanyDetail />} />
                 <Route path="/superadmin/operatorinfo" element={<OperatorInfoManage />} />

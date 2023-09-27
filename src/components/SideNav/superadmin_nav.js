@@ -18,32 +18,32 @@ const superadmin_nav = [
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0부서정보',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/setdepartment',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0직급정보',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/setrole',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0근태정보',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/setattendance',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A04대보험요율',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/setinsrncrate',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0급여정보',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/setsalary',
           },
           {
             component: CNavItem,
             name: '\u00A0\u00A0\u00A0\u00A0휴일정보',
-            to: '/superadmin/dummy',  // 수정
+            to: '/superadmin/sethday',
           },
         ],
       },

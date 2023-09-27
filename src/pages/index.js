@@ -1,7 +1,7 @@
 
-export { default as Home } from "./Home/Home"
+export { default as Home } from "./Main/Home"
 export { default as Login } from "./Login/Login"
-export { default as Main } from "./Main/Main"
+export { default as ServiceInfo } from "./Main/ServiceInfo"
 // admin 관리자 메뉴 페이지
 export { default as AnnualManage } from "./AnnualManage/AnnualManage"
 export { default as AttendanceManage } from "./AttendanceManage/AttendanceManage"
@@ -48,9 +48,15 @@ export { default as VacationUseStatus } from "./UserMenuPages/VacationUseStatus/
 
 //superadmin 결재권자메뉴 페이지
 export { default as DocApprovalPage } from "./SuperAdminMenuPage/DocApprovalPage"
+export { default as SetDepartmentManage } from "./CompanyManage/Basicinfo/SetDepartmentManage"
+export { default as SetAttendanceManage } from "./CompanyManage/Basicinfo/SetAttendanceManage"
+export { default as SetHdayManage } from "./CompanyManage/Basicinfo/SetHdayManage"
+export { default as SetInsrncrateManage } from "./CompanyManage/Basicinfo/SetInsrncrateManage"
+export { default as SetRoleManage } from "./CompanyManage/Basicinfo/SetRoleManage"
+export { default as SetSalaryManage } from "./CompanyManage/Basicinfo/SetSalaryManage"
 
 // operator 운영자메뉴 페이지
-export { default as OperatorInfoManage } from "./OperatorMenuPage/OperatorInfoManage/OperatorInfoManage"
+export { default as OperatorInfoManage } from "./CompanyManage/OperatorInfoManage"
 export { default as NotFound } from "./NotFound/NotFound"
 
 // 더미 페이지

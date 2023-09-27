@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import SideNav from "../../../components/SideNav/SideNav";
 import { useState } from "react";
-import OperatorInfoTable from "../../../components/Table/OperatorMenuTable/OperatorInfoTable";
-import { Header } from "../../../components";
+import OperatorInfoTable from "../../components/Table/OperatorMenuTable/OperatorInfoTable";
+import { Header } from "../../components";
 import { RiGroup2Fill, RiUserSettingsLine, } from "react-icons/ri";
 
 // import AppSidebar from "../../components/SideNav/AppSidebar";
-import AppSidebar from "../../../components/SideNav/AppSidebar"
+import AppSidebar from "../../components/SideNav/AppSidebar";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 
 
