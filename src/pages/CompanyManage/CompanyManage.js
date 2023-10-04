@@ -133,10 +133,10 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'회사관리 > 회사정보'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">회사관리&nbsp;{'>'}&nbsp;회사정보</h2>
+            <h2 className="gap-2 mb-4">회사정보</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>

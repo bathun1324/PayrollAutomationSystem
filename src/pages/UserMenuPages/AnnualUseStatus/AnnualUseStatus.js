@@ -223,10 +223,10 @@ const AnnualUseStatus = ({ userRole, menuItems, iconMapping }) => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'전자결재 > 휴가 > 연차사용내역 조회'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">전자결재&nbsp;{'>'}&nbsp;휴가&nbsp;{'>'}&nbsp;연차사용내역 조회</h2>
+            <h2 className="gap-2 mb-4">연차사용내역 조회</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>

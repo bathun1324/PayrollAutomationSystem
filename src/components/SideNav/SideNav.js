@@ -403,7 +403,7 @@ const SideNav = ({ isOpen, userRole, menuItems: navMenuItems, iconMapping: navIc
       userRole === "operator" ? operatorMenuItems :
         userRole === "superadmin" ? superadminMenuItems :
           managerMenuItems;
-  
+
   console.log(userRole);
 
   const iconMapping =

@@ -95,10 +95,10 @@ const DepartmentManage = () => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'기초정보관리 > 조직정보 > 부서정보'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">기초정보관리&nbsp;{'>'}&nbsp;조직정보&nbsp;{'>'}&nbsp;부서정보</h2>
+            <h2 className="gap-2 mb-4">부서정보</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>

@@ -152,10 +152,10 @@ const TransferHistory = () => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'급여관리 > 이체내역서 조회'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">급여관리&nbsp;{'>'}&nbsp;이체내역서 조회</h2>
+            <h2 className="gap-2 mb-4">이체내역서 조회</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>

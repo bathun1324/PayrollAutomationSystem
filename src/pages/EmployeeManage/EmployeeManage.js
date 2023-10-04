@@ -195,10 +195,10 @@ const EmployeeManage = () => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'인사관리 > 사원정보'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;사원정보</h2>
+            <h2 className="gap-2 mb-4">사원정보</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>

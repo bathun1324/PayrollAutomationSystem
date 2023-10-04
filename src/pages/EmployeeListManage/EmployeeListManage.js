@@ -217,7 +217,7 @@ const EmployeeListManage = () => {
     gridRef.current.api.expandAll();
   }, []);
 
-  // 출력할
+  // 출력
   const onBtPrint = useCallback(() => {
     // 사이드바 접음
     if (sidebarShow) {
@@ -226,8 +226,10 @@ const EmployeeListManage = () => {
     const api = gridRef.current.api;
     setPrinterFriendly(api);
     setTimeout(function () {
+      // 그리드 늘리기
       autoSizeAll(false);
       window.print();
+      // 그리드 원상복구
       setNormal(api);
     }, 2000);
   }, [window.print]);
@@ -263,20 +265,61 @@ const EmployeeListManage = () => {
       fileName: 'export.csv',
       columnSeparator: ',',
     };
+    // const list = gridRef.current.selectionService.selectedNodes
+    // console.log(list); list의 data에 선택한 행 값들 들어가있음
     gridRef.current.exportDataAsCsv(params);
   }, []);
 
+  // 새 창 열어서 출력 미완
+  const handlePrint = () => {
+    // 새 창 열기
+    const tableData = [
+      { name: "John", age: 30 },
+      { name: "Jane", age: 25 },
+      { name: "Bob", age: 40 },
+    ];
+    const printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write('<html><head><title>테이블 인쇄 미리보기</title></head><body>');
+    printWindow.document.write('<h1>테이블 인쇄 미리보기</h1>');
 
+    // 테이블 생성 및 출력
+    printWindow.document.write('<table border="1">');
+    printWindow.document.write('<tr><th>Name</th><th>Age</th></tr>');
+
+    searchResults.forEach((item) => {
+      printWindow.document.write(`<tr><td>${item.name}</td><td>${item.age}</td></tr>`);
+    });
+
+    printWindow.document.write('</table>');
+
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  }
+
+
+  const consoleLog = () => {
+    const list = gridRef.current.selectionService.selectedNodes;
+    if (Array.isArray(list)) {
+      list.map((item) => {
+        console.log(item.data);
+      });
+    } else {
+      console.log("list is not an array");
+    }
+  };
 
 
   return (
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'인사관리 > 직원명부 > 직원명부조회'} />
         <div className="body flex-grow-1 px-5">
 
-          <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;직원명부&nbsp;{'>'}&nbsp;직원명부조회</h2>
+          <h2 className="gap-2 mb-4">직원명부조회</h2>
           <CCard className="mb-4">
             <CCardBody>
               <CRow>
@@ -303,7 +346,8 @@ const EmployeeListManage = () => {
                 <CCol className="gap-2 d-flex justify-content-end">
                   <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
                   <CButton color="dark" variant="outline" onClick={onBtExport}>csv로 다운로드</CButton>
-                  <CButton color="dark" variant="outline" onClick={onBtPrint}>인쇄</CButton>
+                  <CButton color="dark" variant="outline" onClick={handlePrint}>인쇄</CButton>
+                  <CButton color="dark" variant="outline" onClick={consoleLog}>데이터로그</CButton>
                 </CCol>
               </CRow>
             </CCardBody>

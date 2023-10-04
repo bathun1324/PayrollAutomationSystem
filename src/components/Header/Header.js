@@ -35,7 +35,7 @@ const SCompanyWrapper = styled.div`
 `)}
 `
 
-const Header = () => {
+const Header = ({ breadcrumb }) => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
   console.log(login_id)
@@ -70,9 +70,10 @@ const Header = () => {
           </CNavItem>
         </CHeaderNav>
       </CContainer>
-      {/* <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer> */}
+      <CHeaderDivider />
+      <CContainer fluid>
+        {breadcrumb}
+      </CContainer>
     </CHeader>
   )
 }

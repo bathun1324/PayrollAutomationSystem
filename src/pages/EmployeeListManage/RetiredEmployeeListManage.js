@@ -187,10 +187,10 @@ const RetiredEmployeeListManage = () => {
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header />
+        <Header breadcrumb={'인사관리 > 직원명부 > 퇴직자명부조회'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">인사관리&nbsp;{'>'}&nbsp;직원명부&nbsp;{'>'}&nbsp;퇴직자명부조회</h2>
+            <h2 className="gap-2 mb-4">퇴직자명부조회</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>
