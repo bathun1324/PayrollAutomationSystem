@@ -6,61 +6,56 @@ import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons
 import NewFamilyModal from "../Modal/NewFamilyModal";
 import axios from 'axios';  // axios를 임포트하여 API 호출에 사용
 
-
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 const TableContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+ 
+display: flex;
+flex-direction: column;
+justify-content: center;
 
-  width: 90%;
-  height: 90%;
+width: 95%;
+height: 100%;
 
-  padding:5%;
-  background-color: white;
+
+text-align: left;
+line-height: 2;
+border-collapse: collaps;
+
+
+
+
+gap: 2em;
+
+
+
+input {
+  border: none;
   border-radius: 5px;
-  box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
+  // padding: 15px;
+}
 
 
-
-  font-size: 1.1em;
-  text-align: left;
-  line-height: 2.8;
-  border-collapse: collaps;
-
-  margin: 0 10px;
+tr td:nth-child(odd) {
+  background-color: rgb(234, 234, 234);
+  text-align: center;
+}
 
 
-  table {
+td {
+  width: 25%;
+  padding: 5 15px;
+  // border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
 
-  }
-
-  table tr:nth-child(even) {
-    background-color: ${({ theme }) => theme.colors.blue010};
-
-  }
-
-  th {
-    border-bottom: 2px solid #ccc;
-    border-top: 2px solid #ccc;
-    font-weight: 800;
-    text-align: center;
-  }
-
-  tr > td {
-    text-align: center;
-    font-size: 1em;
-    font-weight: 200;u
-    color: rgb(40, 40, 40);
-    cursor: pointer;
-    hover:
-  }
-
-  input {
-    border: none;
+  > select {
     width: 100%;
-    background-color: transparent;
+    height: 100%;
+    padding: 0;
+    border: none;
   }
+}
   
 
 `;
@@ -94,7 +89,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 
@@ -111,7 +106,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -127,13 +122,13 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
   margin-bottom: 1em;
 
   &:hover{  
-    background-color : ${({theme}) => theme.colors.blue010};
+    background-color : skyblue;
   }
 `
 
@@ -144,13 +139,13 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 margin-bottom: 1em;
 
 &:hover{  
-  background-color : ${({theme}) => theme.colors.blue010};
+  background-color : skyblue;
 }
 `
 
@@ -182,8 +177,8 @@ const EmployeeDetailFamilyTable = () => {
 
   const renderTableRows = () => {
     return familyData.map((companydata, index) => (
-      <tr key={index+1}>
-        <td><input name="fmly_no" value={index+1} readOnly /></td>
+      <tr key={index + 1}>
+        <td><input name="fmly_no" value={index + 1} readOnly /></td>
         <td><input name="constnt_type" value={companydata.constnt_type} readOnly /></td>
         <td><input name="reltn" value={companydata.reltn} readOnly /></td>
         <td><input name="constnt_nm" value={companydata.constnt_nm} readOnly /></td>
@@ -214,7 +209,7 @@ const EmployeeDetailFamilyTable = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -224,7 +219,7 @@ const EmployeeDetailFamilyTable = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
@@ -243,12 +238,12 @@ const EmployeeDetailFamilyTable = () => {
 
   return (
     <TableContainer>
-    <SButtonContainer>
-        <SAddButton onClick={openModal}>추가</SAddButton>
-        <NewFamilyModal  isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction}/>
-      <SSaveBtn onClick={handlepost}>저장</SSaveBtn>
-    </SButtonContainer>
-      <table>
+      <SButtonContainer className="gap-2 d-flex justify-content-end" >
+        <CButton color="dark" variant="outline" onClick={openModal}>추가</CButton>
+        <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
+        <CButton color="dark" variant="outline" onClick={handlepost}>저장</CButton>
+      </SButtonContainer>
+      <table style={{ border: '2px solid rgb(210, 210, 214)', textAlign: 'center' }}>
         <thead>
           <tr>
             <th>번호</th>
@@ -268,16 +263,13 @@ const EmployeeDetailFamilyTable = () => {
             <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+    </TableContainer>
+  );
+};
 
 
 export default EmployeeDetailFamilyTable;
-              
+

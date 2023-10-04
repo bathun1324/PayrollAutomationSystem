@@ -75,6 +75,7 @@ const EmployeeListManage = () => {
     axios.get("http://13.125.117.184:8000/get_employeelist/")
       .then((response) => {
         setSearchResults(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -138,16 +139,17 @@ const EmployeeListManage = () => {
     },
     { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
     { field: 'empl_ssid', headerName: '주민번호', initialWidth: 170 },
-    { field: 'empl_telno', headerName: '연락처', initialWidth: 170 },
     { field: 'empl_dept_nm', headerName: '부서', initialWidth: 100 },
+    { field: 'empl_rspofc', headerName: '직급', initialWidth: 100 },
     { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 170 },
     { field: 'empl_retire_date', headerName: '재직기간', initialWidth: 170 },
     { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 140 },
     { field: 'empl_salary_form', headerName: '급여형태', initialWidth: 140 },
-    { field: 'empl_rspofc', headerName: '직급', initialWidth: 100 },
     { field: 'empl_bank', headerName: '은행', initialWidth: 120 },
     { field: 'empl_acc', headerName: '계좌번호', initialWidth: 170 },
     { field: 'empl_ssid_addr', headerName: '주소', initialWidth: 170 },
+    { field: 'empl_telno', headerName: '연락처', initialWidth: 170 },
+    { field: 'empl_email', headerName: '이메일', initialWidth: 170 },
   ]);
   // const onBtExport = useCallback(() => {
   //   // gridRef.current.api.exportDataAsExcel(); 상용버전 구매필요
@@ -347,7 +349,7 @@ const EmployeeListManage = () => {
                   <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
                   <CButton color="dark" variant="outline" onClick={onBtExport}>csv로 다운로드</CButton>
                   <CButton color="dark" variant="outline" onClick={handlePrint}>인쇄</CButton>
-                  <CButton color="dark" variant="outline" onClick={consoleLog}>데이터로그</CButton>
+                  {/* <CButton color="dark" variant="outline" onClick={consoleLog}>데이터로그</CButton> */}
                 </CCol>
               </CRow>
             </CCardBody>
@@ -355,7 +357,7 @@ const EmployeeListManage = () => {
           <CCard style={{
             display: 'flex',
             justifyContent: 'center',
-
+            alignItems: 'center',
           }}>
             <TableContainer id='printableArea'>
               <div>

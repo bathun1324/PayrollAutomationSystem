@@ -14,15 +14,14 @@ const TableContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 
   font-size: 1.1em;
   text-align: left;
   line-height: 2.8;
   border-collapse: collaps;
 
-  margin: 20px 10px;
 
 
   table {
@@ -91,18 +90,18 @@ const EmployeeTable = ({ employees }) => {
   const gridRef = useRef();
   const [columnDefs] = useState([
     {
-      field: 'empl_no', headerName: '사원번호', headerCheckboxSelection: true, checkboxSelection: true,
+      field: 'empl_no', headerName: '사원번호',
       comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
         // 숫자로 변환하여 정렬
         const numA = parseFloat(valueA);
         const numB = parseFloat(valueB);
         return numA - numB;
       },
-      initialWidth: 130, // 열 너비
+      initialWidth: 150, // 열 너비
     },
     { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
     { field: 'empl_rspofc', headerName: '직책', initialWidth: 150 },
-    { field: 'empl_frgnr_yn', headerName: '외국인여부', initialWidth: 200 },
+    { field: 'empl_frgnr_yn', headerName: '외국인여부', initialWidth: 130 },
     { field: 'empl_gender', headerName: '성별', initialWidth: 100 },
     { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 200 },
     { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 160 },
@@ -166,15 +165,29 @@ const EmployeeTable = ({ employees }) => {
     },
   };
 
+  // 클릭시 상세페이지로 이동
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
+  const navigate = useNavigate();
+  const RowClicked = (e) => {
+    const selectedRowData = e.data;
+    if (login_id == 'user') {
+      alert('접근 권한이 없습니다.');
+      return;
+    }
+    else {
+      const nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
+      navigate(nav_url)
+    }
+  }
 
   return (
-    <TableContainer id='printableArea'>
+    <TableContainer>
       <div>
         {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
       </div>
-      <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
         <AgGridReact
-
           onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
           defaultColDef={defaultColDef}
           rowData={employees}
@@ -184,7 +197,7 @@ const EmployeeTable = ({ employees }) => {
           style={{ textAlign: 'center' }}
           pagination={true}
           paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
-
+          onRowClicked={RowClicked}
         // domLayout="autoHeight"
         >
         </AgGridReact>

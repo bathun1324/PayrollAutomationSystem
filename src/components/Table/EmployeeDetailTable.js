@@ -4,6 +4,16 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import {
+  CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput,
+  CTable, CTableRow, CTableBody, CTableHead, CTableHeaderCell, CTableDataCell
+} from '@coreui/react'
+import {
+  cilUser,
+} from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
+import { AiOutlineUser } from "react-icons/ai"
+
 
 const SWrapper = styled.div`
 
@@ -11,18 +21,16 @@ const SWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 100%;
 
-  font-size: 1.1em;
+
   text-align: left;
-  line-height: 2.8;
+  line-height: 2;
   border-collapse: collaps;
 
   margin: 20px 10px;
-  padding-top: 40px;
-  
-  border-top: 2.5px solid ${({ theme }) => theme.colors.black050};
+
 
   gap: 2em;
 
@@ -31,20 +39,20 @@ const SWrapper = styled.div`
   input {
     border: none;
     border-radius: 5px;
-    padding: 15px;
+    // padding: 15px;
   }
 
 
   tr td:nth-child(odd) {
-    background-color: ${({ theme }) => theme.colors.blue010};
-    text-align: right;
+    background-color: rgb(234, 234, 234);
+    text-align: center;
   }
 
 
   td {
     width: 25%;
-    padding: 0 15px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
+    padding: 5 15px;
+    // border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
  
     > select {
       width: 100%;
@@ -85,8 +93,6 @@ const SCompanyInfo = styled.div`
   table {
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
-    
   }
 
 `
@@ -102,7 +108,6 @@ height: 30%;
 table {
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
   
   
 }
@@ -546,77 +551,102 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
       });
   };
 
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
+  const nav_url = '/' + login_id + '/employee';
+
   return (
     <SWrapper>
       <SCompanyInfo>
         <SButtonContainer>
-          <SCancleBtn onClick={() => navigate(`/admin/employee`)}>취소</SCancleBtn>
+          <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
           {id ? (
-            <SSaveBtn onClick={handleUpdate}>수정</SSaveBtn>
+            <CButton color="dark" variant="outline" onClick={handleUpdate}>수정</CButton>
           ) : (
-            <SSaveBtn onClick={handleSave}>저장</SSaveBtn>
+            <CButton color="dark" variant="outline" onClick={handleSave}>저장</CButton>
           )}
         </SButtonContainer>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>기본 정보</h3>
         </SCategoryContainer>
-        <table>
-          <tbody>
-            <tr>
-              <td>사원번호</td>
-              <td>
-                {id ? (
-                  <input type="text" name="empl_no" value={employeeInfo.empl_no || ""} readOnly />
-                ) : (
-                  "자동채번됩니다."
-                )}
-              </td>
-              <td>사원명</td>
-              <td><input type="text" name="empl_nm" value={employeeInfo.empl_nm || ""} onChange={employeeInputChange} /></td>
-            </tr>
-            <tr>
-              <td>주민등록번호</td>
-              <td><input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요" /></td>
-              <td>성별</td>
-              <td>
-                <select size={1} name="gender" value={employeeInfo.gender || ""} onChange={employeeInputChange}>
-                  <option value="남">남</option>
-                  <option value="녀">녀</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>생년월일</td>
-              <td><input type="date" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} /></td>
-              <td>양력/음력</td>
-              <td>
-                <select size={1} name="lunisolar" value={employeeInfo.lunisolar || ""} onChange={employeeInputChange}>
-                  <option value="양">양</option>
-                  <option value="음">음</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>결혼유무</td>
-              <td>
-                <select size={1} name="mrig_yn" value={employeeInfo.mrig_yn || ""} onChange={employeeInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
-                </select>
-              </td>
-              <td>결혼기념일</td>
-              <td><input type="date" name="mrig_anvsry" value={employeeInfo.mrig_anvsry || ""} onChange={employeeInputChange} /></td>
-            </tr>
-          </tbody>
-        </table>
+
+        <CCardBody>
+          <CRow>
+            <CCol style={{ fontSize: '17px', border: '2px solid rgb(210, 210, 214)', height: '250px', width: '250px' }} className="col-3 d-flex justify-content-start">
+              <AiOutlineUser style={{ height: '100%', width: '100%' }} />
+            </CCol>
+            <CCol className="d-flex justify-content-end" >
+              <CTable style={{ border: '2px solid rgb(210, 210, 214)', height: '250px', width: '900px' }}>
+                <CTableBody>
+                  <CTableRow>
+                    <CTableDataCell>사원번호</CTableDataCell>
+                    <CTableDataCell>
+                      {id ? (
+                        <input type="text" name="empl_no" value={employeeInfo.empl_no || ""} readOnly />
+                      ) : (
+                        "자동채번됩니다."
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell>사원명</CTableDataCell>
+                    <CTableDataCell>
+                      <input type="text" name="empl_nm" value={employeeInfo.empl_nm || ""} onChange={employeeInputChange} />
+                    </CTableDataCell>
+                  </CTableRow>
+
+                  <CTableRow>
+                    <CTableDataCell>주민등록번호</CTableDataCell>
+                    <CTableDataCell>
+                      <input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요" />
+                    </CTableDataCell>
+                    <CTableDataCell>성별</CTableDataCell>
+                    <CTableDataCell>
+                      <select size={1} name="gender" value={employeeInfo.gender || ""} onChange={employeeInputChange}>
+                        <option value="남">남</option>
+                        <option value="녀">녀</option>
+                      </select>
+                    </CTableDataCell>
+                  </CTableRow>
+
+                  <CTableRow>
+                    <CTableDataCell>생년월일</CTableDataCell>
+                    <CTableDataCell>
+                      <input type="date" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} />
+                    </CTableDataCell>
+                    <CTableDataCell>양력/음력</CTableDataCell>
+                    <CTableDataCell>
+                      <select size={1} name="lunisolar" value={employeeInfo.lunisolar || ""} onChange={employeeInputChange}>
+                        <option value="양">양</option>
+                        <option value="음">음</option>
+                      </select>
+                    </CTableDataCell>
+                  </CTableRow>
+
+                  <CTableRow>
+                    <CTableDataCell>결혼유무</CTableDataCell>
+                    <CTableDataCell>
+                      <select size={1} name="mrig_yn" value={employeeInfo.mrig_yn || ""} onChange={employeeInputChange}>
+                        <option value="X">X</option>
+                        <option value="O">O</option>
+                      </select>
+                    </CTableDataCell>
+                    <CTableDataCell>결혼기념일</CTableDataCell>
+                    <CTableDataCell>
+                      <input type="date" name="mrig_anvsry" value={employeeInfo.mrig_anvsry || ""} onChange={employeeInputChange} />
+                    </CTableDataCell>
+                  </CTableRow>
+                </CTableBody>
+              </CTable>
+            </CCol>
+          </CRow>
+        </CCardBody>
       </SCompanyInfo>
       <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>연락처 및 주소</h3>
         </SCategoryContainer>
-        <table>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
           <tbody>
             <tr>
               <td>회사 전화번호</td>
@@ -633,18 +663,18 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
             <tr>
               <td>이메일</td>
               <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
-              <td>개인이메일</td>
+              <td>개인 이메일</td>
               <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
       </SManagerInfo>
-      <SContractInfo>
+      <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>부서정보</h3>
         </SCategoryContainer>
-        <table>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
           <tbody>
             <tr>
               <td>부서명</td>
@@ -694,7 +724,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
                   <option value="연봉">연봉</option>
                 </select>
               </td>
-              <td>입사일</td>
+              <td>입사일자</td>
               <td><input type="date" name="encpnd" value={employeeInfo.encpnd || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
@@ -711,13 +741,13 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
             </tr>
           </tbody>
         </table>
-      </SContractInfo>
-      <SAttendanceInfo>
+      </SManagerInfo>
+      <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>근태정보</h3>
         </SCategoryContainer>
-        <table>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
           <tbody>
             <tr>
               <td>기본출근시간</td>
@@ -739,13 +769,13 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
             </tr>
           </tbody>
         </table>
-      </SAttendanceInfo>
-      <SSalaryInfo>
+      </SManagerInfo>
+      <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>급여정보</h3>
         </SCategoryContainer>
-        <table>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}>
           <tbody>
             <tr>
               <td>기본급여</td>
@@ -787,8 +817,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>국민연금납부</td>
               <td>
                 <select size={1} name="npn_pay_yn" value={employeeInfo.npn_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="O">예</option>
+                  <option value="X">아니요</option>
                 </select>
               </td>
               <td>국민연금신고 월보수액</td>
@@ -798,8 +828,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>건강보험납부</td>
               <td>
                 <select size={1} name="hlthins_pay_yn" value={employeeInfo.hlthins_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="O">예</option>
+                  <option value="X">아니요</option>
                 </select>
               </td>
               <td>건강보험 월보수액</td>
@@ -809,29 +839,45 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>고용보험납부</td>
               <td>
                 <select size={1} name="empins_pay_yn" value={employeeInfo.empins_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="O">예</option>
+                  <option value="X">아니요</option>
                 </select>
               </td>
-              <td>고용보험 월보수액</td>
-              <td><input type="text" name="empins_mrmrtn" value={salaryInfo.empins_mrmrtn || ""} onChange={salaryInputChange} /></td>
+              <td>원천징수 세액</td>
+              <td>
+                <select size={1} value={employeeInfo.empins_pay_yn || ""} onChange={salaryInputChange}>
+                  <option value="80">80%</option>
+                  <option value="100">100%</option>
+                  <option value="120">120%</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>장기요양보험 납부여부</td>
+              <td>
+                <select size={1} value={employeeInfo.empins_pay_yn || ""} onChange={salaryInputChange}>
+                  <option value="O">예</option>
+                  <option value="X">아니요</option>
+                </select>
+              </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
-      </SSalaryInfo>
-      <SForeignerInfo>
+      </SManagerInfo>
+      <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
           <h3>외국인정보</h3>
         </ SCategoryContainer>
-        <table>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}>
           <tbody>
             <tr>
               <td>외국인여부</td>
               <td>
                 <select size={1} name="frgnr_yn" value={employeeInfo.frgnr_yn || ""} onChange={employeeInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="X">내국인</option>
+                  <option value="O">외국인</option>
                 </select>
               </td>
               <td>출국만기일자</td>
@@ -850,16 +896,16 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
             </tr>
           </tbody>
         </table>
-      </SForeignerInfo>
+      </SManagerInfo>
       {/* user권한 페이지일경우 추가버튼 숨김 */}
       {isUserPath ? null : (
         <>
-          <SFamilyInfo>
+          <SManagerInfo>
             <SCategoryContainer>
               <GoPrimitiveDot color="#548AFF" />
               <h3>가족사항</h3>
             </SCategoryContainer>
-          </SFamilyInfo>
+          </SManagerInfo>
         </>
       )}
     </SWrapper>

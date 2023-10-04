@@ -4,7 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { EmployeeDetailFamilyTable, EmployeeDetailTable, Header, SideNav } from "../../components";
 
-
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 const SWrapper = styled.div`
   display: flex;
@@ -158,18 +160,23 @@ const EmployeeDetail = () => {
 
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SCategory>사원정보 상세</SCategory>
-          <EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />
-          <EmployeeDetailFamilyTable tablefmly={tablefmly} />
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>
-
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header breadcrumb={'인사관리 > 사원정보 > 사원정보 상세'} />
+        <div className="body flex-grow-1 px-5">
+          <h2 className="gap-2 mb-4">사원정보 상세</h2>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />
+            <EmployeeDetailFamilyTable tablefmly={tablefmly} />
+          </CCard>
+        </div>
+      </div>
+    </div>
   )
 
 }
