@@ -1,8 +1,12 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -91,118 +95,129 @@ const PaginationButton = styled.button`
   color:  ${({theme}) => theme.colors.blue090};
 `;
 
-const CommuteTable = () => {
-  const navigate = useNavigate();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
-
-  const [tests, setTest] = useState( [] );
-  useEffect( () =>{
-    fetch('http://13.125.117.184:8000/test/')
-      .then( res => res.json())
-      .then( data => console.log(data))
-  }, [])
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderTableRows = () => {
-    return currentItems.map((companydata) => (
-      <tr key={companydata.company.companyId}>
-        <td>{companydata.company.companyId}</td>
-        <td onClick={() => navigate(`./commutedetail`)}>{companydata.company.manager}</td>
-        <td>{"남자"}</td>
-        <td>{"관리부"}</td>
-        <td>{""}</td>
-        <td>{"010-1234-1234"}</td>
-        <td>{"내국인"}</td>
-        <td>{"871234-2345678"}</td>
-        <td>{""}</td>
-        <td>{""}</td>
-        <td>{"계약직"}</td>
-        <td>{""}</td>
-        <td>{"00:00:00AM"}</td>
-        <td>{"00:00:00PM"}</td>
-        <td>{""}</td>
-        <td>{""}</td>
-        <td>{""}</td>
-      </tr>
-    ));
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
+const CommuteTable = ( {departments} ) => {
+    // 그리드
+    const gridRef = useRef();
+    const [columnDefs] = useState([
+      {
+        field: 'empl_no', headerName: '번호',
+        comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+          // 숫자로 변환하여 정렬
+          const numA = parseFloat(valueA);
+          const numB = parseFloat(valueB);
+          return numA - numB;
+        },
+        initialWidth: 150, // 열 너비
+      },
+      { field: 'empl_nm', headerName: '근무일자', initialWidth: 100 },
+      { field: 'empl_rspofc', headerName: '근무스케줄', initialWidth: 150 },
+      { field: 'empl_frgnr_yn', headerName: '출근시각', initialWidth: 130 },
+      { field: 'empl_gender', headerName: '퇴근시각', initialWidth: 100 },
+      { field: 'empl_dept_nm', headerName: '외출', initialWidth: 200 },
+      { field: 'empl_emplym_form', headerName: '복귀', initialWidth: 160 },
+      { field: 'empl_encpnd', headerName: '출근판정', initialWidth: 160 },
+      { field: 'empl_hffc_state', headerName: '퇴근판정', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '지각시간', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '외출시간', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '조기출근', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '연장근무', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '야간근무', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '휴일근무', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '실제근무', initialWidth: 160 },
+      { field: 'empl_retire_date', headerName: '비고', initialWidth: 160 },
+    ]);
+  
+  
+    //        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
+    const defaultColDef = useMemo(() => {
+      return {
+        sortable: true,
+        filter: true,
+        resizable: true,
+        rowSelection: 'multiple',
+  
+  
+      };
+    }, []);
+  
+    const gridOptions = {
+      rowSelection: 'multiple', // 채크박스 여러개선택
+      paginationAutoPageSize: true,
+      pagination: true,
     };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
+  
+  
+    const onGridReady = (params) => {
+      gridRef.current = params.api;
     };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
-    );
-  };
+  
+    const onBtnExport = useCallback(() => {
+      if (gridRef.current) {
+        // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+        gridRef.current.exportDataAsCsv();
+      }
+    }, []);
+  
+  
+    const onSelectionChanged = (() => {
+      //setSelectRowData(gridRef.current.api.getSelectedRows());
+    });
+  
+    var autoGroupColumnDef = {
+      headerName: 'Group',
+      minWidth: 170,
+      field: 'athlete',
+      valueGetter: (params) => {
+        if (params.node.group) {
+          return params.node.key;
+        } else {
+          return params.data[params.colDef.field];
+        }
+      },
+      headerCheckboxSelection: true,
+      // headerCheckboxSelectionFilteredOnly: true,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        checkbox: true,
+      },
+    };
+  
+    // 클릭시 상세페이지로 이동
+    const infos = JSON.parse(localStorage.getItem('user_info'));
+    const login_id = infos.login_id;
+    const navigate = useNavigate();
+    const RowClicked = (e) => {
+      const selectedRowData = e.data;
+      if (login_id == 'user') {
+        alert('접근 권한이 없습니다.');
+        return;
+      }
+      else {
+        const nav_url = '/' + login_id + '/commute/commutedetail/'
+        // + selectedRowData.empl_no;
+        navigate(nav_url)
+      }
+    }
 
   return (
     <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>사원번호</th>
-            <th>근무일자</th>
-            <th>근무스케쥴</th>
-            <th>출근시각</th>
-            <th>퇴근시각</th>
-            <th>외출</th>
-            <th>복귀</th>
-            <th>출근판정</th>
-            <th>퇴근판정</th>
-            <th>지각시간</th>
-            <th>외출시간</th>
-            <th>조기출근</th>
-            <th>연장근무</th>
-            <th>야간근무</th>
-            <th>휴일근무</th>
-            <th>실제근무</th>
-            <th>비고</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
+      <div className="ag-theme-alpine" style={{ height: 700, width: '100%' }}>
+                <AgGridReact
+                  onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                  defaultColDef={defaultColDef}
+                  rowData={departments}
+                  columnDefs={columnDefs}
+                  onSelectionChanged={onSelectionChanged}
+                  gridOptions={gridOptions}
+                  style={{ textAlign: 'center' }}
+                  pagination={true}
+                  paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                  onRowClicked={RowClicked}
+                // domLayout="autoHeight"
+                >
+                </AgGridReact>
+              </div>
                     <PaginationContainer>
-                      {renderPaginationButtons()}
                     </PaginationContainer>
                   </TableContainer>
                 );

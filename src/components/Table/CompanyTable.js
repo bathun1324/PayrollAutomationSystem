@@ -1,8 +1,13 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useRef, useCallback, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -86,106 +91,123 @@ const PaginationButton = styled.button`
   color:  ${({theme}) => theme.colors.blue090};
 `;
 
-export const CompanyTable = () => {
-  const navigate = useNavigate();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
-
-  const [tests, setTest] = useState( [] );
-  useEffect( () =>{
-    fetch('http://13.125.117.184:8000/test/')
-      .then( res => res.json())
-      .then( data => console.log(data))
-  }, [])
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderTableRows = () => {
-    return currentItems.map((companydata) => (
-      <tr key={companydata.company.companyId}>
-        <td>{companydata.company.companyId}</td>
-        <td onClick={() => navigate(`./${companydata.company.companyId}`)}>{companydata.company.companyName}</td>
-        <td>{companydata.company.manager}</td>
-        <td>{companydata.company.contact}</td>
-        <td>{companydata.company.email}</td>
-        <td>{companydata.company.companyAddress}</td>
-        <td>{companydata.company.contractType}</td>
-        <td>{companydata.company.contractDate}</td>
-        <td>{companydata.company.expirationDate}</td>
-        <td>{companydata.company.status}</td>
-      </tr>
-    ));
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
+export const CompanyTable = ( {companymanage} ) => {
+    // 그리드
+    const gridRef = useRef();
+    const [columnDefs] = useState([
+      {
+        field: 'corp_no', headerName: '회사번호', headerCheckboxSelection: true, checkboxSelection: true,
+        comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+          // 숫자로 변환하여 정렬
+          const numA = parseFloat(valueA);
+          const numB = parseFloat(valueB);
+          return numA - numB;
+        },
+        initialWidth: 160, // 열 너비
+      },
+      { field: 'corp_nm', headerName: '회사명', initialWidth: 100 },
+      { field: 'mngr_nm', headerName: '담당자', initialWidth: 150 },
+      { field: 'corp_telno', headerName: '연락처', initialWidth: 150 },
+      { field: 'email', headerName: '이메일', initialWidth: 200 },
+      { field: 'addr', headerName: '주소', initialWidth: 100 },
+      { field: 'cntrct_form', headerName: '계약형태', initialWidth: 200 },
+      { field: 'cntrct_date', headerName: '계약일', initialWidth: 160 },
+      { field: 'exp_date', headerName: '만료일', initialWidth: 160 },
+      { field: 'state', headerName: '상태', initialWidth: 160 },
+    ]);
+  
+  
+    //        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
+    const defaultColDef = useMemo(() => {
+      return {
+        sortable: true,
+        filter: true,
+        resizable: true,
+        rowSelection: 'multiple',
+  
+  
+      };
+    }, []);
+  
+    const gridOptions = {
+      rowSelection: 'multiple', // 채크박스 여러개선택
+      paginationAutoPageSize: true,
+      pagination: true,
+    };
+  
+  
+    const onGridReady = (params) => {
+      gridRef.current = params.api;
+    };
+  
+    const onBtnExport = useCallback(() => {
+      if (gridRef.current) {
+        // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+        gridRef.current.exportDataAsCsv();
       }
+    }, []);
+  
+  
+    const onSelectionChanged = (() => {
+      //setSelectRowData(gridRef.current.api.getSelectedRows());
+    });
+  
+    var autoGroupColumnDef = {
+      headerName: 'Group',
+      minWidth: 170,
+      field: 'athlete',
+      valueGetter: (params) => {
+        if (params.node.group) {
+          return params.node.key;
+        } else {
+          return params.data[params.colDef.field];
+        }
+      },
+      headerCheckboxSelection: true,
+      // headerCheckboxSelectionFilteredOnly: true,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        checkbox: true,
+      },
     };
 
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
+    const navigate = useNavigate();
 
+    const handleNewEmployeeClick = () => {
+      navigate('./companydetail');
+    };
+      
+    const RowClicked = (e) => {
+      const selectedRowData = e.data;
+      const nav_url = '/superadmin/company/companydetail/'
+      //selectedRowData.empl_no;
+      navigate(nav_url)
+    }
+  
+  
     return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
+      <TableContainer id='printableArea'>
+        <div>
+          {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+        </div>
+        <div className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+          <AgGridReact
+  
+            onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+            defaultColDef={defaultColDef}
+            rowData={companymanage}
+            columnDefs={columnDefs}
+            onSelectionChanged={onSelectionChanged}
+            gridOptions={gridOptions}
+            style={{ textAlign: 'center' }}
+            pagination={true}
+            paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+            onRowClicked={RowClicked}
+          // domLayout="autoHeight"
           >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
+          </AgGridReact>
+        </div>
+      </TableContainer>
     );
   };
-
-  return (
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>회사명</th>
-            <th>담당자</th>
-            <th>연락처</th>
-            <th>이메일</th>
-            <th>주소</th>
-            <th>계약형태</th>
-            <th>계약일</th>
-            <th>만료일</th>
-            <th>상태</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
-              
+  export default CompanyTable;

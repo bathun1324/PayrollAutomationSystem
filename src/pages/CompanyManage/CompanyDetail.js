@@ -1,7 +1,12 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { Header, SideNav, CompanyDetailTable } from "../../components";
+import { CompanyDetailTable, Header, SideNav } from "../../components";
 
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 
 const SWrapper = styled.div`
@@ -83,23 +88,40 @@ const SSaveBtn = styled.button`
 
 const CompanyDetail = () => {
 
+  const { id } = useParams();
+  const [table, setTable] = useState([]);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://13.125.117.184:8000/get_detailtable/?cmpy_detail=${id}`)
+        .then((response) => {
+          setTable(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SCategory>회사정보 상세</SCategory>
-          <SButtonContainer>
-            <SCancleBtn onClick={()=>navigate(`/home/com`)}>취소</SCancleBtn>
-            <SSaveBtn>저장</SSaveBtn>
-          </SButtonContainer>
-          <CompanyDetailTable />
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>    
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header breadcrumb={'회사정보 > 회사정보 > 회사정보 상세'} />
+        <div className="body flex-grow-1 px-5">
+          <h2 className="gap-2 mb-4">회사정보 상세</h2>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <CompanyDetailTable/>
+          </CCard>
+        </div>
+      </div>
+    </div> 
 
   )
 

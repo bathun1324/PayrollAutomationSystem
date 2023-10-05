@@ -2,7 +2,9 @@ import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
 import React, { useState, useContext, useEffect } from "react";
 import { CompanyTable } from "../../components/Table/CompanyTable";
+import { Link, useNavigate } from "react-router-dom";
 import { Header, Footer } from "../../components";
+import axios from "axios";
 import { RiGroup2Fill, RiUserSettingsLine, } from "react-icons/ri";
 
 import AppSidebar from "../../components/SideNav/AppSidebar";
@@ -122,6 +124,27 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
 
   const [searchtext, setSearchtext] = useState([]);
 
+  const navigate = useNavigate();
+
+  const handleNewEmployeeClick = () => {
+    navigate('./companydetail');
+  };
+
+
+  const [companymanage, setCompanymanage] = useState([]); // departments 변수를 useState로 정의
+
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_corporationinfo/")
+      .then((response) => {
+        setCompanymanage(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
@@ -151,7 +174,7 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline" >검색</CButton>
-                    <CButton color="dark" variant="outline">신규</CButton>
+                    <CButton color="dark" variant="outline" onClick={() => handleNewEmployeeClick()}>신규</CButton>
                   </CCol>
                 </CRow>
               </CCardBody>
@@ -161,7 +184,7 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <CompanyTable />
+              <CompanyTable companymanage={companymanage}/>
             </CCard>
           </CContainer>
         </div>

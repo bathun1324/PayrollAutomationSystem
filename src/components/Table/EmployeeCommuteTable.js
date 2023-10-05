@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -92,119 +97,103 @@ const PaginationButton = styled.button`
 `;
 
 const EmployeeCommuteTable = ({ commutemanage }) => {
-  const navigate = useNavigate();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = commutemanage.slice(indexOfFirstItem, indexOfLastItem);
+  const gridRef = useRef();
+  const [columnDefs] = useState([
+    {
+      field: 'empl_no', headerName: '사원번호',
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 150, // 열 너비
+    },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
+    { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 150 },
+    { field: 'empl_atend_time', headerName: '출근시간', initialWidth: 130 },
+    { field: 'empl_lvofc_time', headerName: '퇴근시간', initialWidth: 100 },
+    { field: 'empl_atend_jdgmnt', headerName: '출근판정', initialWidth: 200 },
+    { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', initialWidth: 160 },
+    { field: 'remark', headerName: '비고', initialWidth: 160 },
+  ]);
 
-  // const [tests, setTest] = useState( [] );
-  // useEffect( () =>{
-  //   fetch('http://13.125.117.184:8000/test/')
-  //     .then( res => res.json())
-  //     .then( data => console.log(data))
-  // }, [])
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  //        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+
+
+    };
+  }, []);
+
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
   };
 
-  const renderTableRows = () => {
-    return currentItems.map((companydata) => (
-      <tr key={companydata.empl_no}>
-        <td>{companydata.empl_no}</td>
-        <td>{companydata.empl_nm}</td>
-        <td>{companydata.empl_gender}</td>
-        <td>{companydata.empl_dept_nm}</td>
-        <td>{companydata.empl_rspofc}</td>
-        <td>{companydata.empl_telno}</td>
-        <td>{companydata.empl_frgnr_yn}</td>
-        <td>{companydata.empl_ssid}</td>
-        <td>{companydata.empl_ssid_addr}</td>
-        <td>{companydata.empl_tltsdnc_addr}</td>
-        <td>{companydata.empl_emplym_form}</td>
-        <td>{companydata.empl_salary_form}</td>
-        <td>{companydata.empl_base_atendtime}</td>
-        <td>{companydata.empl_base_lvofctime}</td>
-        <td>{companydata.empl_encpnd}</td>
-        <td>{companydata.empl_retire_date}</td>
-      </tr>
-    ));
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
   };
 
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(commutemanage.length / itemsPerPage);
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
+    }
+  }, []);
 
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
+
+  const onSelectionChanged = (() => {
+    //setSelectRowData(gridRef.current.api.getSelectedRows());
+  });
+
+  var autoGroupColumnDef = {
+    headerName: 'Group',
+    minWidth: 170,
+    field: 'athlete',
+    valueGetter: (params) => {
+      if (params.node.group) {
+        return params.node.key;
+      } else {
+        return params.data[params.colDef.field];
       }
-    };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
-      </>
-    );
+    },
+    headerCheckboxSelection: true,
+    // headerCheckboxSelectionFilteredOnly: true,
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true,
+    },
   };
 
   return (
     <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>사원번호</th>
-            <th>사원명</th>
-            <th>성별</th>
-            <th>부서명</th>
-            <th>직책</th>
-            <th>휴대폰번호</th>
-            <th>외국인여부</th>
-            <th>주민등록번호</th>
-            <th>주민등록주소</th>
-            <th>실거주지주소</th>
-            <th>고용형태</th>
-            <th>급여형태</th>
-            <th>기본출근시간</th>
-            <th>기본퇴근시간</th>
-            <th>입사일</th>
-            <th>퇴사일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <PaginationContainer>
-        {renderPaginationButtons()}
-      </PaginationContainer>
+      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={commutemanage}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          gridOptions={gridOptions}
+          style={{ textAlign: 'center' }}
+          pagination={true}
+          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
     </TableContainer>
-  );
+                );
 };
 
 

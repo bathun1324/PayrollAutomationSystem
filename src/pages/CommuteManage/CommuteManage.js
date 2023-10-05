@@ -167,7 +167,7 @@ const CommuteManage = () => {
   const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_attendace/")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -266,8 +266,8 @@ const CommuteManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <CommuteTimeTable />
-              <CommuteTable />
+              <CommuteTimeTable departments={departments}/>
+              <CommuteTable departments={departments}/>
             </CCard>
           </CContainer>
         </div>

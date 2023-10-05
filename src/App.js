@@ -85,7 +85,8 @@ function App() {
                 <Route path="/superadmin/setsalary" element={<SetSalaryManage />} />
 
                 <Route path="/superadmin/company" element={<CompanyManage />} />
-                <Route path="/superadmin/company/:companyId" element={<CompanyDetail />} />
+                <Route path="/superadmin/company/companydetail" element={<CompanyDetail />} />
+                <Route path="/superadmin/company/companydetail/:companyId" element={<CompanyDetail />} />
                 <Route path="/superadmin/operatorinfo" element={<OperatorInfoManage />} />
                 {/* 기초정보관리 */}
                 <Route path="/superadmin/depart" element={<DepartmentManage />} />

@@ -1,8 +1,12 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -89,110 +93,130 @@ const PaginationButton = styled.button`
 `;
 
 const AttendanceTable = ( {attendancemanage} ) => {
+  // 그리드
+  const gridRef = useRef();
+  const [columnDefs] = useState([
+    {
+      field: 'empl_no', headerName: '번호',
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 150, // 열 너비
+    },
+    { field: 'empl_work_date', headerName: '근무일자', initialWidth: 100 },
+    { field: 'empl_no', headerName: '사원번호', initialWidth: 150 },
+    { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 130 },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
+    { field: 'empl_frgnr_yn', headerName: '국적', initialWidth: 200 },
+    { field: 'empl_work_sch', headerName: '근무스케쥴', initialWidth: 160 },
+    { field: 'empl_gender', headerName: '성별', initialWidth: 160 },
+    { field: 'empl_atend_time', headerName: '출근시각', initialWidth: 160 },
+    { field: 'empl_lvofc_time', headerName: '퇴근시각', initialWidth: 160 },
+    { field: 'empl_atend_jdgmnt', headerName: '출근판정', initialWidth: 100 },
+    { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', initialWidth: 200 },
+    { field: 'empl_extn_work', headerName: '연장근무', initialWidth: 160 },
+    { field: 'empl_realwork_tume', headerName: '실제근무', initialWidth: 160 },
+    { field: 'empl_remark', headerName: '비고', initialWidth: 160 },
+  ]);
+
+  //        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+
+
+    };
+  }, []);
+
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
+  };
+
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const onBtnExport = useCallback(() => {
+    if (gridRef.current) {
+      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+      gridRef.current.exportDataAsCsv();
+    }
+  }, []);
+
+
+  const onSelectionChanged = (() => {
+    //setSelectRowData(gridRef.current.api.getSelectedRows());
+  });
+
+  var autoGroupColumnDef = {
+    headerName: 'Group',
+    minWidth: 170,
+    field: 'athlete',
+    valueGetter: (params) => {
+      if (params.node.group) {
+        return params.node.key;
+      } else {
+        return params.data[params.colDef.field];
+      }
+    },
+    headerCheckboxSelection: true,
+    // headerCheckboxSelectionFilteredOnly: true,
+    cellRenderer: 'agGroupCellRenderer',
+    cellRendererParams: {
+      checkbox: true,
+    },
+  };
+
+  // 클릭시 상세페이지로 이동
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
   const navigate = useNavigate();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = attendancemanage.slice(indexOfFirstItem, indexOfLastItem);
-  
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderTableRows = () => {
-    return currentItems.map((companydata, index) => (
-      <tr key={companydata.id}>
-        <td>{index+1}</td>
-        <td>{companydata.empl_work_date}</td>
-        <td>{companydata.empl_no}</td>
-        <td>{companydata.empl_dept_nm}</td>
-        <td>{companydata.empl_nm}</td>
-        <td>{companydata.empl_frgnr_yn}</td>
-        <td>{companydata.empl_work_sch}</td>
-        <td>{companydata.empl_gender}</td>
-        <td>{companydata.empl_atend_time}</td>
-        <td>{companydata.empl_lvofc_time}</td>
-        <td>{companydata.empl_atend_jdgmnt}</td>
-        <td>{companydata.empl_lvofc_jdgmnt}</td>
-        <td>{companydata.empl_extn_work}</td>
-        <td>{companydata.empl_realwork_tume}</td>
-        <td>{companydata.empl_remark}</td>
-      </tr>
-    ));
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(attendancemanage.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-    };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
-    );
-  };
+  const RowClicked = (e) => {
+    const selectedRowData = e.data;
+    if (login_id == 'user') {
+      alert('접근 권한이 없습니다.');
+      return;
+    }
+    else {
+      const nav_url = '/' + login_id + '/commute/'
+      // + selectedRowData.empl_no;
+      navigate(nav_url)
+    }
+  }
 
   return (
     <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>근무일자</th>
-            <th>사원번호</th>
-            <th>부서명</th>
-            <th>사원명</th>
-            <th>국적</th>
-            <th>근무스케쥴</th>
-            <th>성별</th>
-            <th>출근시각</th>
-            <th>퇴근시각</th>
-            <th>출근판정</th>
-            <th>퇴근판정</th>
-            <th>연장근무</th>
-            <th>실제근무</th>
-            <th>비고</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+      <div>
+        {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+      </div>
+      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={attendancemanage}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          gridOptions={gridOptions}
+          style={{ textAlign: 'center' }}
+          pagination={true}
+          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+          onRowClicked={RowClicked}
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
+    </TableContainer>
+  );
+};
 
 
 export default AttendanceTable;

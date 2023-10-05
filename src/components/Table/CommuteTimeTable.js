@@ -1,9 +1,13 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { GoPrimitiveDot } from "react-icons/go";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -151,61 +155,102 @@ const SCalcHeader = styled.div`
   }
   `
   
-const CommuteTimeTable = () => {
-  const navigate = useNavigate();
+const CommuteTimeTable = ( {departments} ) => {
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
+    // 그리드
+    const gridRef = useRef();
+    const [columnDefs] = useState([
+      { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
+      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 113 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 113 },
+      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 113 },
+      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 113 },
+      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 113 },
+      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 113 },
+      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 113 },
+      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 110 },
+    ]);
 
-  // const [tests, setTest] = useState( [] );
-  // useEffect( () =>{
-  //   fetch('http://13.125.117.184:8000/test/')
-  //     .then( res => res.json())
-  //     .then( data => console.log(data))
-  // }, [])
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderTableRows = () => {
-    return 
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
+    const [columnDefs2] = useState([
+      { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
+      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 113 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 113 },
+      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 113 },
+      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 113 },
+      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 113 },
+      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 113 },
+      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 113 },
+      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 110 },
+    ]);
+  
+    const defaultColDef = useMemo(() => {
+      return {
+        sortable: true,
+        filter: true,
+        resizable: true,
+        rowSelection: 'multiple',
+  
+  
+      };
+    }, []);
+  
+    const gridOptions = {
+      rowSelection: 'multiple', // 채크박스 여러개선택
+      paginationAutoPageSize: true,
+      pagination: true,
     };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
+  
+  
+    const onGridReady = (params) => {
+      gridRef.current = params.api;
     };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
-    );
-  };
+  
+    const onBtnExport = useCallback(() => {
+      if (gridRef.current) {
+        // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+        gridRef.current.exportDataAsCsv();
+      }
+    }, []);
+  
+  
+    const onSelectionChanged = (() => {
+      //setSelectRowData(gridRef.current.api.getSelectedRows());
+    });
+  
+    var autoGroupColumnDef = {
+      headerName: 'Group',
+      minWidth: 170,
+      field: 'athlete',
+      valueGetter: (params) => {
+        if (params.node.group) {
+          return params.node.key;
+        } else {
+          return params.data[params.colDef.field];
+        }
+      },
+      headerCheckboxSelection: true,
+      // headerCheckboxSelectionFilteredOnly: true,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        checkbox: true,
+      },
+    };
+  
+    // 클릭시 상세페이지로 이동
+    const infos = JSON.parse(localStorage.getItem('user_info'));
+    const login_id = infos.login_id;
+    const navigate = useNavigate();
+    const RowClicked = (e) => {
+      const selectedRowData = e.data;
+      if (login_id == 'user') {
+        alert('접근 권한이 없습니다.');
+        return;
+      }
+      else {
+        const nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
+        navigate(nav_url)
+      }
+    }
 
   return (
     <TableContainer>
@@ -220,89 +265,37 @@ const CommuteTimeTable = () => {
           <div id="infoTitle">※ 기본근로시간에 포함된 유급처리시간을 표기합니다.</div>
         </SCalcInfo>
       </SCalcContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>연차</th>
-            <th>지각시간</th>
-            <th>외출시간</th>
-            <th>주휴시간</th>
-            <th>연장근무</th>
-            <th>야간근무</th>
-            <th>휴일근무</th>
-            <th>실제근무</th>
-            <th>유급처리</th>
-          </tr>
-        </thead>
-        <thead>
-          <tr>
-            <td>0</td>
-            <td>0시간 00분</td>
-            <td>0시간 00분</td>
-            <td>0시간 00분</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </thead>
-        </table>
+      <div className="ag-theme-alpine" style={{ height: 93, width: '90%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          rowData={departments}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          style={{ textAlign: 'center' }}
+          onRowClicked={RowClicked}
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
         <SCalcContainer>
         <SCalcInfo>
           <div id="infoTitle"><GoPrimitiveDot color = "#548AFF" />근로시간</div>
           <div>※ 시급제가 아닌경우는 209시간으로 고정됩니다. 등록을 한 경우에만 기본근로, 주휴시간이 계산됩니다.</div>
         </SCalcInfo>
         </SCalcContainer>
-        <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th colSpan={2}>연장근로</th>
-            <th colSpan={2}>근로시간</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <thead>          
-          <tr>
-            <th>연차</th>
-            <th>지각시간</th>
-            <th>외출시간</th>
-            <th>주휴시간</th>
-            <th>연장근무</th>
-            <th>야간근무</th>
-            <th>휴일근무</th>
-            <th>실제근무</th>
-            <th>유급처리</th>
-          </tr>
-        </thead>
-        <thead>
-          <tr>
-            <td>0</td>
-            <td>0시간 00분</td>
-            <td>0시간 00분</td>
-            <td>0시간 00분</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
-                  </TableContainer>
+        <div className="ag-theme-alpine" style={{ height: 93, width: '90%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          rowData={departments}
+          columnDefs={columnDefs}
+          onSelectionChanged={onSelectionChanged}
+          style={{ textAlign: 'center' }}
+          onRowClicked={RowClicked}
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
+      </TableContainer>
                 );
               };
 

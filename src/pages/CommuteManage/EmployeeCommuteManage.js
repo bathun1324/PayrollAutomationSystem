@@ -155,7 +155,7 @@ const EmployeeCommuteManage = () => {
     let url
 
     if (employeename || employeeno) {
-      url = `http://13.125.117.184:8000/search_commutemanage/?employee_name=${employeename}&employee_no=${employeeno}`
+      url = `http://13.125.117.184:8000/search_commutemanage/?department=${employeename}&employee_no=${employeeno}`
     } else {
       url = "http://13.125.117.184:8000/get_commutemanage/"
     }
@@ -202,10 +202,10 @@ const EmployeeCommuteManage = () => {
                     <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;~&nbsp;</span>
                     <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;사원명:&nbsp;</span>
-                    <input size={200} name="empl_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;Action:&nbsp;</span>
-                    <input size={200} name="empl_no" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
+                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                    <input size={200} name="dept_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;출/퇴근 여부:&nbsp;</span>
+                    <input size={200} name="action" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
                   <CCol className="gap-2 d-flex justify-content-end ">
                     <CButton color="dark" variant="outline" >검색</CButton>
                     <CButton color="dark" variant="outline" >내보내기</CButton>
