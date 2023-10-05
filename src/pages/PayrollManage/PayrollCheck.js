@@ -147,7 +147,7 @@ const SInfoContainer = styled.div`
   padding-top: 5%;
   font-weight: 600;
   font-size: 0.9em;
-  color: ${({ theme }) => theme.colors.blue090}
+  color: ${({ theme }) => 'rgb(79, 93, 115)'}
 `
 
 const PayrollCheck = () => {
@@ -164,36 +164,34 @@ const PayrollCheck = () => {
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <Header breadcrumb={'급여관리 > 급여관리 > 급여대장조회'} />
-        <div className="body flex-grow-1 px-3">
-          <CContainer lg>
-            <h2 className="gap-2 mb-4">급여대장조회</h2>
-            <CCard className="mb-4">
-              <CCardBody>
-                <CRow>
-                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-5 d-flex justify-content-start">
-                    <span>기준월:&nbsp;</span>
-                    <input size={200} type="date" name="dagte" style={{ width: '110px' }} onChange={handleSelectChange} />
-                  </CCol>
-                  <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" >검색</CButton>
-                    <CButton color="dark" variant="outline">내보내기</CButton>
-                    <CButton color="dark" variant="outline">인쇄</CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-            </CCard>
-            <CCard style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <SInfoContainer>
-                <div>※ 연차갯수는 1년차에 매월 발생한 연차를 2년차 말일까지 사용할 수 있다는 노사합의를 전제로 합니다.</div>
-                <div>※ 입사월일기준 전후</div>
-              </SInfoContainer>
-              <PayrollCheckTable />
-            </CCard>
-          </CContainer>
+        <div className="body flex-grow-1 px-5">
+          <h2 className="gap-2 mb-4">급여대장조회</h2>
+          <CCard className="mb-4">
+            <CCardBody>
+              <CRow>
+                <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-5 d-flex justify-content-start">
+                  <span>기준월:&nbsp;</span>
+                  <input size={200} type="date" name="dagte" style={{ width: '110px' }} onChange={handleSelectChange} />
+                </CCol>
+                <CCol className="gap-2 d-flex justify-content-end">
+                  <CButton color="dark" variant="outline" >검색</CButton>
+                  <CButton color="dark" variant="outline">내보내기</CButton>
+                  <CButton color="dark" variant="outline">인쇄</CButton>
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </CCard>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <SInfoContainer>
+              <div>※ 퇴사자의 경우 해당 퇴사급여년월까지 조회됩니다.</div>
+            </SInfoContainer>
+
+          </CCard>
+
         </div>
       </div>
     </div >

@@ -150,53 +150,67 @@ const PayrollManage = () => {
 
   }, []);
 
+  const [tabledata, setTabledata] = useState([]);
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_payroll/")
+      .then((response) => {
+        setTabledata(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+
+
   return (
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <Header breadcrumb={'급여관리 > 급여관리 > 급여관리'} />
-        <div className="body flex-grow-1 px-3">
-          <CContainer lg>
-            <h2 className="gap-2 mb-4">급여관리</h2>
-            <CCard className="mb-4">
-              <CCardBody>
-                <CRow>
-                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
-                    <span>검색기간:&nbsp;</span>
-                    <input size={200} type="date" name="date" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
-                    {/* name값주기 */}
-                    <select size={1} onChange={handleSelectChange}>
-                      <option value="">선택해주세요</option>
-                      {departments.map((dept) => (
-                        <option key={dept.id} value={dept.id}>
-                          {dept.name}
-                        </option>
-                      ))}
-                    </select>
-                    <span>&nbsp;&nbsp;급여종류&nbsp;&nbsp;</span>
-                    <select size={1} onChange={handleSelectChange}>
-                      <option value="">선택해주세요</option>
-                      <option value="1">월급여</option>
-                      <option value="2">시급여</option>
-                      <option value="3">일급여</option>
-                    </select>
-                  </CCol>
-                  <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" >검색</CButton>
-                    <CButton color="dark" variant="outline">신규</CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-            </CCard>
-            <CCard style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <PayrollManageTable />
-            </CCard>
-          </CContainer>
+        <div className="body flex-grow-1 px-5">
+          <h2 className="gap-2 mb-4">급여관리</h2>
+          <CCard className="mb-4">
+            <CCardBody>
+              <CRow>
+                <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                  <span>검색기간:&nbsp;</span>
+                  <input size={200} type="date" name="date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                  {/* name값주기 */}
+                  <select size={1} onChange={handleSelectChange}>
+                    <option value="">선택해주세요</option>
+                    {departments.map((dept) => (
+                      <option key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span>&nbsp;&nbsp;급여종류&nbsp;&nbsp;</span>
+                  <select size={1} onChange={handleSelectChange}>
+                    <option value="">선택해주세요</option>
+                    <option value="1">월급여</option>
+                    <option value="2">시급여</option>
+                    <option value="3">일급여</option>
+                  </select>
+                </CCol>
+                <CCol className="gap-2 d-flex justify-content-end">
+                  <CButton color="dark" variant="outline" >검색</CButton>
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </CCard>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <PayrollManageTable tabledata={tabledata} />
+          </CCard>
+
         </div>
       </div>
     </div >

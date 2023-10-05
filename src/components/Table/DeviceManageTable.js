@@ -1,8 +1,13 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
 
 
 const TableContainer = styled.div`
@@ -10,15 +15,15 @@ const TableContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 
   font-size: 1.1em;
   text-align: left;
   line-height: 2.8;
   border-collapse: collaps;
 
-  margin: 20px 10px;
+
 
 
   table {
@@ -79,108 +84,87 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const DeviceManageTable = () => {
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
   const navigate = useNavigate();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
+  const gridRef = useRef();
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
 
-  // const [tests, setTest] = useState( [] );
-  // useEffect( () =>{
-  //   fetch('http://13.125.117.184:8000/test/')
-  //     .then( res => res.json())
-  //     .then( data => console.log(data))
-  // }, [])
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderTableRows = () => {
-    return currentItems.map((companydata) => (
-      <tr key={companydata.company.companyId}>
-        <td>{companydata.company.companyId}</td>
-        <td onClick={() => navigate(`./devicedetail`)}>A2651</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    ));
-  };
-
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
     };
+  }, []);
 
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
-      </>
-    );
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
   };
+
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const [columnDefs] = useState([
+    {
+      field: 'index', headerName: '번호',
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 100, // 열 너비
+    },
+    { field: 'device_no', headerName: '단말기번호', initialWidth: 150 },
+    { field: 'device_nm', headerName: '단말기명', initialWidth: 150 },
+    { field: 'place', headerName: '설치위치', initialWidth: 130 },
+    { field: 'model_nm', headerName: '모델명', initialWidth: 100 },
+    { field: 'no', headerName: '일련번호', initialWidth: 200 },
+    { field: 'made', headerName: '제조사', initialWidth: 160 },
+    { field: 'date', headerName: '설치일시', initialWidth: 160 },
+    { field: 'state', headerName: '상태', initialWidth: 120 },
+  ]);
+
+  const RowClicked = (e) => {
+    const selectedRowData = e.data;
+    // const nav_url = '/' + login_id + '/device/devicedetail/' + selectedRowData.device_no;
+    navigate('./devicedetail');
+  }
 
   return (
     <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>단말기번호</th>
-            <th>단말기명</th>
-            <th>설치위치</th>
-            <th>모델명</th>
-            <th>일련번호</th>
-            <th>제조사</th>
-            <th>설치일시</th>
-            <th>상태</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
-              
+      <div>
+        {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+      </div>
+      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={CompanyDummy}
+          columnDefs={columnDefs}
+          gridOptions={gridOptions}
+          onRowClicked={RowClicked}
+          style={{ textAlign: 'center' }}
+        // gridRef.current.paginationSetPageSize(10);
+        // domLayout="autoHeight"
+        >
+        </AgGridReact>
+      </div>
+    </TableContainer>
+  );
+
+};
+
+
 export default DeviceManageTable;

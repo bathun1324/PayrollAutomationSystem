@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Header, SideNav } from "../../components";
 import DeviceDetailTable from "../../components/Table/DeviceDetailTable";
 
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
 
 
 const SWrapper = styled.div`
@@ -39,7 +42,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 const SButtonContainer = styled.div`
@@ -55,7 +58,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -71,36 +74,43 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme}) => theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 `
 
 
 
 const DeviceDetail = () => {
-
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
   const navigate = useNavigate();
-
+  const btnClick = () => {
+    const nav_url = '/' + login_id + '/device';
+    navigate(nav_url);
+  }
   return (
-    <SWrapper>
-      <Header />
-      <SContentWrapper>
-        <SideNav />
-        <SContentContainer>
-          <SCategory>비콘단말기 상세</SCategory>
-          <SButtonContainer>
-            <SCancleBtn onClick={()=>navigate(`/admin/device`)}>취소</SCancleBtn>
-            <SSaveBtn onClick={()=>navigate(`/admin/device`)}>저장</SSaveBtn>
-          </SButtonContainer>
-          <DeviceDetailTable />
-        </SContentContainer>
-      </SContentWrapper>
-    </SWrapper>    
+    <div>
+      <AppSidebar />
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header breadcrumb={'기기관리 > 비콘단말기 관리 > 비콘단말기 상세'} />
+        <div className="body flex-grow-1 px-5" >
+          {/* style={{ backgroundColor: 'white' }} */}
+          <h2 className="gap-2 mb-4">비콘단말기 상세</h2>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <DeviceDetailTable />
+          </CCard>
+        </div>
+      </div>
+    </div>
 
   )
 

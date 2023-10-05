@@ -577,7 +577,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <AiOutlineUser style={{ height: '100%', width: '100%' }} />
             </CCol>
             <CCol className="d-flex justify-content-end" >
-              <CTable style={{ border: '2px solid rgb(210, 210, 214)', height: '250px', width: '900px' }}>
+              <CTable style={{ border: '2px solid rgb(210, 210, 214)', height: '250px', width: '900px', alignItems: 'center' }}>
                 <CTableBody>
                   <CTableRow>
                     <CTableDataCell>사원번호</CTableDataCell>

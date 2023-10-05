@@ -89,7 +89,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const PayrollCheckTable = () => {
@@ -101,12 +101,8 @@ const PayrollCheckTable = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
 
-  const [tests, setTest] = useState( [] );
-  useEffect( () =>{
-    fetch('http://13.125.117.184:8000/test/')
-      .then( res => res.json())
-      .then( data => console.log(data))
-  }, [])
+  const [tests, setTest] = useState([]);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -158,7 +154,7 @@ const PayrollCheckTable = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -168,7 +164,7 @@ const PayrollCheckTable = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
@@ -178,7 +174,7 @@ const PayrollCheckTable = () => {
       <table>
         <thead>
           <tr>
-          <th>{""}</th>
+            <th>{""}</th>
             <th>{""}</th>
             <th>직급</th>
             <th>평일근로</th>
@@ -203,8 +199,8 @@ const PayrollCheckTable = () => {
           </tr>
         </thead>
         <thead>
-        <tr>
-          <th rowSpan="2">순번</th>
+          <tr>
+            <th rowSpan="2">순번</th>
             <th>사원번호</th>
             <th>성명</th>
             <th>휴일연장</th>
@@ -235,16 +231,16 @@ const PayrollCheckTable = () => {
             <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+    </TableContainer>
+  );
+};
 
 
 export default PayrollCheckTable;
-              
+

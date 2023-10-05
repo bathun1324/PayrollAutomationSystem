@@ -1,25 +1,28 @@
 import styled from "styled-components";
 import { GoPrimitiveDot } from "react-icons/go";
 
+import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
+import '../../components/Table/styles.css'
+import AppSidebar from "../../components/SideNav/AppSidebar";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const SWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 100%;
 
-  font-size: 1.1em;
+
   text-align: left;
-  line-height: 2.8;
+  line-height: 2;
   border-collapse: collaps;
 
   margin: 20px 10px;
-  padding-top: 40px;
-  
-  border-top: 2.5px solid ${({theme}) => theme.colors.black050};
 
 
   gap: 2em;
@@ -29,20 +32,27 @@ const SWrapper = styled.div`
   input {
     border: none;
     border-radius: 5px;
-    padding: 15px;
+    // padding: 15px;
   }
 
 
   tr td:nth-child(odd) {
-    background-color: ${({ theme }) => theme.colors.blue010};
-    text-align: right;
+    background-color: rgb(234, 234, 234);
+    text-align: center;
+    border: 1px solid #ccc;
   }
 
+  td:nth-child(even) {  // 짝수번열
+    background-color: white;
+    text-align: center;
+    border: 1px solid #ccc;
+
+  }
 
   td {
     width: 25%;
-    padding: 0 15px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.black050};
+    padding: 5 15px;
+    // border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
  
     > select {
       width: 100%;
@@ -81,18 +91,13 @@ const SCompanyInfo = styled.div`
   height: 30%;
 
   table {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
-    
+    background-color: white;    
   }
 
 `
-
 const SManagerInfo = styled.div`
 display: flex;
 flex-direction: column;
-padding-top: 1.5em;
 
 
 height: 30%;
@@ -101,75 +106,91 @@ height: 30%;
 table {
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
   
   
 }
 
 `
 
+const SButtonContainer = styled.div`
+  display: flex;
+  min-width: 90%;
+  justify-content: flex-end;
+  gap: 10px;
+`
 
-const DeviceDetailTable = () => {
 
+const DeviceDetailTable = ({ id }) => {
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
+  const navigate = useNavigate();
+  const btnClick = () => {
+    const nav_url = '/' + login_id + '/device';
+    navigate(nav_url);
+  }
   return (
     <SWrapper>
       <SCompanyInfo>
+        <SButtonContainer>
+          <CButton color="dark" variant="outline" onClick={btnClick}>취소</CButton>
+          {id ? (
+            <CButton color="dark" variant="outline" onClick={btnClick}>수정</CButton>
+          ) : (
+            <CButton color="dark" variant="outline" onClick={btnClick}>저장</CButton>
+          )}
+        </SButtonContainer>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>단말기 정보</h3>
         </SCategoryContainer>
         <table>
-          <tr>
-            <td>회사명</td>
-            <td><input type="text"/></td>
-            <td>고유 ID</td>
-            <td><input type="text"/></td>
-          </tr>
-          <tr>
-            <td>단말기번호</td>
-            <td><input type="text"/></td>
-            <td>단말기명</td>
-            <td><input type="text"/></td>
-          </tr>
-          <tr>
-            <td>모델명</td>
-            <td><input type="text"/></td>
-            <td>일련번호</td>
-            <td><input type="text"/></td>
-          </tr>
-          <tr>
-            <td>제조사</td>
-            <td><input type="text"/></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>단말기번호</td>
+              <td><input type="text" /></td>
+              <td>단말기명</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>모델명</td>
+              <td><input type="text" /></td>
+              <td>일련번호</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>제조사</td>
+              <td><input type="text" /></td>
+              <td></td>
+              <td><input type="text" /></td>
+            </tr>
+          </tbody>
         </table>
       </SCompanyInfo>
-      <SManagerInfo>
+      <SCompanyInfo>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+          <GoPrimitiveDot color="#548AFF" />
           <h3>설치정보</h3>
         </SCategoryContainer>
         <table>
           <tr>
             <td>설치위치</td>
-            <td><input type="text"/></td>
+            <td><input type="text" /></td>
             <td>설치일시</td>
-            <td><input type="date"/></td>
+            <td><input type="date" /></td>
           </tr>
           <tr>
             <td>상태</td>
             <td>
               <select size={1}>
-              <option value="1">사용</option>
-              <option value="2">미사용</option>
+                <option value="1">사용</option>
+                <option value="2">미사용</option>
               </select>
             </td>
             <td></td>
             <td></td>
           </tr>
         </table>
-      </SManagerInfo>
+      </SCompanyInfo>
     </SWrapper>
   )
 }
