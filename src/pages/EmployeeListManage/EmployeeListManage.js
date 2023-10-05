@@ -149,7 +149,7 @@ const EmployeeListManage = () => {
     { field: 'empl_acc', headerName: '계좌번호', initialWidth: 170 },
     { field: 'empl_ssid_addr', headerName: '주소', initialWidth: 170 },
     { field: 'empl_telno', headerName: '연락처', initialWidth: 170 },
-    { field: 'empl_email', headerName: '이메일', initialWidth: 170 },
+    // { field: 'empl_email', headerName: '이메일', initialWidth: 170 },
   ]);
   // const onBtExport = useCallback(() => {
   //   // gridRef.current.api.exportDataAsExcel(); 상용버전 구매필요
@@ -267,35 +267,108 @@ const EmployeeListManage = () => {
       fileName: 'export.csv',
       columnSeparator: ',',
     };
-    // const list = gridRef.current.selectionService.selectedNodes
-    // console.log(list); list의 data에 선택한 행 값들 들어가있음
+    const list = gridRef.current.selectionService.selectedNodes
+    console.log(list); // list의 data에 선택한 행 값들 들어가있음
     gridRef.current.exportDataAsCsv(params);
   }, []);
 
   // 새 창 열어서 출력 미완
   const handlePrint = () => {
     // 새 창 열기
-    const tableData = [
-      { name: "John", age: 30 },
-      { name: "Jane", age: 25 },
-      { name: "Bob", age: 40 },
-    ];
     const printWindow = window.open('', '_blank');
     printWindow.document.open();
-    printWindow.document.write('<html><head><title>테이블 인쇄 미리보기</title></head><body>');
-    printWindow.document.write('<h1>테이블 인쇄 미리보기</h1>');
+    printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>표 예제</title>
+        <style>
+            /* 프린트 스타일 */
+            @media print {
+                /* 배경 그래픽 추가 (인쇄용) */
+                body {
+                    background-image: url('your-background-image-print.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    
+                }
 
-    // 테이블 생성 및 출력
-    printWindow.document.write('<table border="1">');
-    printWindow.document.write('<tr><th>Name</th><th>Age</th></tr>');
+                /* 테이블 스타일 (인쇄용) */
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px auto;
+                    pont-size: 10px;
+                }
 
+                th {
+                    background-color: rgb(79, 93, 115);
+                    color: white;
+                    text-align: center;
+                    padding: 10px;
+                    font-size: 12px;
+                }
+
+                td {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    text-align: center;
+                    font-size: 12px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                tr:nth-child(odd) {
+                    background-color: #fff;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h2 style="text-align: center;">직원명부조회</h2>
+        <table>
+            <tr>
+                <th>사원번호</th>
+                <th>사원명</th>
+                <th>주민번호</th>
+                <th>부서</th>
+                <th>직급</th>
+                <th>입사일자</th>
+                <th>재직기간</th>
+                <th>고용형태</th>
+                <th>급여형태</th>
+                <th>은행</th>
+                <th>계좌번호</th>
+                <th>주소</th>
+                <th>연락처</th>
+            </tr>
+            `);
     searchResults.forEach((item) => {
-      printWindow.document.write(`<tr><td>${item.name}</td><td>${item.age}</td></tr>`);
+      printWindow.document.write(`
+                <tr>
+                  <td>${item.empl_no}</td>
+                  <td>${item.empl_nm}</td>
+                  <td>${item.empl_ssid}</td>
+                  <td>${item.empl_dept_nm}</td>
+                  <td>${item.empl_rspofc}</td>
+                  <td>${item.empl_encpnd}</td>
+                  <td>${item.empl_retire_date}</td>
+                  <td>${item.empl_emplym_form}</td>
+                  <td>${item.empl_salary_form}</td>
+                  <td>${item.empl_bank}</td>
+                  <td>${item.empl_acc}</td>
+                  <td>${item.empl_ssid_addr}</td>
+                  <td>${item.empl_telno}</td>
+                </tr>
+              `);
     });
-
-    printWindow.document.write('</table>');
-
-    printWindow.document.write('</body></html>');
+    printWindow.document.write(`
+        </table>
+    </body>
+    </html>
+`);
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
