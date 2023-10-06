@@ -175,12 +175,6 @@ const EmployeeListManage = () => {
     gridRef.current = params.api;
   };
 
-  const onBtnExport = useCallback(() => {
-    if (gridRef.current) {
-      // api가 정의되어 있을 때만 exportDataAsCsv를 호출
-      gridRef.current.exportDataAsCsv();
-    }
-  }, []);
 
 
   const onSelectionChanged = (() => {
@@ -205,6 +199,7 @@ const EmployeeListManage = () => {
       checkbox: true,
     },
   };
+
   // 너비 맞추기
   const autoSizeAll = useCallback((skipHeader) => {
     const allColumnIds = [];
@@ -219,7 +214,7 @@ const EmployeeListManage = () => {
     gridRef.current.api.expandAll();
   }, []);
 
-  // 출력
+  // 출력(사용X)
   const onBtPrint = useCallback(() => {
     // 사이드바 접음
     if (sidebarShow) {
@@ -252,30 +247,35 @@ const EmployeeListManage = () => {
 
   //선택한 행만 csv로 내보내기
   const onBtExport = useCallback(() => {
-    const selectedNodes = gridRef.current.getSelectedNodes();
-    const selectedData = selectedNodes.map((node) => node.data);
-    const selectedDataString = selectedData.map((node) => node.make + ' ' + node.model).join('\n');
-    const params = {
-      skipHeader: false,
-      columnGroups: true,
-      skipFooters: true,
-      skipGroups: true,
-      skipPinnedTop: true,
-      skipPinnedBottom: true,
-      allColumns: false,
-      onlySelected: true,
-      fileName: 'export.csv',
-      columnSeparator: ',',
-    };
-    const list = gridRef.current.selectionService.selectedNodes
-    console.log(list); // list의 data에 선택한 행 값들 들어가있음
-    gridRef.current.exportDataAsCsv(params);
+    // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+    if (gridRef.current) {
+      const selectedNodes = gridRef.current.getSelectedNodes();
+      const selectedData = selectedNodes.map((node) => node.data);
+      const selectedDataString = selectedData.map((node) => node.make + ' ' + node.model).join('\n');
+      const params = {
+        skipHeader: false,
+        columnGroups: true,
+        skipFooters: true,
+        skipGroups: true,
+        skipPinnedTop: true,
+        skipPinnedBottom: true,
+        allColumns: false,
+        onlySelected: true,
+        fileName: 'export.csv',
+        columnSeparator: ',',
+      };
+      const list = gridRef.current.selectionService.selectedNodes
+      console.log(list); // list의 data에 선택한 행 값들 들어가있음
+      gridRef.current.exportDataAsCsv(params);
+    }
   }, []);
 
   // 새 창 열어서 출력 미완
   const handlePrint = () => {
     // 새 창 열기
     const printWindow = window.open('', '_blank');
+    // 체크박스로 선택한 열데이터 가져오기
+    const selectedRows = gridRef.current.getSelectedRows();
     printWindow.document.open();
     printWindow.document.write(`
     <!DOCTYPE html>
@@ -287,7 +287,7 @@ const EmployeeListManage = () => {
             @media print {
                 /* 배경 그래픽 추가 (인쇄용) */
                 body {
-                    background-image: url('your-background-image-print.jpg');
+                    // background-image: url('your-background-image-print.jpg');
                     background-repeat: no-repeat;
                     background-size: cover;
                     
@@ -302,26 +302,26 @@ const EmployeeListManage = () => {
                 }
 
                 th {
-                    background-color: rgb(79, 93, 115);
-                    color: white;
+                    background-color: #f2f2f2;
+                    border: 1px solid #000;
                     text-align: center;
                     padding: 10px;
                     font-size: 12px;
                 }
 
                 td {
-                    border: 1px solid #ddd;
+                    border: 1px solid #000;
                     padding: 10px;
                     text-align: center;
                     font-size: 12px;
                 }
 
                 tr:nth-child(even) {
-                    background-color: #f2f2f2;
+                    background-color: #fff;
                 }
 
                 tr:nth-child(odd) {
-                    background-color: #fff;
+                    background-color: #f2f2f2;
                 }
             }
         </style>
@@ -330,6 +330,7 @@ const EmployeeListManage = () => {
         <h2 style="text-align: center;">직원명부조회</h2>
         <table>
             <tr>
+                <th>번호</th>
                 <th>사원번호</th>
                 <th>사원명</th>
                 <th>주민번호</th>
@@ -345,12 +346,13 @@ const EmployeeListManage = () => {
                 <th>연락처</th>
             </tr>
             `);
-    searchResults.forEach((item) => {
+    selectedRows.forEach((item, index) => {
       printWindow.document.write(`
                 <tr>
+                <td>${index}</td>
                   <td>${item.empl_no}</td>
                   <td>${item.empl_nm}</td>
-                  <td>${item.empl_ssid}</td>
+                  <td>${item.empl_ssid.substring(0, 6)}*******</td>
                   <td>${item.empl_dept_nm}</td>
                   <td>${item.empl_rspofc}</td>
                   <td>${item.empl_encpnd}</td>
@@ -376,14 +378,10 @@ const EmployeeListManage = () => {
 
 
   const consoleLog = () => {
-    const list = gridRef.current.selectionService.selectedNodes;
-    if (Array.isArray(list)) {
-      list.map((item) => {
-        console.log(item.data);
-      });
-    } else {
-      console.log("list is not an array");
-    }
+    const selectedRows = gridRef.current.getSelectedRows();
+    selectedRows.forEach((row) => {
+      console.log(row); // 선택한 행의 데이터 객체
+    });
   };
 
 
@@ -445,7 +443,6 @@ const EmployeeListManage = () => {
                   defaultColDef={defaultColDef}
                   rowData={searchResults}
                   columnDefs={columnDefs}
-                  onSelectionChanged={onSelectionChanged}
                   gridOptions={gridOptions}
                   style={{ textAlign: 'center' }}
                 // paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
