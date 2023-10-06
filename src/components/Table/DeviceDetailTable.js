@@ -93,6 +93,9 @@ const SCompanyInfo = styled.div`
   table {
     background-color: white;    
   }
+  input {
+    width: 100%;
+  }
 
 `
 const SManagerInfo = styled.div`
@@ -176,7 +179,7 @@ const DeviceDetailTable = ({ id }) => {
             <td>설치위치</td>
             <td><input type="text" /></td>
             <td>설치일시</td>
-            <td><input type="date" /></td>
+            <td><input type="date" style={{ width: '50%' }} /></td>
           </tr>
           <tr>
             <td>상태</td>

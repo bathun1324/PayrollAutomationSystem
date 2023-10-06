@@ -17,35 +17,37 @@ flex-direction: column;
 justify-content: center;
 
 width: 95%;
-height: 100%;
-
 
 text-align: left;
 line-height: 2;
 border-collapse: collaps;
 
-
-
-
 gap: 2em;
-
 
 
 input {
   border: none;
   border-radius: 5px;
   // padding: 15px;
+  text-align: center;
+  width: 100%;
+}
+table {
+  text-align: center;
 }
 
+th {
+  background-color: rgb(234, 234, 234);
+  border-bottom: 2px solid rgb(210, 210, 214);
+}
 
 tr td:nth-child(odd) {
-  background-color: rgb(234, 234, 234);
-  text-align: center;
+  background-color: white;
 }
 
 
 td {
-  width: 25%;
+  width: 12%;
   padding: 5 15px;
   // border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
 

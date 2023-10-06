@@ -271,7 +271,7 @@ tr {
 
 input {
   border: none;
-
+  width: 100%;
 }
 `
 const SBasicInfoTable2 = styled.div`
@@ -313,7 +313,7 @@ border: 2px solid #ccc;
 
 input {
 border: none;
-
+width: 100%;
 }
 `
 const SBasicInfoTable3 = styled.div`
@@ -368,7 +368,7 @@ border: 2px solid #ccc;
 
 input {
 border: none;
-
+width: 100%;
 }
 `
 
@@ -389,7 +389,6 @@ const SBasicInfoTable4 = styled.div`
   th {
     padding: 0.2em 0.6em;
     font-weight: 400;
-    font-size: 1em;
     height: 3em;
     // 나머지 테이블
     background-color: ${({ theme }) => `rgb(234, 234, 234)`};
@@ -411,7 +410,7 @@ tr {
 
 input {
   border: none;
-
+  width: 100%;
 }
 `
 

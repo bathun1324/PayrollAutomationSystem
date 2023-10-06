@@ -24,7 +24,7 @@ const SWrapper = styled.div`
   margin: 20px 10px;
   padding-top: 40px;
   
-  border-top: 2.5px solid ${({theme}) => theme.colors.black050};
+  border-top: 2.5px solid ${({ theme }) => theme.colors.black050};
 
   gap: 2em;
 
@@ -50,7 +50,7 @@ const SWrapper = styled.div`
   td {
     width: 25%;
     padding: 0 15px;
-    border-bottom: 1px solid ${({theme}) => theme.colors.black050};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.black050};
 
     > select {
       width: 100%;
@@ -217,7 +217,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -293,7 +293,7 @@ width: 80px;
 height: 30px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -318,54 +318,54 @@ const EmployeeFamilyCheckTable = () => {
   // user 경로인 경우 추가버튼 숨김
   const location = useLocation();
   const isUserPath = location.pathname.startsWith('/user');
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <>    
-    <SWrapper>
-      <SBasicInfo>
-        <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-          <h3>기본 정보</h3>
-        </SCategoryContainer>
-        <SBasicInfoTable>
-          <table>
-            <tr>
-              <td>사원번호</td>
-              <td></td>
-              <td>사원명</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>주민등록번호</td>
-              <td></td>
-              <td>성별</td>
-              <td></td>
-            </tr>
-          </table>
-        </SBasicInfoTable>
-      </SBasicInfo>
-      <SFamilyContainer>
-      <SFamilyInfo>
-      <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-            <h3>가족사항</h3>
-            {/* user권한 페이지일경우 추가버튼 숨김 */}
-            {isUserPath ? null : (
+    <>
+      <SWrapper>
+        <SBasicInfo>
+          <SCategoryContainer>
+            <GoPrimitiveDot color="#548AFF" />
+            <h3>기본 정보</h3>
+          </SCategoryContainer>
+          <SBasicInfoTable>
+            <table>
+              <tr>
+                <td>사원번호</td>
+                <td></td>
+                <td>사원명</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>주민등록번호</td>
+                <td></td>
+                <td>성별</td>
+                <td></td>
+              </tr>
+            </table>
+          </SBasicInfoTable>
+        </SBasicInfo>
+        <SFamilyContainer>
+          <SFamilyInfo>
+            <SCategoryContainer>
+              <GoPrimitiveDot color="#548AFF" />
+              <h3>가족사항</h3>
+              {/* user권한 페이지일경우 추가버튼 숨김 */}
+              {isUserPath ? null : (
                 <>
                   <SAddButton onClick={openModal}>추가</SAddButton>
                   <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} />
                 </>
               )}
-        </SCategoryContainer>
-      </SFamilyInfo>
-    </SFamilyContainer>
-    </SWrapper>
-    </>  
+            </SCategoryContainer>
+          </SFamilyInfo>
+        </SFamilyContainer>
+      </SWrapper>
+    </>
   )
 }
 

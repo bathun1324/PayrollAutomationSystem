@@ -38,7 +38,6 @@ const SCompanyWrapper = styled.div`
 const Header = ({ breadcrumb }) => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
-  console.log(login_id)
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
   return (
