@@ -271,7 +271,7 @@ const EmployeeListManage = () => {
     }
   }, []);
 
-  // 새 창 열어서 출력 미완
+  // 새 창 열어서 출력
   const handlePrint = () => {
     // 새 창 열기
     const printWindow = window.open('', '_blank');
@@ -299,7 +299,6 @@ const EmployeeListManage = () => {
                     width: 100%;
                     border-collapse: collapse;
                     margin: 20px auto;
-                    pont-size: 10px;
                 }
 
                 th {
@@ -314,7 +313,7 @@ const EmployeeListManage = () => {
                     border: 1px solid #000;
                     padding: 10px;
                     text-align: center;
-                    font-size: 12px;
+                    font-size: 10px;
                 }
 
                 tr:nth-child(even) {
@@ -372,8 +371,8 @@ const EmployeeListManage = () => {
     printWindow.document.write(`
         </table>
     </body>
-    </html>
-`);
+    </html> 
+    `);
     printWindow.document.close();
     printWindow.print();
     printWindow.close();

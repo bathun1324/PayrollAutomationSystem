@@ -8,7 +8,6 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 import '../../print.css';
 
-
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;

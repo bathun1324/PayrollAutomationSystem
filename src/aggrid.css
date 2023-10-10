@@ -1,0 +1,14 @@
+/* 열 중앙정렬 */
+.ag-header-cell-label {
+    justify-content: center;
+}
+
+/* 열 클래스 지정하여 중앙정렬 */
+.center-align-header {
+    justify-content: center;
+}
+
+/* 셀 중앙정렬 */
+.ag-cell {
+    text-align: center;
+}

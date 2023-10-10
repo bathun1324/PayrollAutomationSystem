@@ -1,13 +1,56 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo, Children } from "react";
 import DepartureInsuranceTable from "../../components/Table/DepartureInsuranceTable";
 import { DepartureSumTable, Header } from "../../components";
+import '../../print.css';
 
 import AppSidebar from "../../components/SideNav/AppSidebar";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 
 
+const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.1em;
+  text-align: left;
+  line-height: 2.8;
+  border-collapse: collaps;
+
+  table {
+
+  }
+
+  table tr:nth-child(even) {
+    background-color: ${({ theme }) => theme.colors.blue010};
+
+  }
+
+  th {
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  tr > td {
+    text-align: center;
+    font-size: 1em;
+    font-weight: 200;u
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+    hover:
+  }
+
+`;
 const SWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -149,14 +192,67 @@ const DepartureInsurance = () => {
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
+  // 그리드
+  const gridRef = useRef();
+  const [columnDefs] = useState([
+    {
+      headerName: '',
+      children: [
+        {
+          field: 'empl_no', headerName: '번호', headerCheckboxSelection: true, checkboxSelection: true,
+          comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+            // 숫자로 변환하여 정렬
+            const numA = parseFloat(valueA);
+            const numB = parseFloat(valueB);
+            return numA - numB;
+          },
+          initialWidth: 150, // 열 너비
+        },
+        { field: 'empl_nm', headerName: '성명', initialWidth: 200, cellRenderer: 'centerAlignRenderer' },
+        { field: 'empl_ssid', headerName: '주민번호', initialWidth: 170 },
+        { field: 'empl_dept_nm', headerName: '입사일', initialWidth: 150 },
+      ],
+    },
+    {
+      headerName: '납입부담금',
+      headerClass: 'center-align-header', // 열 헤더의 클래스를 지정
+      children: [
+        { field: 'empl_rspofc', headerName: '보험료', initialWidth: 170 },
+        { field: 'empl_encpnd', headerName: '납입횟수', initialWidth: 170 },
+        { field: 'empl_retire_date', headerName: '보험사', initialWidth: 170 },
+      ],
+    },
+  ]);
+
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+    };
+  }, []);
+
+  const gridOptions = {
+    rowSelection: 'multiple',
+    //paginationAutoPageSize: true,
+    //pagination: true,
+  };
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+
+
   return (
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header breadcrumb={'급여관리 > 보험 및 세금 > 출국만기보험내역 조회'} />
+        <Header breadcrumb={'급여관리 > 보험 및 세금 > 출국만기보험내역'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">출국만기보험내역 조회</h2>
+            <h2 className="gap-2 mb-4">출국만기보험내역</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>
@@ -166,8 +262,8 @@ const DepartureInsurance = () => {
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline" >검색</CButton>
-                    <CButton color="dark" variant="outline" >내보내기</CButton>
-                    <CButton color="dark" variant="outline">인쇄</CButton>
+                    <CButton color="dark" variant="outline" ><BsFileEarmarkExcel />내보내기</CButton>
+                    <CButton color="dark" variant="outline"><BsPrinter />인쇄</CButton>
                   </CCol>
                 </CRow>
               </CCardBody>
@@ -177,7 +273,27 @@ const DepartureInsurance = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <DepartureInsuranceTable />
+              <TableContainer id='printableArea'>
+                <div>
+                  {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        <SNewButton onClick={onBtPrint}>print</SNewButton>
+        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
+                </div>
+
+                <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+                  <AgGridReact
+                    onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                    defaultColDef={defaultColDef}
+                    rowData={CompanyDummy}
+                    columnDefs={columnDefs}
+                    gridOptions={gridOptions}
+                    style={{ textAlign: 'center' }}
+                    pagination={true}
+                    paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                  >
+                  </AgGridReact>
+                </div>
+              </TableContainer>
             </CCard>
           </CContainer>
         </div>

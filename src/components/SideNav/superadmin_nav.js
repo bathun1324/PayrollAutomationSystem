@@ -221,12 +221,12 @@ const superadmin_nav = [
         items: [
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0출국만기보험내역 조회',
+            name: '\u00A0\u00A0\u00A0\u00A0출국만기보험내역',
             to: '/superadmin/departins',
           },
           {
             component: CNavItem,
-            name: '\u00A0\u00A0\u00A0\u00A0퇴직연금 조회',
+            name: '\u00A0\u00A0\u00A0\u00A0퇴직연금내역',
             to: '/superadmin/retire',
           },
           {
@@ -237,9 +237,16 @@ const superadmin_nav = [
         ],
       },
       {
-        component: CNavItem,
-        name: '\u00A0\u00A0이체내역서 조회',
-        to: '/superadmin/transferhistory',
+        component: CNavGroup,
+        name: '\u00A0\u00A0급여이체현황',
+        to: '/employee',
+        items: [
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0이체내역',
+            to: '/superadmin/transferhistory',
+          },
+        ],
       },
     ],
   },
