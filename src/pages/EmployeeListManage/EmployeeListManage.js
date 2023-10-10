@@ -12,7 +12,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 //import '../../components/Table/styles.css'
-
+import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@ const TableContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  font-size: 0.9em;
+  font-size: 1.1em;
   text-align: left;
   line-height: 2.8;
   border-collapse: collaps;
@@ -50,10 +50,11 @@ const TableContainer = styled.div`
     font-weight: 200;u
     color: rgb(40, 40, 40);
     cursor: pointer;
-    :hover {
-      color: ${({ theme }) => (theme.colors.blue090)}
-    }
+    hover:
   }
+
+  
+
 `;
 
 const EmployeeListManage = () => {
@@ -149,7 +150,7 @@ const EmployeeListManage = () => {
     { field: 'empl_acc', headerName: '계좌번호', initialWidth: 170 },
     { field: 'empl_ssid_addr', headerName: '주소', initialWidth: 170 },
     { field: 'empl_telno', headerName: '연락처', initialWidth: 170 },
-    // { field: 'empl_email', headerName: '이메일', initialWidth: 170 },
+    { field: 'empl_email', headerName: '이메일', initialWidth: 170 },
   ]);
   // const onBtExport = useCallback(() => {
   //   // gridRef.current.api.exportDataAsExcel(); 상용버전 구매필요
@@ -344,6 +345,7 @@ const EmployeeListManage = () => {
                 <th>계좌번호</th>
                 <th>주소</th>
                 <th>연락처</th>
+                <th>이메일</th>
             </tr>
             `);
     selectedRows.forEach((item, index) => {
@@ -363,6 +365,7 @@ const EmployeeListManage = () => {
                   <td>${item.empl_acc}</td>
                   <td>${item.empl_ssid_addr}</td>
                   <td>${item.empl_telno}</td>
+                  <td>${item.empl_email}</td>
                 </tr>
               `);
     });
@@ -418,8 +421,8 @@ const EmployeeListManage = () => {
                 </CCol>
                 <CCol className="gap-2 d-flex justify-content-end">
                   <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
-                  <CButton color="dark" variant="outline" onClick={onBtExport}>csv로 다운로드</CButton>
-                  <CButton color="dark" variant="outline" onClick={handlePrint}>인쇄</CButton>
+                  <CButton color="dark" variant="outline" onClick={onBtExport}><BsFileEarmarkExcel />내보내기</CButton>
+                  <CButton color="dark" variant="outline" onClick={handlePrint}><BsPrinter />인쇄</CButton>
                   {/* <CButton color="dark" variant="outline" onClick={consoleLog}>데이터로그</CButton> */}
                 </CCol>
               </CRow>
@@ -445,7 +448,8 @@ const EmployeeListManage = () => {
                   columnDefs={columnDefs}
                   gridOptions={gridOptions}
                   style={{ textAlign: 'center' }}
-                // paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                  pagination={true}
+                  paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
                 >
                 </AgGridReact>
               </div>

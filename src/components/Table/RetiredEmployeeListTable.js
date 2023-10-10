@@ -14,15 +14,14 @@ const TableContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 
   font-size: 0.9em;
   text-align: left;
   line-height: 2.8;
   border-collapse: collaps;
 
-  margin: 20px 10px;
 
 
   table {
@@ -94,26 +93,29 @@ const RetiredEmployeeListTable = ({ retirelist }) => {
   const gridRef = useRef();
   const [columnDefs] = useState([
     {
-      field: 'empl_no', headerName: '번호', headerCheckboxSelection: true, checkboxSelection: true,
+      field: 'empl_no', headerName: '사원번호', headerCheckboxSelection: true, checkboxSelection: true,
       comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
         // 숫자로 변환하여 정렬
         const numA = parseFloat(valueA);
         const numB = parseFloat(valueB);
         return numA - numB;
       },
-      initialWidth: 130, // 열 너비
+      initialWidth: 160, // 열 너비
     },
     { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
-    { field: 'empl_dept_nm', headerName: '부서', initialWidth: 150 },
-    { field: 'empl_telno', headerName: '연락처', initialWidth: 200 },
-    { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 100 },
-    { field: 'empl_period', headerName: '재직기간', initialWidth: 200 },
-    { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 160 },
-    { field: 'empl_salary_form', headerName: '급여형태', initialWidth: 160 },
+    { field: 'empl_dept_nm', headerName: '부서', initialWidth: 130 },
+    { field: 'empl_telno', headerName: '연락처', initialWidth: 160 },
+    { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 130 },
+    { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 130 },
+    { field: 'empl_period', headerName: '재직기간', initialWidth: 130 },
+    { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 130 },
+    { field: 'empl_salary_form', headerName: '급여형태', initialWidth: 130 },
     { field: 'empl_bank', headerName: '은행', initialWidth: 160 },
     { field: 'empl_acc', headerName: '계좌번호', initialWidth: 160 },
     { field: 'empl_email', headerName: '이메일', initialWidth: 160 },
   ]);
+
+
 
 
   const defaultColDef = useMemo(() => {

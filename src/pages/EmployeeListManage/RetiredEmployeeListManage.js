@@ -9,6 +9,7 @@ import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGrou
 import { useSelector, useDispatch } from 'react-redux'
 import RetiredEmployeeListTable from "../../components/Table/RetiredEmployeeListTable";
 import '../../components/Table/styles.css'
+import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
 
 const SWrapper = styled.div`
   display: flex;
@@ -188,42 +189,41 @@ const RetiredEmployeeListManage = () => {
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <Header breadcrumb={'인사관리 > 직원명부 > 퇴직자명부조회'} />
-        <div className="body flex-grow-1 px-3">
-          <CContainer lg>
-            <h2 className="gap-2 mb-4">퇴직자명부조회</h2>
-            <CCard className="mb-4">
-              <CCardBody>
-                <CRow>
-                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
-                    <span>입사일:&nbsp;</span>
-                    <input size={200} type="date" name="encpnd" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;퇴직일:&nbsp;</span>
-                    <input size={200} type="date" name="retire_date" style={{ width: '110px' }} onChange={handleSelectChange} />
-                    <span>&nbsp;&nbsp;부서명:&nbsp;</span>
-                    <select size={1} name="dept_id" onChange={handleSelectChange}>
-                      <option value="">선택</option>
-                      {departments.map((dept) => (
-                        <option key={dept.id} value={dept.id}>
-                          {dept.name}
-                        </option>
-                      ))}
-                    </select>
-                  </CCol>
-                  <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
-                    <CButton color="dark" variant="outline">인쇄</CButton>
-                  </CCol>
-                </CRow>
-              </CCardBody>
-            </CCard>
-            <CCard style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <RetiredEmployeeListTable retirelist={searchresult} />
-            </CCard>
-          </CContainer>
+        <div className="body flex-grow-1 px-5">
+          <h2 className="gap-2 mb-4">퇴직자명부조회</h2>
+          <CCard className="mb-4">
+            <CCardBody>
+              <CRow>
+                <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-9 d-flex justify-content-start">
+                  <span>입사일:&nbsp;</span>
+                  <input size={200} type="date" name="encpnd" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  <span>&nbsp;&nbsp;퇴직일:&nbsp;</span>
+                  <input size={200} type="date" name="retire_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                  <span>&nbsp;&nbsp;부서명:&nbsp;</span>
+                  <select size={1} name="dept_id" onChange={handleSelectChange}>
+                    <option value="">선택</option>
+                    {departments.map((dept) => (
+                      <option key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </option>
+                    ))}
+                  </select>
+                </CCol>
+                <CCol className="gap-2 d-flex justify-content-end">
+                  <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                  <CButton color="dark" variant="outline"><BsFileEarmarkExcel />내보내기</CButton>
+                  <CButton color="dark" variant="outline"><BsPrinter />인쇄</CButton>
+                </CCol>
+              </CRow>
+            </CCardBody>
+          </CCard>
+          <CCard style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <RetiredEmployeeListTable retirelist={searchresult} />
+          </CCard>
         </div>
       </div>
     </div>

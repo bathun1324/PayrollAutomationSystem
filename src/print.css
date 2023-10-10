@@ -25,3 +25,17 @@
 
   }
 }
+
+.ag-paging-panel {
+  text-align: center;
+}
+
+/* 페이지 크기 선택 드롭다운 메뉴 가운데 정렬 */
+.ag-paging-page-summary-panel {
+  justify-content: center;
+}
+
+/* 페이지 크기 선택 드롭다운 메뉴 아이템 가운데 정렬 */
+.ag-paging-page-summary-panel .ag-paging-page-size {
+  text-align: center;
+}
