@@ -8,6 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 import '../../print.css';
+import { cibJupyter } from "@coreui/icons";
 
 
 const TableContainer = styled.div`
@@ -161,26 +162,26 @@ const CommuteTimeTable = ( {departments} ) => {
     const gridRef = useRef();
     const [columnDefs] = useState([
       { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
-      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 113 },
-      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 113 },
-      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 113 },
-      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 113 },
-      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 113 },
-      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 113 },
-      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 113 },
-      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 110 },
+      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 120 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 120 },
+      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 120 },
+      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 120 },
+      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 120 },
+      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 120 },
+      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 120 },
+      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 115 },
     ]);
 
     const [columnDefs2] = useState([
       { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
-      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 113 },
-      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 113 },
-      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 113 },
-      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 113 },
-      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 113 },
-      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 113 },
-      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 113 },
-      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 110 },
+      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 120 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 120 },
+      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 120 },
+      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 120 },
+      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 120 },
+      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 120 },
+      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 120 },
+      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 115 },
     ]);
   
     const defaultColDef = useMemo(() => {
@@ -271,7 +272,7 @@ const CommuteTimeTable = ( {departments} ) => {
           rowData={departments}
           columnDefs={columnDefs}
           onSelectionChanged={onSelectionChanged}
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center'}}
           onRowClicked={RowClicked}
         // domLayout="autoHeight"
         >
@@ -287,7 +288,7 @@ const CommuteTimeTable = ( {departments} ) => {
         <AgGridReact
           onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
           rowData={departments}
-          columnDefs={columnDefs}
+          columnDefs={columnDefs2}
           onSelectionChanged={onSelectionChanged}
           style={{ textAlign: 'center' }}
           onRowClicked={RowClicked}
