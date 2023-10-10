@@ -567,70 +567,42 @@ const CompanyDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
 
   return (
     <SWrapper>
-      <SCompanyInfo>
-        <SButtonContainer>
+      <SManagerInfo>
+      <SButtonContainer>
           <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
           {id ? (
             <CButton color="dark" variant="outline" onClick={handleUpdate}>수정</CButton>
           ) : (
-            <CButton color="dark" variant="outline" onClick={handleSave}>저장</CButton>
+            <CButton style={{backgroundColor: 'red', color: 'white', borderColor: 'white'}} variant="outline" onClick={handleSave}>저장</CButton>
           )}
         </SButtonContainer>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
-          <h3>기본 정보</h3>
+          <h3>회사 정보</h3>
         </SCategoryContainer>
-
-        <CCardBody>
-          <CRow>
-            <CCol style={{ fontSize: '17px', border: '2px solid rgb(210, 210, 214)', height: '250px', width: '250px' }} className="col-3 d-flex justify-content-start">
-              <AiOutlineUser style={{ height: '100%', width: '100%' }} />
-            </CCol>
-            <CCol className="d-flex justify-content-end" >
-              <CTable style={{ border: '2px solid rgb(210, 210, 214)', height: '187.5px', width: '900px' }}>
-                <CTableBody>
-                  <CTableRow>
-                    <CTableDataCell>회사명</CTableDataCell>
-                    <CTableDataCell>
-                      {id ? (
-                        <input type="text" name="empl_no" value={employeeInfo.empl_no || ""} readOnly />
-                      ) : (
-                        "자동채번됩니다."
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell>대표자명</CTableDataCell>
-                    <CTableDataCell>
-                      <input type="text" name="empl_nm" value={employeeInfo.empl_nm || ""} onChange={employeeInputChange} />
-                    </CTableDataCell>
-                  </CTableRow>
-
-                  <CTableRow>
-                    <CTableDataCell>사업자번호</CTableDataCell>
-                    <CTableDataCell>
-                      <input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" />
-                    </CTableDataCell>
-                    <CTableDataCell>대표전화번호</CTableDataCell>
-                    <CTableDataCell>
-                    <input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} />
-                    </CTableDataCell>
-                  </CTableRow>
-
-                  <CTableRow>
-                    <CTableDataCell>주소</CTableDataCell>
-                    <CTableDataCell>
-                      <input type="text" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} />
-                    </CTableDataCell>
-                    <CTableDataCell>사원수</CTableDataCell>
-                    <CTableDataCell>
-                      <input type="text" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} />
-                    </CTableDataCell>
-                  </CTableRow>
-                </CTableBody>
-              </CTable>
-            </CCol>
-          </CRow>
-        </CCardBody>
-      </SCompanyInfo>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
+          <tbody>
+            <tr>
+              <td>회사명</td>
+              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} /></td>
+              <td>대표자명</td>
+              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} /></td>
+            </tr>
+            <tr>
+              <td>사업자번호</td>
+              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange} /></td>
+              <td>대표 전화번호</td>
+              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
+            </tr>
+            <tr>
+              <td>주소</td>
+              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
+              <td>사원수</td>
+              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </SManagerInfo>
       <SManagerInfo>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
@@ -655,6 +627,48 @@ const CompanyDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
               <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
               <td>담당자ID</td>
               <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </SManagerInfo>
+      <SManagerInfo>
+        <SCategoryContainer>
+          <GoPrimitiveDot color="#548AFF" />
+          <h3>근태 및 급여 기준정보</h3>
+        </SCategoryContainer>
+        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
+          <tbody>
+            <tr>
+              <td>부서정보</td>
+              <td>
+              <select size={1}>
+                <option value="1">IT 업종</option>
+                <option value="2">생산 업종</option>
+              </select>
+              </td>
+              <td>직급정보</td>
+              <td>
+              <select size={1}>
+                <option value="1">IT 업종</option>
+                <option value="2">생산 업종</option>
+              </select>
+              </td>
+            </tr>
+            <tr>
+            <td>근태정보</td>
+            <td>
+            <select size={1}>
+              <option value="1">IT 업종</option>
+              <option value="2">생산 업종</option>
+            </select>
+            </td>
+            <td>급여정보</td>
+            <td>
+            <select size={1}>
+              <option value="1">IT 업종</option>
+              <option value="2">생산 업종</option>
+            </select>
+            </td>
             </tr>
           </tbody>
         </table>

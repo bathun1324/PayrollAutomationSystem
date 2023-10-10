@@ -63,9 +63,6 @@ td {
 `;
 
 const SNoDataMsg = styled.td`
-  height: 500px;
-  padding: 150px;
-
   align-items: center;
   justify-content: center;
   margin-top: 100px;
@@ -245,7 +242,7 @@ const EmployeeDetailFamilyTable = () => {
         <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
         <CButton color="dark" variant="outline" onClick={handlepost}>저장</CButton>
       </SButtonContainer>
-      <table style={{ border: '2px solid rgb(210, 210, 214)', textAlign: 'center' }}>
+      <table style={{ border: '2px solid rgb(210, 210, 214)', marginBottom: '100px', textAlign: 'center' }}>
         <thead>
           <tr>
             <th>번호</th>
