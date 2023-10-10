@@ -576,20 +576,6 @@ const PayrollManageTable = ({ tabledata }) => {
     setCurrentPage(pageNumber);
   };
 
-  // const renderTableRows = () => {
-  //   return currentItems.map((companydata) => (
-  //     <tr key={companydata.company.companyId}>
-  //       <td>{companydata.company.companyId}</td>
-  //       <td onClick={() => handleEmployeeClick(companydata)}>{companydata.company.manager}</td>
-  //       <td>{"남자"}</td>
-  //       <td>{"관리부"}</td>
-  //       <td>{""}</td>
-  //       <td>{"010-1234-1234"}</td>
-  //       <td>{"내국인"}</td>
-  //     </tr>
-  //   ));
-  // };
-
   const renderTableRows = () => {
     return currentItems.map((companydata, index) => (
       <tr key={companydata.empl_no}>

@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { CommuteTable } from "../../components";
 import CommuteTimeTable from "../../components/Table/CommuteTimeTable";
 import axios from "axios";
+import CommuteModal from "../../components/Modal/CommuteModal";
 
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
 import AppSidebar from "../../components/SideNav/AppSidebar";
@@ -157,6 +158,9 @@ const SCompanyTable = styled.div`
 
 const CommuteManage = () => {
   const [searchtext, setSearchtext] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
@@ -254,7 +258,8 @@ const CommuteManage = () => {
                     </label>
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" onClick={openModal}>검색</CButton>
+                    <CommuteModal isOpen={isModalOpen} closeModal={closeModal} departments={departments}/>
                     <CButton color="dark" variant="outline">내보내기</CButton>
                     <CButton color="dark" variant="outline">인쇄</CButton>
                   </CCol>
