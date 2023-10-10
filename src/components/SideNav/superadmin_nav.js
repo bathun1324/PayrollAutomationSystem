@@ -322,6 +322,23 @@ const superadmin_nav = [
           },
         ],
       },
+      {
+        component: CNavGroup,
+        name: '\u00A0\u00A0결근',
+        to: '/employee',
+        items: [
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0\u00A0\u00A0결근 현황',
+            to: '/superadmin/dummy',  // 수정          
+          },
+          {
+            component: CNavItem,
+            name: '\u00A0\u00A0\u00A0\u00A0결근사유서 작성',
+            to: '/superadmin/dummy',  // 수정         
+          },
+        ],
+      },
     ],
   },
   {
