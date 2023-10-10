@@ -1,11 +1,18 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import TransferHistoryTable from "../../components/Table/TransferHistoryTable";
 import { Header } from "../../components";
 
 import AppSidebar from "../../components/SideNav/AppSidebar";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton } from '@coreui/react'
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+//import '../../components/Table/styles.css'
+import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
+import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 
 
 const SWrapper = styled.div`
@@ -139,6 +146,51 @@ const SCompanyTable = styled.div`
   border-radius: 5px;
 `
 
+const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 1.1em;
+  text-align: left;
+  line-height: 2.8;
+  border-collapse: collaps;
+
+
+
+  table {
+
+  }
+
+  table tr:nth-child(even) {
+    background-color: ${({ theme }) => theme.colors.blue010};
+
+  }
+
+  th {
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  tr > td {
+    text-align: center;
+    font-size: 1em;
+    font-weight: 200;u
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+    hover:
+  }
+
+  
+
+`;
+
+
 const TransferHistory = () => {
   const [searchtext, setSearchtext] = useState([]);
 
@@ -148,14 +200,56 @@ const TransferHistory = () => {
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
+  // 그리드
+  const gridRef = useRef();
+  const index = 1;
+  const [columnDefs] = useState([
+    {
+      valueGetter: 'node.rowIndex + 1', headerName: '번호', headerCheckboxSelection: true,
+      checkboxSelection: true,
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 140, // 열 너비
+    },
+    { field: 'dept_nm', headerName: '지급일자', initialWidth: 140 },
+    { field: 'empl_no', headerName: '사원번호', initialWidth: 140 },
+    { field: 'dept_nm', headerName: '직급', initialWidth: 140 },
+    { field: 'dept_nm', headerName: '성명', initialWidth: 140 },
+    { field: 'dept_nm', headerName: '은행명', initialWidth: 140 },
+    { field: 'dept_nm', headerName: '계좌번호', initialWidth: 140 },
+    { field: 'empl_nm', headerName: '실 지급액', initialWidth: 140 },
+    { field: 'empl_rspofc', headerName: '비고', initialWidth: 140 },
+  ]);
+
+  const gridOptions = {
+    pagination: true,
+  };
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
+  };
+
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+
+    };
+  }, []);
   return (
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <Header breadcrumb={'급여관리 > 이체내역서 조회'} />
+        <Header breadcrumb={'급여관리 > 급여이체현황 > 이체내역'} />
         <div className="body flex-grow-1 px-3">
           <CContainer lg>
-            <h2 className="gap-2 mb-4">이체내역서 조회</h2>
+            <h2 className="gap-2 mb-4">이체내역</h2>
             <CCard className="mb-4">
               <CCardBody>
                 <CRow>
@@ -174,8 +268,8 @@ const TransferHistory = () => {
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline">검색</CButton>
-                    <CButton color="dark" variant="outline">내보내기</CButton>
-                    <CButton color="dark" variant="outline">인쇄</CButton>
+                    <CButton color="dark" variant="outline"><BsFileEarmarkExcel />내보내기</CButton>
+                    <CButton color="dark" variant="outline"><BsPrinter />인쇄</CButton>
                   </CCol>
                 </CRow>
               </CCardBody>
@@ -185,7 +279,28 @@ const TransferHistory = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <TransferHistoryTable />
+              {/* <TransferHistoryTable /> */}
+              <TableContainer id='printableArea'>
+                <div>
+                  {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        <SNewButton onClick={onBtPrint}>print</SNewButton>
+        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
+                </div>
+
+                <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+                  <AgGridReact
+                    onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                    defaultColDef={defaultColDef}
+                    rowData={CompanyDummy}
+                    columnDefs={columnDefs}
+                    gridOptions={gridOptions}
+                    style={{ textAlign: 'center' }}
+                    pagination={true}
+                    paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                  >
+                  </AgGridReact>
+                </div>
+              </TableContainer>
             </CCard>
           </CContainer>
         </div>

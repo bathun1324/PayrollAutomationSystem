@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompanyDummy } from "../../pages/CompanyManage/CompanyDummy";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
@@ -9,6 +9,13 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
 import '../../components/Table/styles.css'
 import AppSidebar from "../../components/SideNav/AppSidebar";
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+import '../../print.css';
+
+
 
 const TableContainer = styled.div`
   display: flex;
@@ -89,94 +96,7 @@ const PaginationButton = styled.button`
   color:  ${({ theme }) => `rgb(79, 93, 115)`};
   `;
 
-const SCalcContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: ;
-  width: 100%;
-  height: 100%;
 
-  gap: 4em;
-  padding-top: 2em;
-  
-  span {
-    padding-right: 10px;
-  }
-
-  `
-
-const SButtonContainer = styled.div`
-display: flex;
-  justify-content: flex-end;
-  gap: 1em;
-
-`
-
-const SCalcButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  width: auto;
-  height: 40px;
-  gap: 2px;
-  
-  color: white;
-  font-size: 0.7em;
-  background-color: ${({ theme }) => theme.colors.blue090};
-  border-radius: 3px;
-  border: none;
-
-  
-  &:hover{  
-    background-color : skyblue;
-  }
-
-`
-
-const SSaveButton = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-wrap: wrap;
-width: 80px;
-height: 40px;
-gap: 2px;
-
-color: white;
-font-size: 0.7em;
-background-color: ${({ theme }) => theme.colors.blue090};
-border-radius: 3px;
-border: none;
-
-
-&:hover{  
-  background-color : skyblue;
-}
-
-`
-
-const SPrintButton = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-wrap: wrap;
-width: 80px;
-height: 40px;
-gap: 2px;
-
-color: white;
-font-size: 0.7em;
-background-color: ${({ theme }) => theme.colors.blue090};
-border-radius: 3px;
-border: none;
-
-
-&:hover{  
-  background-color : skyblue;
-}
-
-`
 
 const SBasicInfo = styled.div`
   display: flex;
@@ -434,116 +354,13 @@ td:nth-child(odd) {
 
 `
 
-const SSpecialAllowInfo = styled(SBasicInfo)`
-`
-
-const SSpecialAllowInfoTable = styled(SPaymentInfoTable)`
-`
-
-const SPaymentContainer = styled.div`
+const SNoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 `
 
-const SSpecialAllowTotalTable = styled.div`
-  display: flex;
-  justify-content: center;
-  border-top: none;
-
-  input {
-    border: none;
-  }
-
-  table {
-    border: 2px solid #ccc;
-    // width: 50%;
-  }
-
-  td:first-child {
-    text-align: right;
-    background-color: ${({ theme }) => theme.colors.blue010};
-  }
-`
-
-
-const SDeductionTotalTable = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  border-top: none;
-
-  input {
-    border: none;
-  }
-
-    th {
-      text-align: center;
-      width: 50%;
-    } 
-    td { 
-      width: 50%;
-      border: 2px solid #ccc;
-    }
-
-    tr:first-child > td {
-      background-color: ${({ theme }) => theme.colors.blue010};
-    }
-
-    tr:last-child > td {
-      background-color: white;
-    }
-    `
-
-const SDeductionContainer = styled(SPaymentContainer)`
-`
-const SDeductionInfo = styled(SPaymentInfo)`
-`
-const SDeductionInfoTable = styled(SPaymentInfoTable)`
-`
-const SAttendanceContainer = styled(SPaymentContainer)`
-  justify-content: center;
-  align-items:center;
-  width: 100%;
-  // border: 1px solid green;
-`
-const SAttendanceInfo = styled(SPaymentInfo)`
-  justify-content: flex-start;
-  // border: 1px solid orange;
-  table {
-      width: 90%;
-  }
-`
-const SAttendanceInfoTable = styled(SPaymentInfoTable)`
-  width: 80%;
-  
-  td {
-  }
-    
-
-
-  td:nth-child(odd) { 
-    width: 20%;
-    text-align: right;
-  }
-
-`
-
-const SAnnualInfo = styled(SPaymentInfo)``
-
-const SAnnualInfoTable = styled(SPaymentInfoTable)`
-
-width: 100%;
-
-`
-
-
-const SNoticeContainer = styled(SPaymentContainer)``
-
-const SNoticeInfo = styled(SPaymentInfo)``
-
-const SSalaryStandardContainer = styled.div`
-`
 
 const SNoticeInfoTable = styled(SPaymentInfoTable)`
 
@@ -568,87 +385,66 @@ const PayrollManageTable = ({ tabledata }) => {
   const currentItems = tabledata.slice(indexOfFirstItem, indexOfLastItem);
 
   const [selectedEmployee, setSelectedEmployee] = useState(null); // State 추가
-  const handleEmployeeClick = (companydata) => {
-    setSelectedEmployee(companydata); // 클릭한 사원 데이터를 상태에 저장
+  const handleEmployeeClick = (e) => {
+    setSelectedEmployee(e.data); // 클릭한 사원 데이터를 상태에 저장
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+
+  // 그리드
+  const gridRef = useRef();
+  const index = 1;
+  const [columnDefs] = useState([
+    {
+      valueGetter: 'node.rowIndex + 1', headerName: '번호',
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 180, // 열 너비
+    },
+    { field: 'dept_nm', headerName: '부서명', initialWidth: 180 },
+    { field: 'empl_no', headerName: '사원번호', initialWidth: 180 },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 180 },
+    { field: 'empl_rspofc', headerName: '직책', initialWidth: 180 },
+    { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 180 },
+    { field: 'empl_salary_form', headerName: '급여종류', initialWidth: 180 },
+  ]);
+
+  const gridOptions = {
+    pagination: true,
   };
 
-  const renderTableRows = () => {
-    return currentItems.map((companydata, index) => (
-      <tr key={companydata.empl_no}>
-        <td>{index + 1}</td>
-        <td>{companydata.dept_nm}</td>
-        <td onClick={() => handleEmployeeClick(companydata)}>{companydata.empl_no}</td>
-        <td>{companydata.empl_nm}</td>
-        <td>{companydata.empl_rspofc}</td>
-        <td>{companydata.empl_encpnd}</td>
-        <td>{companydata.empl_salary_form}</td>
-      </tr>
-    ));
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
   };
 
-  const renderPaginationButtons = () => {
-    const pageNumbers = Math.ceil(tabledata.length / itemsPerPage);
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
 
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
     };
-
-    const handleNextPage = () => {
-      if (currentPage < pageNumbers) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-
-    return (
-      <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
-        {Array.from({ length: pageNumbers }, (_, index) => (
-          <PaginationButton
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            active={index + 1 === currentPage}
-          >
-            {index + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
-      </>
-    );
-  };
+  }, []);
 
   return (
     <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>부서명</th>
-            <th>사원번호</th>
-            <th>사원명</th>
-            <th>직책</th>
-            <th>입사일</th>
-            <th>급여종류</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
-            <tr>
-              <SNoDataMsg colSpan="5">조회할 항목이 없습니다.</SNoDataMsg>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <PaginationContainer>
-        {renderPaginationButtons()}
-      </PaginationContainer>
+      <div className="ag-theme-alpine" style={{ height: 309, width: '100%' }}>
+        <AgGridReact
+          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          defaultColDef={defaultColDef}
+          rowData={tabledata}
+          columnDefs={columnDefs}
+          gridOptions={gridOptions}
+          pagination={true}
+          paginationPageSize={5}   // gridRef.current.paginationSetPageSize(10);
+          onRowClicked={handleEmployeeClick}
+        >
+        </AgGridReact>
+      </div>
       {selectedEmployee && ( // 선택된 데이터가 있을 때에만 아래 컴포넌트들을 활성화
         <>
           <CCardBody>
@@ -821,7 +617,7 @@ const PayrollManageTable = ({ tabledata }) => {
                 <tr>
                   <th>장기요양보험정산</th>
                   <th>지방소득세</th>
-                  <th></th>
+                  <th>퇴직연금</th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -914,7 +710,7 @@ const PayrollManageTable = ({ tabledata }) => {
             </SBasicInfoTable>
           </SBasicInfo>
           <SNoticeContainer>
-            <SNoticeInfo>
+            <SPaymentInfo>
               <SDotContainer>
                 <div>공지사항</div>
               </SDotContainer>
@@ -922,7 +718,7 @@ const PayrollManageTable = ({ tabledata }) => {
                 {/* 사이즈 변경필요 */}
                 <input type="text" placeholder="내용을 입력해주세요" />
               </SNoticeInfoTable>
-            </SNoticeInfo>
+            </SPaymentInfo>
           </SNoticeContainer>
         </>
       )}
