@@ -161,27 +161,27 @@ const CommuteTimeTable = ( {departments} ) => {
     // 그리드
     const gridRef = useRef();
     const [columnDefs] = useState([
-      { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
-      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 120 },
-      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 120 },
-      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 120 },
-      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 120 },
-      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 120 },
-      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 120 },
-      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 120 },
-      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 115 },
+      { field: 'empl_nm', headerName: '연차', flex: 1 },
+      { field: 'empl_rspofc', headerName: '지각시간', flex: 1 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', flex: 1 },
+      { field: 'empl_gender', headerName: '주휴시간', flex: 1 },
+      { field: 'empl_dept_nm', headerName: '연장근무', flex: 1 },
+      { field: 'empl_emplym_form', headerName: '야간근무', flex: 1 },
+      { field: 'empl_encpnd', headerName: '휴일근무', flex: 1 },
+      { field: 'empl_hffc_state', headerName: '실제근무', flex: 1 },
+      { field: 'empl_retire_date', headerName: '유급처리', flex: 1 },
     ]);
 
     const [columnDefs2] = useState([
-      { field: 'empl_nm', headerName: '연차', initialWidth: 80 },
-      { field: 'empl_rspofc', headerName: '지각시간', initialWidth: 120 },
-      { field: 'empl_frgnr_yn', headerName: '외출시간', initialWidth: 120 },
-      { field: 'empl_gender', headerName: '주휴시간', initialWidth: 120 },
-      { field: 'empl_dept_nm', headerName: '연장근무', initialWidth: 120 },
-      { field: 'empl_emplym_form', headerName: '야간근무', initialWidth: 120 },
-      { field: 'empl_encpnd', headerName: '휴일근무', initialWidth: 120 },
-      { field: 'empl_hffc_state', headerName: '실제근무', initialWidth: 120 },
-      { field: 'empl_retire_date', headerName: '유급처리', initialWidth: 115 },
+      { field: 'empl_nm', headerName: '연차', flex: 1 },
+      { field: 'empl_rspofc', headerName: '지각시간', flex: 1 },
+      { field: 'empl_frgnr_yn', headerName: '외출시간', flex: 1 },
+      { field: 'empl_gender', headerName: '주휴시간', flex: 1 },
+      { field: 'empl_dept_nm', headerName: '연장근무', flex: 1 },
+      { field: 'empl_emplym_form', headerName: '야간근무', flex: 1 },
+      { field: 'empl_encpnd', headerName: '휴일근무', flex: 1 },
+      { field: 'empl_hffc_state', headerName: '실제근무', flex: 1 },
+      { field: 'empl_retire_date', headerName: '유급처리', flex: 1 },
     ]);
   
     const defaultColDef = useMemo(() => {
@@ -266,17 +266,15 @@ const CommuteTimeTable = ( {departments} ) => {
           <div id="infoTitle">※ 기본근로시간에 포함된 유급처리시간을 표기합니다.</div>
         </SCalcInfo>
       </SCalcContainer>
-      <div className="ag-theme-alpine" style={{ height: 93, width: '90%' }}>
+      <div className="ag-theme-alpine" style={{ height: '93px', width: '90%' }}>
         <AgGridReact
-          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+          onGridReady={onGridReady}
           rowData={departments}
           columnDefs={columnDefs}
           onSelectionChanged={onSelectionChanged}
           style={{ textAlign: 'center'}}
           onRowClicked={RowClicked}
-        // domLayout="autoHeight"
-        >
-        </AgGridReact>
+        />
       </div>
         <SCalcContainer>
         <SCalcInfo>
@@ -284,18 +282,16 @@ const CommuteTimeTable = ( {departments} ) => {
           <div>※ 시급제가 아닌경우는 209시간으로 고정됩니다. 등록을 한 경우에만 기본근로, 주휴시간이 계산됩니다.</div>
         </SCalcInfo>
         </SCalcContainer>
-        <div className="ag-theme-alpine" style={{ height: 93, width: '90%' }}>
-        <AgGridReact
-          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
-          rowData={departments}
-          columnDefs={columnDefs2}
-          onSelectionChanged={onSelectionChanged}
-          style={{ textAlign: 'center' }}
-          onRowClicked={RowClicked}
-        // domLayout="autoHeight"
-        >
-        </AgGridReact>
-      </div>
+        <div className="ag-theme-alpine" style={{ height: '93px', width: '90%' }}>
+          <AgGridReact
+            onGridReady={onGridReady}
+            rowData={departments}
+            columnDefs={columnDefs2}
+            onSelectionChanged={onSelectionChanged}
+            style={{ textAlign: 'center' }}
+            onRowClicked={RowClicked}
+          />
+        </div>
       </TableContainer>
                 );
               };
