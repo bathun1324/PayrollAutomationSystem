@@ -175,7 +175,15 @@ const NewCommuteModal = ({isOpen, closeModal, departments} ) => {
                 </CRow>
                 <CRow>
                 <CCol style={{ fontSize: '17px' }} className="mb-1 col-4 d-flex justify-content-end">
-                    <input type="textarea" style={{ height: '275px'}} name="constnt_type" value={data.constnt_type} onChange={fmlyChange}/>
+                    <table style={{ borderCollapse: 'collapse' }}>
+                        <tbody>
+                            {departments.map((department, index) => (
+                                <tr key={index}>
+                                    <td><input type="text" name={department.empl_nm} value={currentItems[department.empl_nm]} onChange={fmlyChange} /></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </CCol>
                 <CCol style={{ fontSize: '17px' }} className="mb-1 col-6 d-flex justify-content-start">
                 <SModalTable>
