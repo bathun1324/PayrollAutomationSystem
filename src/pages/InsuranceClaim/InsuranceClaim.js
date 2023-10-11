@@ -136,7 +136,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 130,
             },
           ],
         },
@@ -148,7 +148,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험정산',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 156,
             },
           ],
         },
@@ -190,7 +190,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 130,
             },
           ],
         },
@@ -202,7 +202,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험정산',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 156,
             },
           ],
         },
@@ -244,7 +244,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 130,
             },
           ],
         },
@@ -256,7 +256,7 @@ const InsuranceClaim = () => {
             {
               headerName: '장기요양보험정산',
               field: 'column1_1_1',
-              initialWidth: 120,
+              initialWidth: 156,
             },
           ],
         },

@@ -51,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
 
     &:hover, &:active {
-      color: ${({theme}) => theme.colors.black110};
+      color: ${({ theme }) => theme.colors.black110};
       text-decoration: none;
       cursor: pointer;
     }
