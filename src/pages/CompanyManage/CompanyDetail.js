@@ -88,12 +88,14 @@ const SSaveBtn = styled.button`
 
 const CompanyDetail = () => {
 
-  const { id } = useParams();
+  const { companyId } = useParams();
   const [table, setTable] = useState([]);
 
+  console.log(companyId);
+
   useEffect(() => {
-    if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailtable/?cmpy_detail=${id}`)
+    if (companyId) {
+      axios.get(`http://13.125.117.184:8000/get_detailtable/?cmpy_detail=${companyId}`)
         .then((response) => {
           setTable(response.data);
         })
@@ -117,7 +119,7 @@ const CompanyDetail = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-            <CompanyDetailTable/>
+            <CompanyDetailTable companyId={companyId}/>
           </CCard>
         </div>
       </div>

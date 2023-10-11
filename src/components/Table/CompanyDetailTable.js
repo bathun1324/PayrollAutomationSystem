@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { GoPrimitiveDot } from "react-icons/go";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { FaList } from 'react-icons/fa';
 
 import {
   CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput,
@@ -348,7 +349,7 @@ const SCompanyLogo = styled.div`
 
 
 
-const CompanyDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }) => {
+const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablefrgnr }) => {
 
   const navigate = useNavigate();
 
@@ -569,9 +570,15 @@ const CompanyDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
     <SWrapper>
       <SManagerInfo>
       <SButtonContainer>
-          <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
-          {id ? (
+          {companyId ? (
             <CButton color="dark" variant="outline" onClick={handleUpdate}>수정</CButton>
+          ) : (
+            <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
+          )}
+          {companyId ? (
+            <CButton color="dark" variant="outline" onClick={handleUpdate}>
+              <FaList />
+            </CButton>
           ) : (
             <CButton style={{backgroundColor: 'red', color: 'white', borderColor: 'white'}} variant="outline" onClick={handleSave}>저장</CButton>
           )}

@@ -171,17 +171,23 @@ export const CompanyTable = ( {companymanage} ) => {
       },
     };
 
-    const navigate = useNavigate();
-
     const handleNewEmployeeClick = () => {
       navigate('./companydetail');
     };
-      
+
+    const infos = JSON.parse(localStorage.getItem('user_info'));
+    const login_id = infos.login_id;
+    const navigate = useNavigate();
     const RowClicked = (e) => {
       const selectedRowData = e.data;
-      const nav_url = '/superadmin/company/companydetail/'
-      //selectedRowData.empl_no;
-      navigate(nav_url)
+      if (login_id == 'user') {
+        alert('접근 권한이 없습니다.');
+        return;
+      }
+      else {
+        const nav_url = '/' + login_id + '/company/companydetail/' + selectedRowData.corp_no;
+        navigate(nav_url)
+      }
     }
   
   

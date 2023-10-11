@@ -236,22 +236,6 @@ const CommuteTimeTable = ( {departments} ) => {
         checkbox: true,
       },
     };
-  
-    // 클릭시 상세페이지로 이동
-    const infos = JSON.parse(localStorage.getItem('user_info'));
-    const login_id = infos.login_id;
-    const navigate = useNavigate();
-    const RowClicked = (e) => {
-      const selectedRowData = e.data;
-      if (login_id == 'user') {
-        alert('접근 권한이 없습니다.');
-        return;
-      }
-      else {
-        const nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
-        navigate(nav_url)
-      }
-    }
 
   return (
     <TableContainer>
@@ -273,7 +257,6 @@ const CommuteTimeTable = ( {departments} ) => {
           columnDefs={columnDefs}
           onSelectionChanged={onSelectionChanged}
           style={{ textAlign: 'center'}}
-          onRowClicked={RowClicked}
         />
       </div>
         <SCalcContainer>
@@ -289,7 +272,6 @@ const CommuteTimeTable = ( {departments} ) => {
             columnDefs={columnDefs2}
             onSelectionChanged={onSelectionChanged}
             style={{ textAlign: 'center' }}
-            onRowClicked={RowClicked}
           />
         </div>
       </TableContainer>
