@@ -30,7 +30,7 @@ const TableContainer = styled.div`
   line-height: 2.8;
   border-collapse: collaps;
 
-  margin: 2em 10px;
+  margin: 2em 5px;
 
 
   table {
@@ -432,7 +432,7 @@ const PayrollManageTable = ({ tabledata }) => {
 
   return (
     <TableContainer>
-      <div className="ag-theme-alpine" style={{ height: 309, width: '100%' }}>
+      <div className="mb-4 ag-theme-alpine" style={{ height: 309, width: '100%' }}>
         <AgGridReact
           onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
           defaultColDef={defaultColDef}

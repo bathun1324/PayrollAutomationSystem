@@ -13,6 +13,7 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { AiOutlineUser } from "react-icons/ai"
+import { cilMenu } from '@coreui/icons'
 
 
 const SWrapper = styled.div`
@@ -559,11 +560,16 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
     <SWrapper>
       <SCompanyInfo>
         <SButtonContainer>
-          <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
           {id ? (
-            <CButton color="dark" variant="outline" onClick={handleUpdate}>수정</CButton>
+            <>
+              <CButton color="primary" style={{ color: 'white', width: "80px" }} onClick={handleUpdate}>수정</CButton>
+              <CIcon icon={cilMenu} style={{ width: "80px", height: "30px", alignItems: 'center' }} onClick={() => navigate(nav_url)} />
+            </>
           ) : (
-            <CButton color="dark" variant="outline" onClick={handleSave}>저장</CButton>
+            <>
+              <CButton color="secondary" style={{ width: "80px" }} onClick={() => navigate(nav_url)}>취소</CButton>
+              <CButton color="danger" style={{ color: 'white', width: "80px" }} onClick={handleSave}>저장</CButton>
+            </>
           )}
         </SButtonContainer>
         <SCategoryContainer>
