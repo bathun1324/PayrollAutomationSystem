@@ -14,7 +14,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { AiOutlineUser } from "react-icons/ai"
 import { cilMenu } from '@coreui/icons'
-
+import { FaList } from 'react-icons/fa';
 
 const SWrapper = styled.div`
 
@@ -562,13 +562,15 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
         <SButtonContainer>
           {id ? (
             <>
-              <CButton color="primary" style={{ color: 'white', width: "80px" }} onClick={handleUpdate}>수정</CButton>
-              <CIcon icon={cilMenu} style={{ width: "80px", height: "30px", alignItems: 'center' }} onClick={() => navigate(nav_url)} />
+              <CButton color="primary" variant="outline" onClick={handleUpdate}>수정</CButton>
+              <CButton color="dark" variant="outline" onClick={handleUpdate}>
+                <FaList />
+              </CButton>
             </>
           ) : (
             <>
-              <CButton color="secondary" style={{ width: "80px" }} onClick={() => navigate(nav_url)}>취소</CButton>
-              <CButton color="danger" style={{ color: 'white', width: "80px" }} onClick={handleSave}>저장</CButton>
+              <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
+              <CButton color="danger" variant="outline" onClick={handleSave}>저장</CButton>
             </>
           )}
         </SButtonContainer>
