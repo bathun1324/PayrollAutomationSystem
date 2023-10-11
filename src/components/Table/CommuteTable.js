@@ -107,24 +107,24 @@ const CommuteTable = ( {departments} ) => {
           const numB = parseFloat(valueB);
           return numA - numB;
         },
-        initialWidth: 150, // 열 너비
+        initialWidth: 80, // 열 너비
       },
-      { field: 'empl_nm', headerName: '근무일자', initialWidth: 100 },
-      { field: 'empl_rspofc', headerName: '근무스케줄', initialWidth: 150 },
-      { field: 'empl_frgnr_yn', headerName: '출근시각', initialWidth: 130 },
-      { field: 'empl_gender', headerName: '퇴근시각', initialWidth: 100 },
-      { field: 'empl_dept_nm', headerName: '외출', initialWidth: 200 },
-      { field: 'empl_emplym_form', headerName: '복귀', initialWidth: 160 },
-      { field: 'empl_encpnd', headerName: '출근판정', initialWidth: 160 },
-      { field: 'empl_hffc_state', headerName: '퇴근판정', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '지각시간', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '외출시간', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '조기출근', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '연장근무', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '야간근무', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '휴일근무', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '실제근무', initialWidth: 160 },
-      { field: 'empl_retire_date', headerName: '비고', initialWidth: 160 },
+      { field: 'empl_work_date', headerName: '근무일자', initialWidth: 120 },
+      { field: 'empl_work_sch', headerName: '근무스케줄', initialWidth: 150 },
+      { field: 'empl_atend_time', headerName: '출근시각', initialWidth: 130 },
+      { field: 'empl_lvofc_time', headerName: '퇴근시각', initialWidth: 130 },
+      { field: 'empl_gnot', headerName: '외출', initialWidth: 130 },
+      { field: 'empl_rtn', headerName: '복귀', initialWidth: 130 },
+      { field: 'empl_atend_jdgmnt', headerName: '출근판정', initialWidth: 130 },
+      { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', initialWidth: 130 },
+      { field: 'empl_laten_time', headerName: '지각시간', initialWidth: 160 },
+      { field: 'empl_gnot_time', headerName: '외출시간', initialWidth: 160 },
+      { field: 'empl_elpd_atend', headerName: '조기출근', initialWidth: 160 },
+      { field: 'empl_extn_work', headerName: '연장근무', initialWidth: 160 },
+      { field: 'empl_night_work', headerName: '야간근무', initialWidth: 160 },
+      { field: 'empl_hday_work', headerName: '휴일근무', initialWidth: 160 },
+      { field: 'empl_realwork_tume', headerName: '실제근무', initialWidth: 160 },
+      { field: 'empl_remark', headerName: '비고', initialWidth: 160 },
     ]);
   
   
