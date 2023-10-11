@@ -9,7 +9,7 @@ import { css } from "styled-components";
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-
+import '../../home.css'
 
 
 const SWrapper = styled.div`
@@ -205,6 +205,11 @@ const Home = ({ type }) => {
 
     }
   };
+  const handleKeyDown = (e) => {
+    if (e.key == 'Enter') {
+      handleLogin(); // Enter 키를 눌렀을 때 로그인 함수 호출
+    }
+  };
 
   return (
     <SWrapper>
@@ -223,15 +228,22 @@ const Home = ({ type }) => {
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
-                    <CFormInput placeholder="username" autoComplete="username" onChange={handleUsernameChange} />
+                    <CFormInput
+                      className="username"
+                      placeholder="username"
+                      autoComplete="username"
+                      onChange={handleUsernameChange}
+                      onKeyDown={handleKeyDown} />
                   </CInputGroup>
                   <CInputGroup>
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
+                      type="password"
                       placeholder="password"
                       onChange={handlePasswordChange}
+                      onKeyDown={handleKeyDown}
                     />
                   </CInputGroup>
                 </CForm>
