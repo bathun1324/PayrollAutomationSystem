@@ -678,7 +678,6 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
           </tbody>
         </table>
       </SManagerInfo>
-      <SNote>
         <SCategoryContainer>
           <GoPrimitiveDot color = "#548AFF" />
           <h3>근무시간 합계</h3>  
@@ -691,11 +690,10 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
             </tr>
             <tr>
               <td>비고</td>
-              <td><input type="text"/></td>
+              <td><input type="textarea" style={{width:'150px', height:'150px'}}/></td>
             </tr>
           </tbody>
         </table>
-      </SNote>
     </SWrapper>
   )
 }
