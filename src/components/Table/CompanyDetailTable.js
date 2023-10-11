@@ -564,7 +564,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
 
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
-  const nav_url = '/' + login_id + '/employee';
+  const nav_url = '/' + login_id + '/company';
 
   return (
     <SWrapper>
@@ -576,7 +576,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
           )}
           {companyId ? (
-            <CButton color="dark" variant="outline" onClick={handleUpdate}>
+            <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>
               <FaList />
             </CButton>
           ) : (
