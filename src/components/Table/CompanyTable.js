@@ -96,7 +96,7 @@ export const CompanyTable = ( {companymanage} ) => {
     const gridRef = useRef();
     const [columnDefs] = useState([
       {
-        field: 'corp_no', headerName: '회사번호', headerCheckboxSelection: true, checkboxSelection: true,
+        field: 'corp_no', headerName: '회사번호',
         comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
           // 숫자로 변환하여 정렬
           const numA = parseFloat(valueA);

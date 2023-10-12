@@ -151,6 +151,23 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const handleSearchClick = () => {
+    let url
+
+    if (searchtext.corp_nm || searchtext.start_date || searchtext.end_date) {
+      url = `http://13.125.117.184:8000/search_corporationinfo/?start_date=${searchtext.start_date}&end_date=${searchtext.end_date}&corp_nm=${searchtext.corp_nm}`
+    } else {
+      url = "http://13.125.117.184:8000/get_corporationinfo/"
+    }
+
+    axios.get(url)
+      .then((response) => {
+        setCompanymanage(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -167,13 +184,13 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
                     <span>회사명:&nbsp;</span>
                     <input size={200} name="corp_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;등록일:&nbsp;</span>
-                    <input size={200} type="date" name="start_reg_dtime" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-                    <input size={200} type="date" name="end_reg_dtime" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
 
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
-                    <CButton color="dark" variant="outline" >검색</CButton>
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
                     <CButton color="dark" variant="outline" onClick={() => handleNewEmployeeClick()}>신규</CButton>
                   </CCol>
                 </CRow>
