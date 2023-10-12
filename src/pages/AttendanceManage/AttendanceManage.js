@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import SideNav from "../../components/SideNav/SideNav";
-import { AttendanceTable } from "../../components";
 import { Header } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

@@ -213,13 +213,13 @@ const EmployeeCommuteManage = () => {
       },
       initialWidth: 150, // 열 너비
     },
-    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
-    { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 150 },
-    { field: 'empl_atend_time', headerName: '출근시간', initialWidth: 130 },
-    { field: 'empl_lvofc_time', headerName: '퇴근시간', initialWidth: 100 },
-    { field: 'empl_atend_jdgmnt', headerName: '출근판정', initialWidth: 200 },
-    { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', initialWidth: 160 },
-    { field: 'remark', headerName: '비고', initialWidth: 160 },
+    { field: 'empl_nm', headerName: '사원명', flex: 1 },
+    { field: 'empl_dept_nm', headerName: '부서명', flex: 1 },
+    { field: 'empl_atend_time', headerName: '출근시간', flex: 1 },
+    { field: 'empl_lvofc_time', headerName: '퇴근시간', flex: 1 },
+    { field: 'empl_atend_jdgmnt', headerName: '출근판정', flex: 1 },
+    { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', flex: 1 },
+    { field: 'remark', headerName: '비고', flex: 1 },
   ]);
 
 
