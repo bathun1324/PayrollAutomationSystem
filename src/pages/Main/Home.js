@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { IconInput, Footer, NoAccountErrorModal } from "../../components"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { FaShoppingBag, FaUser, FaLock } from "react-icons/fa";
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -151,7 +151,8 @@ const SCheckbox = styled.div`
 
 
 const Home = ({ type }) => {
-
+  // 회사별 url
+  const { companyName } = useParams();
   // 모달
   const [isNoAccountModalOpen, setIsNoAccountModalOpen] = useState(false);
 
@@ -172,7 +173,6 @@ const Home = ({ type }) => {
   };
 
   const handleLogin = async () => {
-
     try {
       const response = await axios.post('http://13.125.117.184:8000/login/', {
         username: username,
@@ -213,7 +213,8 @@ const Home = ({ type }) => {
 
   return (
     <SWrapper>
-      <SCompanyName>(주)케이이노텍</SCompanyName>
+      <SCompanyName>{companyName ? (companyName)
+        : ('(주)케이이노텍')}</SCompanyName>
       <SContainer>
         <SContentWrapper>
           <SHeaderContainer>

@@ -54,9 +54,25 @@ const Header = ({ breadcrumb }) => {
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
         </CHeaderNav>
+        <CHeaderNav className="d-md-flex mr-5">
+          {(login_id == "superadmin") ? (
+            <select size={1} name="company_nm" >
+              <option value="">회사선택</option>
+              <option value="A회사">A회사</option>
+              <option value="B회사">B회사</option>
+            </select>
+          ) : (null)}
+        </CHeaderNav>
         <CHeaderNav className="d-none d-md-flex">
+          {/* {(login_id == "superadmin") ? (
+            <AppSidebarNav items={superadmin_nav} />
+          ) : (login_id == "admin") ? (
+            <AppSidebarNav items={admin_nav} />
+          ) : (login_id == "user") ? (
+            <AppSidebarNav items={user_nav} />
+          ) : (<AppSidebar />) */}
           <CNavItem>
-            계약 만료일: 2025-12-31
+            &nbsp;&nbsp;계약 만료일: 2025-12-31
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
