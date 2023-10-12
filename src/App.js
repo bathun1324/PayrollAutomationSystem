@@ -67,6 +67,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path='/:companyName' element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         {/* superadmin 권한용 컨텍스트 제공 */}

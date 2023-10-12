@@ -64,40 +64,6 @@ const TableContainer = styled.div`
 
 `;
 
-const SNoDataMsg = styled.td`
-  height: 500px;
-  padding: 150px;
-
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
-`;
-
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-`;
-
-const PaginationButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  width: 1.5em;
-  height: 1.5em;
-
-  border: 0;
-  border-radius: 5px;
-  background-color: transparent;
-  font-size: 1.1em;
-  font-weight: 550;
-  color:  ${({ theme }) => `rgb(79, 93, 115)`};
-  `;
-
-
-
 const SBasicInfo = styled.div`
   display: flex;
   justify-content: space-between; 
@@ -109,12 +75,9 @@ const SBasicInfo = styled.div`
 `
 
 
-
-
 const SPaymentInfo = styled(SBasicInfo)`
   width: 100%;
 `
-
 
 const SDotContainer = styled.div`
   display: flex;
@@ -429,6 +392,96 @@ const PayrollManageTable = ({ tabledata }) => {
 
     };
   }, []);
+  // 그리드 끝
+
+  const handlePrint = () => {
+    // 새 창 열기
+    const printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>표 예제</title>
+        <style>
+            /* 프린트 스타일 */
+            @media print {
+                /* 배경 그래픽 추가 (인쇄용) */
+                body {
+                    // background-image: url('your-background-image-print.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    
+                }
+
+                /* 테이블 스타일 (인쇄용) */
+                .div2 {  /* .div2 클래스로 변경 */
+                  width: 100%;
+                  padding-top: 20px;
+                  padding-right: 0px;
+                }
+
+                .div2 table {  /* .div2 클래스 하위의 테이블 요소에 스타일 적용 */
+                  width: 90%;
+                  font-size: 0.8em;
+                  border-collapse: collapse;
+                }
+                
+                .div2 td {  /* .div2 클래스 하위의 td 요소에 스타일 적용 */
+                  width: 15%;
+                  border: 1px solid #000;
+                  
+                }
+
+                .div2 td:nth-of-type(odd) {  //홀수번열
+                  background-color: #f2f2f2;
+                  text-align: center;
+                  padding: 0.2em 0.6em;  // 상 우 하 좌
+                }
+
+                .div2 td:nth-of-type(even) {  // 짝수번열
+                  background-color: #fff;
+                  text-align: center;
+                }
+
+                .div2 input {  /* .div2 클래스 하위의 input 요소에 스타일 적용 */
+                  border: none;
+                  width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h2 style="text-align: center; text-decoration: underline ;">&nbsp;급여명세서&nbsp;</h2>
+        <div class="div2">  <!-- 클래스 이름을 .div2로 변경 -->
+        <table>
+          <tr>
+            <td>급여기준액</td>
+            <td></td>
+            <td>성명</td>
+            <td></td>
+            <td>입사일자</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>부서명</td>
+            <td></td>
+            <td>직책</td>
+            <td></td>
+            <td>계좌번호</td>
+            <td></td>
+          </tr>
+        </table>
+        </div> <!-- .div2 요소 닫기 -->
+    </body>
+    </html> 
+    `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  }
+
+
 
   return (
     <TableContainer>
@@ -461,7 +514,7 @@ const PayrollManageTable = ({ tabledata }) => {
                   <BsFillCalculatorFill />계산하기
                 </CButton>
                 <CButton color="dark" variant="outline" >저장하기</CButton>
-                <CButton color="dark" variant="outline" ><BsPrinter />인쇄</CButton>
+                <CButton color="dark" variant="outline" onClick={handlePrint} ><BsPrinter />인쇄</CButton>
               </CCol>
             </CRow>
           </CCardBody>

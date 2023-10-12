@@ -1,11 +1,12 @@
 import React from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { CBadge } from '@coreui/react'
 
 export const AppSidebarNav = ({ items }) => {
   const location = useLocation()
+  const { companyName } = useParams();
   const navLink = (name, icon, badge) => {
     return (
       <>
@@ -19,12 +20,15 @@ export const AppSidebarNav = ({ items }) => {
       </>
     )
   }
-
   const navItem = (item, index) => {
     const { component, name, badge, icon, ...rest } = item
     const Component = component
+    // 회사명을 url에 추가
+    // const updatedRest = { ...rest, to: `/${companyName}${rest.to}` };
     return (
+      // <Component {...(rest.to && !rest.items && { component: NavLink })} key={index} {...rest}{...updatedRest}>
       <Component {...(rest.to && !rest.items && { component: NavLink })} key={index} {...rest}>
+
         {navLink(name, icon, badge)}
       </Component>
     )
@@ -37,6 +41,7 @@ export const AppSidebarNav = ({ items }) => {
         idx={String(index)}
         key={index}
         toggler={navLink(name, icon)}
+
         visible={location.pathname.startsWith(to)}
         {...rest}
       >
