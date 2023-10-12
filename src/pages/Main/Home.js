@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { IconInput, Footer, NoAccountErrorModal } from "../../components"
 import { useNavigate, useParams } from "react-router-dom"
 import { FaShoppingBag, FaUser, FaLock } from "react-icons/fa";
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
@@ -10,7 +10,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import '../../home.css'
-
+import Cookies from 'js-cookie';
 
 const SWrapper = styled.div`
 display: flex;
@@ -211,6 +211,37 @@ const Home = ({ type }) => {
     }
   };
 
+  const [rememberMe, setRememberMe] = useState(false);
+  
+  const [logincookie, setLogincookie] = useState('');
+  
+  useEffect(() => {
+    const savedUsername = Cookies.get('username');
+    const savedRememberMe = Cookies.get('rememberMe');
+  
+    if (savedUsername) {
+      setUsername(savedUsername);
+    }
+  
+    if (savedRememberMe === 'true') {
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    const isChecked = event.target.checked;
+  
+    setRememberMe(isChecked); // 상태 업데이트
+  
+    if (isChecked) {
+      Cookies.set('rememberMe', isChecked.toString(), { expires: 7 });
+      Cookies.set('username', username, { expires: 7 });
+    } else {
+      Cookies.remove('rememberMe');
+      Cookies.remove('username');
+    }
+  };
+
   return (
     <SWrapper>
       <SCompanyName>{companyName ? (companyName)
@@ -234,7 +265,8 @@ const Home = ({ type }) => {
                       placeholder="username"
                       autoComplete="username"
                       onChange={handleUsernameChange}
-                      onKeyDown={handleKeyDown} />
+                      onKeyDown={handleKeyDown} 
+                      value={username}/>
                   </CInputGroup>
                   <CInputGroup>
                     <CInputGroupText>
@@ -250,11 +282,11 @@ const Home = ({ type }) => {
                 </CForm>
               </div>
               <SLoginButton onClick={handleLogin}>로그인</SLoginButton>
-              <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} />
+              <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} checked={rememberMe}/>
             </SInputContainer>
             <SCheckboxContainer>
               <SCheckbox>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={handleCheckboxChange} checked={rememberMe}/>
                 <div>아이디 저장</div>
               </SCheckbox>
               <div onClick={() => navigate('')}>비밀번호 찾기</div>
