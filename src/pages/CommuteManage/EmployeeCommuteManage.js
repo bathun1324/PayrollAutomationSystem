@@ -1,10 +1,62 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { EmployeeCommuteTable, Header } from "../../components";
+import { Header } from "../../components";
 import SideNav from "../../components/SideNav/SideNav";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
 import AppSidebar from "../../components/SideNav/AppSidebar";
+
+import { useSelector, useDispatch } from 'react-redux'
+
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { AgGridReact } from 'ag-grid-react';
+
+import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
+
+const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 1.1em;
+  text-align: left;
+  line-height: 2.8;
+  border-collapse: collaps;
+
+
+
+  table {
+
+  }
+
+  table tr:nth-child(even) {
+    background-color: ${({ theme }) => theme.colors.blue010};
+
+  }
+
+  th {
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  tr > td {
+    text-align: center;
+    font-size: 1em;
+    font-weight: 200;u
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+    hover:
+  }
+
+  
+
+`;
 
 const SWrapper = styled.div`
   display: flex;
@@ -141,21 +193,63 @@ const SCompanyTable = styled.div`
 const EmployeeCommuteManage = () => {
 
   const [commutemanage, setACommutemanage] = useState([]); // departments 변수를 useState로 정의
-  const [employeename, setEmployeename] = useState('');
-  const [employeeno, setEmployeeno] = useState('');
+  const gridRef = useRef();
+  const [searchtext, setSearchtext] = useState([]); // 
 
-  const handleNameChange = (event) => {
-    setEmployeename(event.target.value);
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-  const handleNoChange = (event) => {
-    setEmployeeno(event.target.value);
+
+  const [columnDefs] = useState([
+    {
+      field: 'empl_no', headerName: '사원번호', headerCheckboxSelection: true, checkboxSelection: true,
+      comparator: (valueA, valueB, nodeA, nodeB, isInverted) => {
+        // 숫자로 변환하여 정렬
+        const numA = parseFloat(valueA);
+        const numB = parseFloat(valueB);
+        return numA - numB;
+      },
+      initialWidth: 150, // 열 너비
+    },
+    { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
+    { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 150 },
+    { field: 'empl_atend_time', headerName: '출근시간', initialWidth: 130 },
+    { field: 'empl_lvofc_time', headerName: '퇴근시간', initialWidth: 100 },
+    { field: 'empl_atend_jdgmnt', headerName: '출근판정', initialWidth: 200 },
+    { field: 'empl_lvofc_jdgmnt', headerName: '퇴근판정', initialWidth: 160 },
+    { field: 'remark', headerName: '비고', initialWidth: 160 },
+  ]);
+
+
+  //        <td><Link to={`/admin/employee/employeedetail/${companydata.empl_no}`}>{companydata.empl_nm}</Link></td>
+  const defaultColDef = useMemo(() => {
+    return {
+      sortable: true,
+      filter: true,
+      resizable: true,
+      rowSelection: 'multiple',
+
+
+    };
+  }, []);
+
+  const gridOptions = {
+    rowSelection: 'multiple', // 채크박스 여러개선택
+    paginationAutoPageSize: true,
+    pagination: true,
+  };
+
+  const onGridReady = (params) => {
+    gridRef.current = params.api;
   };
 
   const handleSearchClick = () => {
     let url
 
-    if (employeename || employeeno) {
-      url = `http://13.125.117.184:8000/search_commutemanage/?department=${employeename}&employee_no=${employeeno}`
+    if (searchtext.start_date || searchtext.end_date || searchtext.dept_nm || searchtext.action) {
+      url = `http://13.125.117.184:8000/search_commutemanage/?start_date=${searchtext.start_date}&end_date=${searchtext.end_date}&department=${searchtext.dept_nm}&attendyn=${searchtext.action}`
     } else {
       url = "http://13.125.117.184:8000/get_commutemanage/"
     }
@@ -168,6 +262,7 @@ const EmployeeCommuteManage = () => {
         console.log(error);
       });
   };
+
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
     axios.get("http://13.125.117.184:8000/get_commutemanage/")
@@ -180,12 +275,31 @@ const EmployeeCommuteManage = () => {
 
   }, []);
 
-  const [searchtext, setSearchtext] = useState([]);
-  const handleSelectChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    setSearchtext(prevState => ({ ...prevState, [name]: value }));
-  };
+  const onBtExport = useCallback(() => {
+    // api가 정의되어 있을 때만 exportDataAsCsv를 호출
+    if (gridRef.current) {
+      const selectedNodes = gridRef.current.getSelectedNodes();
+      const selectedData = selectedNodes.map((node) => node.data);
+      const selectedDataString = selectedData.map((node) => node.make + ' ' + node.model).join('\n');
+      const params = {
+        skipHeader: false,
+        columnGroups: true,
+        skipFooters: true,
+        skipGroups: true,
+        skipPinnedTop: true,
+        skipPinnedBottom: true,
+        allColumns: false,
+        onlySelected: false,
+        fileName: 'export.csv',
+        columnSeparator: ',',
+      };
+      const list = gridRef.current.selectionService.selectedNodes
+      console.log(list); // list의 data에 선택한 행 값들 들어가있음
+      gridRef.current.exportDataAsCsv(params);
+    }
+  }, []);
+
+
   return (
     <div>
       <AppSidebar />
@@ -207,9 +321,9 @@ const EmployeeCommuteManage = () => {
                     <span>&nbsp;&nbsp;출/퇴근 여부:&nbsp;</span>
                     <input size={200} name="action" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
                   <CCol className="gap-2 d-flex justify-content-end ">
-                    <CButton color="dark" variant="outline" >검색</CButton>
-                    <CButton color="dark" variant="outline" >내보내기</CButton>
-                    <CButton color="dark" variant="outline" >인쇄</CButton>
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                    <CButton color="dark" variant="outline" onClick={onBtExport}><BsFileEarmarkExcel />내보내기</CButton>
+                    <CButton color="dark" variant="outline" ><BsPrinter />인쇄</CButton>
                   </CCol>
                 </CRow>
               </CCardBody>
@@ -219,7 +333,27 @@ const EmployeeCommuteManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <EmployeeCommuteTable commutemanage={commutemanage} />
+              <TableContainer id='printableArea'>
+              <div>
+                {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+        <SNewButton onClick={onBtPrint}>print</SNewButton>
+        <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
+              </div>
+
+              <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+                <AgGridReact
+                  onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                  defaultColDef={defaultColDef}
+                  rowData={commutemanage}
+                  columnDefs={columnDefs}
+                  gridOptions={gridOptions}
+                  style={{ textAlign: 'center' }}
+                  pagination={true}
+                  paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                >
+                </AgGridReact>
+              </div>
+            </TableContainer>
             </CCard>
           </CContainer>
         </div>

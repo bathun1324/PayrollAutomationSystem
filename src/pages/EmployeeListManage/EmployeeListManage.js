@@ -13,6 +13,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 //import '../../components/Table/styles.css'
 import { BsPrinter, BsFileEarmarkExcel } from "react-icons/bs";
+
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,11 +64,13 @@ const EmployeeListManage = () => {
   const [departments, setDepartments] = useState([]); // 부서
   const [role, setRole] = useState([]); // 직급
   const gridRef = useRef();
+
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
+
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
 

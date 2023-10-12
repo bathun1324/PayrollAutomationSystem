@@ -352,10 +352,6 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
 
   const navigate = useNavigate();
 
-  // user 경로인 경우 가족사항 조회 숨김
-  const location = useLocation();
-  const isUserPath = location.pathname.startsWith('/user');
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
