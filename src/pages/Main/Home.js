@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { IconInput, Footer, NoAccountErrorModal } from "../../components"
 import { useNavigate, useParams } from "react-router-dom"
 import { FaShoppingBag, FaUser, FaLock } from "react-icons/fa";
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { mobile } from "../../assets/styles/Theme";
 import { css } from "styled-components";
@@ -161,16 +161,6 @@ const Home = ({ type }) => {
 
 
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleLogin = async () => {
     try {
@@ -180,6 +170,10 @@ const Home = ({ type }) => {
       });
 
       if (response.status === 200) {
+        // 쿠키저장
+        Cookies.set('username', username, { expires: 7 });
+        Cookies.set('checked', isChecked, { expires: 7 });
+
         const { user_info } = response.data;
         localStorage.setItem('user_info', JSON.stringify(user_info));
         const infos = JSON.parse(localStorage.getItem('user_info'));
@@ -205,41 +199,47 @@ const Home = ({ type }) => {
 
     }
   };
+  // Enter 키를 눌렀을 때 로그인 함수 호출
   const handleKeyDown = (e) => {
     if (e.key == 'Enter') {
-      handleLogin(); // Enter 키를 눌렀을 때 로그인 함수 호출
+      handleLogin();
     }
   };
 
-  const [rememberMe, setRememberMe] = useState(false);
-  
-  const [logincookie, setLogincookie] = useState('');
-  
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // 쿠키
+  const [isChecked, setIsChecked] = useState(true);  // 시작시 실행
+
   useEffect(() => {
-    const savedUsername = Cookies.get('username');
-    const savedRememberMe = Cookies.get('rememberMe');
-  
-    if (savedUsername) {
-      setUsername(savedUsername);
+    const checkedvalue = Cookies.get('checked');
+    const usernamevalue = Cookies.get('username');
+    setIsChecked(checkedvalue == "true" ? true : false);
+
+    console.log('checked', checkedvalue)
+    if (checkedvalue == "false") {
+      document.querySelector('.username').value = '';
+      setUsername('');
     }
-  
-    if (savedRememberMe === 'true') {
-      setRememberMe(true);
+    else {
+      document.querySelector('.username').value = usernamevalue;
+      setUsername(usernamevalue);
     }
   }, []);
 
+  // 체크버튼 이벤트
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
-  
-    setRememberMe(isChecked); // 상태 업데이트
-  
-    if (isChecked) {
-      Cookies.set('rememberMe', isChecked.toString(), { expires: 7 });
-      Cookies.set('username', username, { expires: 7 });
-    } else {
-      Cookies.remove('rememberMe');
-      Cookies.remove('username');
-    }
+    setIsChecked(isChecked);
   };
 
   return (
@@ -261,12 +261,12 @@ const Home = ({ type }) => {
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
                     <CFormInput
+                      value={username}
                       className="username"
                       placeholder="username"
                       autoComplete="username"
                       onChange={handleUsernameChange}
-                      onKeyDown={handleKeyDown} 
-                      value={username}/>
+                      onKeyDown={handleKeyDown} />
                   </CInputGroup>
                   <CInputGroup>
                     <CInputGroupText>
@@ -282,11 +282,11 @@ const Home = ({ type }) => {
                 </CForm>
               </div>
               <SLoginButton onClick={handleLogin}>로그인</SLoginButton>
-              <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} checked={rememberMe}/>
+              {/* <NoAccountErrorModal isOpen={isNoAccountModalOpen} closeModal={closeNoAccountModal} checked={rememberMe} /> */}
             </SInputContainer>
             <SCheckboxContainer>
               <SCheckbox>
-                <input type="checkbox" onChange={handleCheckboxChange} checked={rememberMe}/>
+                <input type="checkbox" onChange={handleCheckboxChange} checked={isChecked} className="checked" />
                 <div>아이디 저장</div>
               </SCheckbox>
               <div onClick={() => navigate('')}>비밀번호 찾기</div>
