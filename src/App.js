@@ -193,6 +193,7 @@ function App() {
               <Routes>
                 {/* (사용자 권한) user메뉴 페이지 라우팅 */}
                 <Route path="/user/employee" element={<EmployeeManage />} />
+                <Route path="/user/employee/employeedetail" element={<EmployeeDetail />} />
                 <Route path="/user/payrollmanage" element={<PayrollManage />} />
                 <Route path="/user/employeefamilycheck" element={<EmployeeFamilyCheck />} />
                 <Route path="/user/employeeinfocheck" element={<EmployeeInfoCheck />} />

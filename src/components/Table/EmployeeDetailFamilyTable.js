@@ -234,14 +234,19 @@ const EmployeeDetailFamilyTable = () => {
         console.error('API 호출 에러:', error);
       });
   };
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_id = infos.login_id;
 
   return (
     <TableContainer>
-      <SButtonContainer className="gap-2 d-flex justify-content-end" >
-        <CButton color="dark" variant="outline" onClick={openModal}>추가</CButton>
-        <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
-        <CButton color="dark" variant="outline" onClick={handlepost}>저장</CButton>
-      </SButtonContainer>
+      {(login_id == "user") ? null : (
+        <SButtonContainer className="gap-2 d-flex justify-content-end" >
+          <CButton color="dark" variant="outline" onClick={openModal}>추가</CButton>
+          <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
+          <CButton color="dark" variant="outline" onClick={handlepost}>저장</CButton>
+        </SButtonContainer>
+
+      )}
       <table style={{ border: '2px solid rgb(210, 210, 214)', marginBottom: '100px', textAlign: 'center' }}>
         <thead>
           <tr>

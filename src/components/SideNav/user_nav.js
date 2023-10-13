@@ -14,7 +14,7 @@ const user_nav = [
       {
         component: CNavItem,
         name: '\u00A0\u00A0사원정보',
-        to: '/user/employee',
+        to: '/user/employee/employeedetail',
       },
     ],
   },

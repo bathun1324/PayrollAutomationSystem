@@ -560,19 +560,20 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
     <SWrapper>
       <SCompanyInfo>
         <SButtonContainer>
-          {id ? (
-            <>
-              <CButton color="primary" variant="outline" onClick={handleUpdate}>수정</CButton>
-              <CButton color="dark" variant="outline" onClick={handleUpdate}>
-                <FaList />
-              </CButton>
-            </>
-          ) : (
-            <>
-              <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
-              <CButton color="danger" variant="outline" onClick={handleSave}>저장</CButton>
-            </>
-          )}
+          {(login_id == 'user') ? null :
+            id ? (
+              <>
+                <CButton color="primary" variant="outline" onClick={handleUpdate}>수정</CButton>
+                <CButton color="dark" variant="outline" onClick={handleUpdate}>
+                  <FaList />
+                </CButton>
+              </>
+            ) : (
+              <>
+                <CButton color="dark" variant="outline" onClick={() => navigate(nav_url)}>취소</CButton>
+                <CButton color="danger" variant="outline" onClick={handleSave}>저장</CButton>
+              </>
+            )}
         </SButtonContainer>
         <SCategoryContainer>
           <GoPrimitiveDot color="#548AFF" />
@@ -906,16 +907,14 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
         </table>
       </SManagerInfo>
       {/* user권한 페이지일경우 추가버튼 숨김 */}
-      {isUserPath ? null : (
-        <>
-          <SManagerInfo>
-            <SCategoryContainer>
-              <GoPrimitiveDot color="#548AFF" />
-              <h3>가족사항</h3>
-            </SCategoryContainer>
-          </SManagerInfo>
-        </>
-      )}
+      <>
+        <SManagerInfo>
+          <SCategoryContainer>
+            <GoPrimitiveDot color="#548AFF" />
+            <h3>가족사항</h3>
+          </SCategoryContainer>
+        </SManagerInfo>
+      </>
     </SWrapper>
   )
 }

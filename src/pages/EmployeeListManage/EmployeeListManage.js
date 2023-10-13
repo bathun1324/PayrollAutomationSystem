@@ -309,14 +309,14 @@ const EmployeeListManage = () => {
                     border: 1px solid #000;
                     text-align: center;
                     padding: 10px;
-                    font-size: 12px;
+                    font-size: 7px;
                 }
 
                 td {
                     border: 1px solid #000;
                     padding: 10px;
                     text-align: center;
-                    font-size: 10px;
+                    font-size: 8px;
                 }
 
                 tr:nth-child(even) {
