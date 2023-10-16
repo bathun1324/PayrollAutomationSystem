@@ -226,7 +226,7 @@ const Home = ({ type }) => {
     setIsChecked(checkedvalue == "true" ? true : false);
 
     console.log('checked', checkedvalue)
-    if (checkedvalue == "false") {
+    if (checkedvalue == "false" || checkedvalue == undefined) {
       document.querySelector('.username').value = '';
       setUsername('');
     }
