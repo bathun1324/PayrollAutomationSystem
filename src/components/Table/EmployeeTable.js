@@ -103,7 +103,7 @@ const EmployeeTable = ({ employees }) => {
     { field: 'empl_frgnr_yn', headerName: '외국인여부', initialWidth: 130 },
     { field: 'empl_gender', headerName: '성별', initialWidth: 100 },
     { field: 'empl_dept_nm', headerName: '부서명', initialWidth: 200 },
-    { field: 'empl_emplym_form', headerName: '고용형태', initialWidth: 160 },
+    { field: 'empl_emplyn_form', headerName: '고용형태', initialWidth: 160 },
     { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 160 },
     { field: 'empl_hffc_state', headerName: '재직상태', initialWidth: 160 },
     { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 160 },

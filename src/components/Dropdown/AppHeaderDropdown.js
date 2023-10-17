@@ -25,6 +25,11 @@ import CIcon from '@coreui/icons-react'
 const AppHeaderDropdown = () => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
+  // 로그아웃 시 세션제거
+  const handleLogout = () => {
+    localStorage.removeItem('user_info'); // 로컬 스토리지에서 user_info 제거
+    window.location.href = '/'; // 로그인 페이지로 이동
+  };
   if (login_id == "user") {
     return (
       <CDropdown variant="nav-item">
@@ -47,7 +52,7 @@ const AppHeaderDropdown = () => {
             비밀번호변경
           </CDropdownItem>
           <CDropdownDivider />
-          <CDropdownItem href="/">
+          <CDropdownItem onClick={handleLogout}>
             <CIcon icon={cilAccountLogout} className="me-2" />
             로그아웃
           </CDropdownItem>
@@ -88,7 +93,7 @@ const AppHeaderDropdown = () => {
             비밀번호변경
           </CDropdownItem>
           <CDropdownDivider />
-          <CDropdownItem href="/">
+          <CDropdownItem onClick={handleLogout}>
             <CIcon icon={cilAccountLogout} className="me-2" />
             로그아웃
           </CDropdownItem>
