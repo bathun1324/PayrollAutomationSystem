@@ -264,8 +264,8 @@ const AnnualUseStatus = ({ userRole, menuItems, iconMapping }) => {
                     <select size={1} name="rspofc" onChange={handleSelectChange} >
                       <option value="">선택</option>
                       {role.map((roles) => (
-                        <option key={roles.lcode} value={roles.lcode_nm}>
-                          {roles.lcode_nm}
+                        <option key={roles.lcode} value={roles.CD_VAL}>
+                          {roles.CD_VAL}
                         </option>
                       ))}
                     </select>

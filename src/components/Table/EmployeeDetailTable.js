@@ -635,8 +635,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
                     <CTableDataCell>결혼유무</CTableDataCell>
                     <CTableDataCell>
                       <select size={1} name="mrig_yn" value={employeeInfo.mrig_yn || ""} onChange={employeeInputChange}>
-                        <option value="X">X</option>
-                        <option value="O">O</option>
+                        <option value="N">X</option>
+                        <option value="Y">O</option>
                       </select>
                     </CTableDataCell>
                     <CTableDataCell>결혼기념일</CTableDataCell>
@@ -699,8 +699,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>임원여부</td>
               <td>
                 <select size={1} name="exctv_yn" value={employeeInfo.exctv_yn || ""} onChange={employeeInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="N">X</option>
+                  <option value="Y">O</option>
                 </select>
               </td>
             </tr>
@@ -709,8 +709,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>
                 <select size={1} name="rspofc" value={employeeInfo.rspofc || ""} onChange={employeeInputChange}>
                   {role.map((roles) => (
-                    <option key={roles.lcode} value={roles.lcode_nm}>
-                      {roles.lcode_nm}
+                    <option key={roles.lcode} value={roles.CD_VAL}>
+                      {roles.CD_VAL}
                     </option>
                   ))}
                 </select>
@@ -826,8 +826,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>국민연금납부</td>
               <td>
                 <select size={1} name="npn_pay_yn" value={employeeInfo.npn_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="O">예</option>
-                  <option value="X">아니요</option>
+                  <option value="Y">예</option>
+                  <option value="N">아니요</option>
                 </select>
               </td>
               <td>국민연금신고 월보수액</td>
@@ -837,8 +837,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>건강보험납부</td>
               <td>
                 <select size={1} name="hlthins_pay_yn" value={employeeInfo.hlthins_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="O">예</option>
-                  <option value="X">아니요</option>
+                  <option value="Y">예</option>
+                  <option value="N">아니요</option>
                 </select>
               </td>
               <td>건강보험 월보수액</td>
@@ -848,8 +848,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>고용보험납부</td>
               <td>
                 <select size={1} name="empins_pay_yn" value={employeeInfo.empins_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="O">예</option>
-                  <option value="X">아니요</option>
+                  <option value="Y">예</option>
+                  <option value="N">아니요</option>
                 </select>
               </td>
               <td>원천징수 세액</td>
@@ -865,8 +865,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>장기요양보험 납부여부</td>
               <td>
                 <select size={1} value={employeeInfo.empins_pay_yn || ""} onChange={salaryInputChange}>
-                  <option value="O">예</option>
-                  <option value="X">아니요</option>
+                  <option value="Y">예</option>
+                  <option value="N">아니요</option>
                 </select>
               </td>
               <td></td>
@@ -885,8 +885,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>외국인여부</td>
               <td>
                 <select size={1} name="frgnr_yn" value={employeeInfo.frgnr_yn || ""} onChange={employeeInputChange}>
-                  <option value="X">내국인</option>
-                  <option value="O">외국인</option>
+                  <option value="N">내국인</option>
+                  <option value="Y">외국인</option>
                 </select>
               </td>
               <td>출국만기일자</td>
@@ -896,8 +896,8 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               <td>출국만기보험사</td>
               <td>
                 <select size={1} name="dtrmcexp_icny" value={frgnrInfo.frgnrInputChange || ""} onChange={frgnrInputChange}>
-                  <option value="X">X</option>
-                  <option value="O">O</option>
+                  <option value="N">X</option>
+                  <option value="Y">O</option>
                 </select>
               </td>
               <td>출국만기보험금액</td>

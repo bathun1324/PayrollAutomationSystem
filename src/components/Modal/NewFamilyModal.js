@@ -164,15 +164,15 @@ const NewFamilyModal = ({isOpen, closeModal, parentFunction} ) => {
                 <td>동거여부</td>
                 <td>
                   <select size={1} name="livtgt_yn" value={data.livtgt_yn} onChange={fmlyChange}>
-                    <option value="O">O</option>
-                    <option value="x">X</option>
+                    <option value="Y">O</option>
+                    <option value="N">X</option>
                   </select>
                 </td>
                 <td>공제희망여부</td>
                 <td>                
                   <select size={1} name="dednhope_yn" value={data.dednhope_yn} onChange={fmlyChange}> 
-                    <option value="O">O</option>
-                    <option value="X">X</option>
+                    <option value="Y">O</option>
+                    <option value="N">X</option>
                   </select>
                 </td>
                 </tr>
@@ -180,8 +180,8 @@ const NewFamilyModal = ({isOpen, closeModal, parentFunction} ) => {
                 <td>장애인여부</td>
                 <td>                
                   <select size={1} name="dspsn_yn" value={data.dspsn_yn} onChange={fmlyChange}>
-                    <option value="O">O</option>
-                    <option value="X">X</option>
+                    <option value="Y">O</option>
+                    <option value="N">X</option>
                   </select>
                 </td>
                 <td></td>

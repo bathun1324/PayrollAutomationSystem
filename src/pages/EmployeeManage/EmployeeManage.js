@@ -217,8 +217,8 @@ const EmployeeManage = () => {
                   <span>&nbsp;&nbsp;외국인여부:&nbsp;</span>
                   <select size={1} name="foreigner" onChange={handleSelectChange}>
                     <option value="">선택</option>
-                    <option value="X">내국인</option>
-                    <option value="O">외국인</option>
+                    <option value="N">내국인</option>
+                    <option value="Y">외국인</option>
                   </select>
                   <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
                   <select size={1} name="employmentType" onChange={handleSelectChange}>

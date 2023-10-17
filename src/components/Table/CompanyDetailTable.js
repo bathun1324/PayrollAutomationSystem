@@ -358,191 +358,110 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   const isUserPath = location.pathname.startsWith('/user');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchtext, setSearchtext] = useState([]);
+  const [codes, setCode] = useState([]);
+  const [ofcps, setOfcps] = useState([]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   //정규식필요
 
-  const [employeeInfo, setEmployeeInfo] = useState({
-    dept_no: '',
-    empl_no: '',
-    empl_nm: '',
-    ssid: '',
-    gender: '남',
-    brthdy: '',
-    lunisolar: '양',
-    mrig_yn: 'X',
-    mrig_anvsry: '',
-    tel_no: '',
-    mobile_no: '',
-    ssid_addr: '',
-    rlsdnc_addr: '',
+  const [corporationinfo, setCorporationInfo] = useState({
+    corp_no: '',
+    corp_nm: '',
+    repre_nm: '',
+    bizm_no: '',
+    addr: '',
+    empl_num: '',
+    mngr_nm: '',
+    ofcps: 'X',
+    corp_telno: '',
     email: '',
-    prsl_email: '',
-    exctv_yn: '',
-    rspofc: '',
-    emplym_form: '상용',
-    salary_form: '시급',
-    encpnd: '',
-    hffc_state: '재직',
-    retire_date: '',
-    frgnr_yn: 'X',
+    mobile_no: '',
+    mngr_id: '',
+    info1: '',
+    info2: '',
+    info3: '',
+    info4: '',
   });
 
   useEffect(() => {
     if (table && table[0]) {
-      setEmployeeInfo({ ...table[0] });
+      setCorporationInfo({ ...table[0] });
     }
   }, [table]);
 
-  const [attendInfo, setAttendInfo] = useState({
-    empl_no: '',
-    corp_no: '',
-    dept_no: '',
-    base_attendtime: '',
-    base_lvofctime: '',
-    mdwk_workday: '',
-    whday: '',
-    crtlwh: '',
+  const [cntrctinfo, setCntrctInfo] = useState({
+    cntrct_form: '',
+    state: '',
+    cntcrt_date: '',
+    exp_date: '',
+    pmt_date: '',
+    ter_date: '',
+    tml_use_yn: '',
+    exp_date: '',
+    mtyvc_stl_std: '',
   });
 
   useEffect(() => {
     if (tableattend && tableattend[0]) {
-      setAttendInfo({ ...tableattend[0] });
+      setCntrctInfo({ ...tableattend[0] });
     }
   }, [tableattend]);
 
-  const [salaryInfo, setSalaryInfo] = useState({
-    empl_no: '',
-    corp_no: '',
-    dept_no: '',
-    base_salary: '',
-    trn_bank: '',
-    acc_no: '',
-    npn_pay_yn: 'X',
-    npn_mrmrtn: '',
-    hlthins_pay_yn: 'X',
-    hlthins_mrmrtn: '',
-    empins_pay_yn: 'X',
-    empins_mrmrtn: '',
-  });
-
-  useEffect(() => {
-    if (tablesalary && tablesalary[0]) {
-      setSalaryInfo({ ...tablesalary[0] });
-    }
-  }, [tablesalary]);
-
-  const [frgnrInfo, setFrgnrInfo] = useState({
-    empl_no: '',
-    corp_no: '',
-    dept_no: '',
-    dtrmcexp_date: '',
-    dtrmcexp_icny: 'X',
-    dtrmcexp_insrnc_amt: '',
-    remark: '',
-  });
-
-
-  useEffect(() => {
-    if (tablefrgnr && tablefrgnr[0]) {
-      setFrgnrInfo({ ...tablefrgnr[0] });
-    }
-  }, [tablefrgnr]);
-
-  const employeeInputChange = (event) => {
+  const corporationInputChange = (event) => {
     const { name, value } = event.target;
-    setEmployeeInfo({
-      ...employeeInfo,
+    setCorporationInfo({
+      ...corporationinfo,
       [name]: value,
     })
   };
 
   const attendInputChange = (event) => {
     const { name, value } = event.target;
-    setAttendInfo({
-      ...attendInfo,
+    setCntrctInfo({
+      ...cntrctinfo,
       [name]: value,
     });
   };
-
-  const [rate, setRate] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_rate/')
-      .then((response) => {
-        setRate(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const salaryInputChange = (event) => {
-    const { name, value } = event.target;
-    let updatedSalaryInfo = {
-      ...salaryInfo,
-      [name]: value,
-    };
-
-    // 기본 급여가 변경된 경우 월보수액을 자동으로 계산합니다.
-    if (name === 'base_salary') {
-      const baseSalary = parseFloat(value); // 기본 급여 값을 숫자로 변환합니다.
-
-      // rate와 기본 급여를 사용하여 다른 값들을 계산합니다.
-      updatedSalaryInfo.npn_mrmrtn = baseSalary - 300000
-      updatedSalaryInfo.hlthins_mrmrtn = baseSalary - 300000
-      updatedSalaryInfo.empins_mrmrtn = baseSalary - 300000
-    }
-
-    setSalaryInfo(updatedSalaryInfo);
-  };
-
-  const frgnrInputChange = (event) => {
-    const { name, value } = event.target;
-    setFrgnrInfo({
-      ...frgnrInfo,
-      [name]: value,
-    });
-  };
-
-  const [departments, setDepartments] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_departments/')
-      .then((response) => {
-        setDepartments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const [role, setRole] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_role/')
-      .then((response) => {
-        setRole(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   const payload = {
-    employeeInfo: employeeInfo,
-    attendInfo: attendInfo,
-    salaryInfo: salaryInfo,
-    frgnrInfo: frgnrInfo,
+    corporationinfo: corporationinfo,
+    cntrctinfo: cntrctinfo,
   };
 
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_info/")
+      .then((response) => {
+        setCode(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_ofcps/")
+      .then((response) => {
+        setOfcps(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
   const handleSave = () => {
-    axios.post('http://13.125.117.184:8000/post_employees/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_corporation/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 저장 성공:', response.data);
-        navigate('/admin/employee');
+        navigate('/superadmin/company');
       })
       .catch(error => {
         console.log('error');
@@ -554,12 +473,18 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     axios.post('http://13.125.117.184:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 수정 성공:', response.data);
-        navigate('/admin/employee');
+        navigate('/superadmin/company');
       })
       .catch(error => {
         console.log('error');
         console.error('API 호출 에러:', error);
       });
+  };
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
   const infos = JSON.parse(localStorage.getItem('user_info'));
@@ -591,21 +516,21 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <tbody>
             <tr>
               <td>회사명</td>
-              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="corp_nm" value={corporationinfo.corp_nm || ""} onChange={corporationInputChange} /></td>
               <td>대표자명</td>
-              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="repre_nm" value={corporationinfo.repre_nm || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>사업자번호</td>
-              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="bizm_no" value={corporationinfo.bizm_no || ""} onChange={corporationInputChange} /></td>
               <td>대표 전화번호</td>
-              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="repre_telno" value={corporationinfo.repre_telno || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>주소</td>
-              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="addr" value={corporationinfo.addr || ""} onChange={corporationInputChange} /></td>
               <td>사원수</td>
-              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="empl_num" value={corporationinfo.empl_num || ""} onChange={corporationInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -619,21 +544,30 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <tbody>
             <tr>
               <td>담당자 명</td>
-              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="mngr_nm" value={corporationinfo.mngr_nm || ""} onChange={corporationInputChange} /></td>
               <td>직책</td>
-              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} /></td>
+              <td>
+              <select size={1} name="ofcps" onChange={corporationInputChange}>
+                  <option value="">선택</option>
+                    {ofcps.map((dept) => (
+                      <option key={dept.scode} value={dept.cd_val}>
+                        {dept.cd_val}
+                  </option>
+                    ))}
+              </select>
+              </td>
             </tr>
             <tr>
               <td>회사 전화번호</td>
-              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="corp_telno" value={corporationinfo.corp_telno || ""} onChange={corporationInputChange} /></td>
               <td>이메일</td>
-              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="email" value={corporationinfo.email || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>휴대폰번호</td>
-              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="mobile_no" value={corporationinfo.mobile_no || ""} onChange={corporationInputChange} /></td>
               <td>담당자ID</td>
-              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="mngr_id" value={corporationinfo.mngr_id || ""} onChange={corporationInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -648,33 +582,45 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>부서정보</td>
               <td>
-              <select size={1}>
-                <option value="1">IT 업종</option>
-                <option value="2">생산 업종</option>
+              <select size={1} name="info1" value={corporationinfo.info1 || ""} onChange={corporationInputChange}>
+                <option value="1">IT업종</option>
+                <option value="2">유통업종</option>
+                <option value="3">건설업종</option>
+                <option value="4">서비스업종</option>
+                <option value="17">제조업종</option>
               </select>
               </td>
               <td>직급정보</td>
               <td>
-              <select size={1}>
-                <option value="1">IT 업종</option>
-                <option value="2">생산 업종</option>
+              <select size={1} name="info2" value={corporationinfo.info2 || ""} onChange={corporationInputChange}>
+                <option value="5">IT업종</option>
+                <option value="6">유통업종</option>
+                <option value="7">건설업종</option>
+                <option value="8">서비스업종</option>
+                <option value="18">제조업종</option>
               </select>
               </td>
             </tr>
             <tr>
             <td>근태정보</td>
             <td>
-            <select size={1}>
-              <option value="1">IT 업종</option>
-              <option value="2">생산 업종</option>
-            </select>
+            <select size={1} name="info3" value={corporationinfo.info3 || ""} onChange={corporationInputChange}>
+                <option value="9">IT업종</option>
+                <option value="10">유통업종</option>
+                <option value="11">건설업종</option>
+                <option value="12">서비스업종</option>
+                <option value="18">제조업종</option>
+              </select>
             </td>
             <td>급여정보</td>
             <td>
-            <select size={1}>
-              <option value="1">IT 업종</option>
-              <option value="2">생산 업종</option>
-            </select>
+            <select size={1} name="info4" value={corporationinfo.info4 || ""} onChange={corporationInputChange}>
+                <option value="13">IT업종</option>
+                <option value="14">유통업종</option>
+                <option value="15">건설업종</option>
+                <option value="16">서비스업종</option>
+                <option value="20">제조업종</option>
+              </select>
             </td>
             </tr>
           </tbody>
@@ -690,31 +636,41 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>계약형태</td>
               <td>
-              <select size={1}>
-                <option value="1">년간 갱신</option>
-                <option value="2">월간 갱신</option>
+              <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={attendInputChange}>
+                <option value="1">종신</option>
+                <option value="2">기간</option>
               </select>
               </td>
               <td>상태</td>
-              <td><input type="text"/></td>
+              <td>
+              <select size={1} name="state" value={cntrctinfo.state || ""} onChange={attendInputChange}>
+                <option value="Y">계약</option>
+                <option value="N">만료</option>
+              </select>
+              </td>
             </tr>
             <tr>
               <td>계약일자</td>
-              <td><input type="date"/></td>
+              <td><input type="date" name="cntcrt_date" value={cntrctinfo.cntcrt_date || ""} onChange={attendInputChange} /></td>
               <td>만료일자</td>
-              <td><input type="date"/></td>
+              <td><input type="date" name="exp_date" value={cntrctinfo.exp_date || ""} onChange={attendInputChange} /></td>
             </tr>
             <tr>
               <td>결제일자</td>
-              <td><input type="date"/></td>
+              <td><input type="date" name="pmt_date" value={cntrctinfo.pmt_date || ""} onChange={attendInputChange} /></td>
               <td>해지일자</td>
-              <td><input type="date"/></td>
+              <td><input type="date" name="ter_date" value={cntrctinfo.ter_date || ""} onChange={attendInputChange} /></td>
             </tr>
             <tr>
               <td>비콘사용여부</td>
-              <td><input type="text"/></td>
+              <td>
+              <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={attendInputChange}>
+                <option value="Y">Y</option>
+                <option value="N">N</option>
+              </select>
+              </td>
               <td>비콘설치개수</td>
-              <td><input type="text"/></td>
+              <td><input type="text" name="be" value={cntrctinfo.be || ""} onChange={attendInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -728,7 +684,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <tbody>
             <tr>
               <td>월차정산기준</td>
-              <td><input placeholder="회계년도 / 입사월"/></td>
+              <td><input type="text" placeholder="회계년도 / 입사월" name="mtyvc_stl_std" value={cntrctinfo.mtyvc_stl_std || ""} onChange={attendInputChange} /></td>
               <td></td>
               <td></td>
             </tr>
