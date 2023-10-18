@@ -87,8 +87,9 @@ const SSaveBtn = styled.button`
 
 const EmployeeDetail = () => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
-  const login_id = infos.login_id; // 로그인한 사원아이디
-  const login_no = infos.empl_no; // 로그인한 사원번호, user계정은 사원번호가 3이라 3번의 정보가 나온다
+  const login_no = infos.empl_no; // 로그인 id 사원번호
+  const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+  const corp_no = infos.corp_no; // 회사 id
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -101,7 +102,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailtable/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailtable/?empl_id_detail=${id}&corp_no=${corp_no}`)
         .then((response) => {
           setTable(response.data);
         })
@@ -109,8 +110,8 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-    if (login_id == "user") {
-      axios.get(`http://13.125.117.184:8000/get_detailtable/?empl_id_detail=${login_no}`)
+    if (perm == "21") {
+      axios.get(`http://13.125.117.184:8000/get_detailtable/?empl_id_detail=${login_no}&corp_no=${corp_no}`)
         .then((response) => {
           setTable(response.data);
         })
@@ -122,7 +123,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailattend/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailattend/?empl_id_detail=${id}&corp_no=${corp_no}`)
         .then((response) => {
           setTableAtend(response.data);
         })
@@ -130,8 +131,8 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-    if (login_id == "user") {
-      axios.get(`http://13.125.117.184:8000/get_detailattend/?empl_id_detail=${login_no}`)
+    if (perm == "21") {
+      axios.get(`http://13.125.117.184:8000/get_detailattend/?empl_id_detail=${login_no}&corp_no=${corp_no}`)
         .then((response) => {
           setTableAtend(response.data);
         })
@@ -143,7 +144,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailsalary/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailsalary/?empl_id_detail=${id}&corp_no=${corp_no}`)
         .then((response) => {
           setTableSalary(response.data);
         })
@@ -151,8 +152,8 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-    if (login_id == "user") {
-      axios.get(`http://13.125.117.184:8000/get_detailsalary/?empl_id_detail=${login_no}`)
+    if (perm == "21") {
+      axios.get(`http://13.125.117.184:8000/get_detailsalary/?empl_id_detail=${login_no}&corp_no=${corp_no}`)
         .then((response) => {
           setTableSalary(response.data);
         })
@@ -164,7 +165,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailfrgnr/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailfrgnr/?empl_id_detail=${id}&corp_no=${corp_no}`)
         .then((response) => {
           setTableFrgnr(response.data);
         })
@@ -172,8 +173,8 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-    if (login_id == "user") {
-      axios.get(`http://13.125.117.184:8000/get_detailfrgnr/?empl_id_detail=${login_no}`)
+    if (perm == "21") {
+      axios.get(`http://13.125.117.184:8000/get_detailfrgnr/?empl_id_detail=${login_no}&corp_no=${corp_no}`)
         .then((response) => {
           setTableFrgnr(response.data);
         })
@@ -185,7 +186,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`http://13.125.117.184:8000/get_detailtablefmly/?empl_id_detail=${id}`)
+      axios.get(`http://13.125.117.184:8000/get_detailtablefmly/?empl_id_detail=${id}&corp_no=${corp_no}`)
         .then((response) => {
           setTablefmly(response.data);
         })
@@ -193,8 +194,8 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-    if (login_id == "user") {
-      axios.get(`http://13.125.117.184:8000/get_detailtablefmly/?empl_id_detail=${login_no}`)
+    if (perm == "21") {
+      axios.get(`http://13.125.117.184:8000/get_detailtablefmly/?empl_id_detail=${login_no}&corp_no=${corp_no}`)
         .then((response) => {
           setTablefmly(response.data);
         })
@@ -218,7 +219,7 @@ const EmployeeDetail = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-            {(login_id == "user") ? (<EmployeeDetailTable id={login_no} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)
+            {(perm == "21") ? (<EmployeeDetailTable id={login_no} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)
               : (<EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)}
             <EmployeeDetailFamilyTable tablefmly={tablefmly} />
           </CCard>

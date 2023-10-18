@@ -235,9 +235,9 @@ const EmployeeManage = () => {
                   <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
                   <select size={1} name="employmentType" onChange={handleSelectChange}>
                     <option value="">선택</option>
-                    {employmentType.map((employmentType) => (
-                      <option key={employmentType.scode} value={employmentType.scode}>
-                        {employmentType.cd_val}
+                    {employmentType.map((empl) => (
+                      <option key={empl.scode} value={empl.scode}>
+                        {empl.cd_val}
                       </option>
                     ))}
                   </select>

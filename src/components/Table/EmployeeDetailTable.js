@@ -352,32 +352,46 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const login_no = infos.empl_no; // 사원번호
+  const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+  const corp_no = infos.corp_no; // 회사 id'
+  const login_id = infos.login_id; // 로그인 id
+  const nav_url = '/' + login_id + '/employee';
   //정규식필요
 
   const [employeeInfo, setEmployeeInfo] = useState({
+    corp_no: '',
     dept_no: '',
+    dept_nm: '',
     empl_no: '',
+    empl_rspofc: '',
     empl_nm: '',
-    ssid: '',
-    gender: '남',
-    brthdy: '',
-    lunisolar: '양',
-    mrig_yn: 'X',
-    mrig_anvsry: '',
-    tel_no: '',
-    mobile_no: '',
-    ssid_addr: '',
-    rlsdnc_addr: '',
-    email: '',
-    prsl_email: '',
-    exctv_yn: '',
-    rspofc: '',
-    emplym_form: '상용',
-    salary_form: '시급',
-    encpnd: '',
-    hffc_state: '재직',
-    retire_date: '',
-    frgnr_yn: 'X',
+    empl_gender: '',
+    empl_mrig_yn: '',
+    empl_prsl_email: '',
+    empl_brthdy: '',
+    empl_lscld: '',
+    empl_lunisolar: '',
+    empl_hffc_state: '',
+    empl_exctv_yn: '',
+    empl_photoid: '',
+    empl_frgnr_yn: '',
+    empl_telno: '',
+    empl_mobile_no: '',
+    empl_retire_date: '',
+    empl_salary_form: '',
+    empl_ssid: '',
+    empl_email: '',
+    empl_emplyn_form: '',
+    empl_mrig_anvsry: '',
+    empl_ssid_addr: '',
+    empl_rlsdnc_addr: '',
+    empl_encpnd: '',
+    empl_reg_dtime: '',
+    empl_reg_id: '',
+    empl_upt_dtime: '',
+    empl_upt_id: '',
   });
 
   useEffect(() => {
@@ -512,7 +526,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const [role, setRole] = useState([]);
 
   useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_role/')
+    axios.get(`http://13.125.117.184:8000/get_role/?corp_no=${corp_no}`)
       .then((response) => {
         setRole(response.data);
       })
@@ -551,16 +565,39 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
         console.error('API 호출 에러:', error);
       });
   };
+  const [employmentType, setEmploymentType] = useState([]); // 고용형태 데이터
+  useEffect(() => {
+    // 백엔드에서 고용형태 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_codeEmploymentType/")
+      .then((response) => {
+        setEmploymentType(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  const infos = JSON.parse(localStorage.getItem('user_info'));
-  const login_id = infos.login_id;
-  const nav_url = '/' + login_id + '/employee';
+  }, []);
+
+  const [salaryform, setSalaryform] = useState([]); // 급여형태 데이터
+  useEffect(() => {
+    // 백엔드에서 급여형태 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_codesalaryform/")
+      .then((response) => {
+        setSalaryform(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+
 
   return (
     <SWrapper>
       <SCompanyInfo>
         <SButtonContainer>
-          {(login_id == 'user') ? null :
+          {(perm == '21') ? null :
             id ? (
               <>
                 <CButton color="primary" variant="outline" onClick={handleUpdate}>수정</CButton>
@@ -606,13 +643,13 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
                   <CTableRow>
                     <CTableDataCell>주민등록번호</CTableDataCell>
                     <CTableDataCell>
-                      <input type="text" name="ssid" value={employeeInfo.ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요" />
+                      <input type="text" name="empl_ssid" value={employeeInfo.empl_ssid || ""} onChange={employeeInputChange} maxLength={13} placeholder="'-'를 빼고 적어주세요" />
                     </CTableDataCell>
                     <CTableDataCell>성별</CTableDataCell>
                     <CTableDataCell>
-                      <select size={1} name="gender" value={employeeInfo.gender || ""} onChange={employeeInputChange}>
-                        <option value="남">남</option>
-                        <option value="녀">녀</option>
+                      <select size={1} name="empl_gender" value={employeeInfo.empl_gender || ""} onChange={employeeInputChange}>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
                       </select>
                     </CTableDataCell>
                   </CTableRow>
@@ -620,13 +657,14 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
                   <CTableRow>
                     <CTableDataCell>생년월일</CTableDataCell>
                     <CTableDataCell>
-                      <input type="date" name="brthdy" value={employeeInfo.brthdy || ""} onChange={employeeInputChange} />
+                      <input type="date" name="empl_brthdy" value={employeeInfo.empl_brthdy || ""} onChange={employeeInputChange} />
                     </CTableDataCell>
                     <CTableDataCell>양력/음력</CTableDataCell>
                     <CTableDataCell>
-                      <select size={1} name="lunisolar" value={employeeInfo.lunisolar || ""} onChange={employeeInputChange}>
-                        <option value="양">양</option>
-                        <option value="음">음</option>
+                      {/* empl_lunisolar는 양력과 음력으로 출력하기 위한 변수, 실제값은 empl_lscld 이다 */}
+                      <select size={1} name="empl_lunisolar" value={employeeInfo.empl_lunisolar || ""} onChange={employeeInputChange}>
+                        <option value="1">양</option>
+                        <option value="2">음</option>
                       </select>
                     </CTableDataCell>
                   </CTableRow>
@@ -634,14 +672,14 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
                   <CTableRow>
                     <CTableDataCell>결혼유무</CTableDataCell>
                     <CTableDataCell>
-                      <select size={1} name="mrig_yn" value={employeeInfo.mrig_yn || ""} onChange={employeeInputChange}>
-                        <option value="N">X</option>
-                        <option value="Y">O</option>
+                      <select size={1} name="empl_mrig_yn" value={employeeInfo.empl_mrig_yn || ""} onChange={employeeInputChange}>
+                        <option value="N">N</option>
+                        <option value="Y">Y</option>
                       </select>
                     </CTableDataCell>
                     <CTableDataCell>결혼기념일</CTableDataCell>
                     <CTableDataCell>
-                      <input type="date" name="mrig_anvsry" value={employeeInfo.mrig_anvsry || ""} onChange={employeeInputChange} />
+                      <input type="date" name="empl_mrig_anvsry" value={employeeInfo.empl_mrig_anvsry || ""} onChange={employeeInputChange} />
                     </CTableDataCell>
                   </CTableRow>
                 </CTableBody>
@@ -658,22 +696,22 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
         <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
           <tbody>
             <tr>
-              <td>회사 전화번호</td>
-              <td><input type="text" name="tel_no" value={employeeInfo.tel_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
+              <td>전화번호</td>
+              <td><input type="text" name="empl_telno" value={employeeInfo.empl_telno || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
               <td>휴대폰 번호</td>
-              <td><input type="text" name="mobile_no" value={employeeInfo.mobile_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
+              <td><input type="text" name="empl_mobile_no" value={employeeInfo.empl_mobile_no || ""} onChange={employeeInputChange} placeholder="'-'를 빼고 적어주세요" /></td>
             </tr>
             <tr>
               <td>주민등록 주소</td>
-              <td><input type="text" name="ssid_addr" value={employeeInfo.ssid_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="empl_ssid_addr" value={employeeInfo.empl_ssid_addr || ""} onChange={employeeInputChange} /></td>
               <td>실거주지 주소</td>
-              <td><input type="text" name="rlsdnc_addr" value={employeeInfo.rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="empl_rlsdnc_addr" value={employeeInfo.empl_rlsdnc_addr || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
               <td>이메일</td>
-              <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="empl_email" value={employeeInfo.empl_email || ""} onChange={employeeInputChange} /></td>
               <td>개인 이메일</td>
-              <td><input type="text" name="prsl_email" value={employeeInfo.prsl_email || ""} onChange={employeeInputChange} /></td>
+              <td><input type="text" name="empl_prsl_email" value={employeeInfo.empl_prsl_email || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -688,7 +726,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
             <tr>
               <td>부서명</td>
               <td>
-                <select size={1} name="dept_no" value={employeeInfo.dept_no || ""} onChange={employeeInputChange}>
+                <select size={1} name="dept_nm" value={employeeInfo.dept_nm || ""} onChange={employeeInputChange}>
                   {departments.map((dept) => (
                     <option key={dept.id} value={dept.id}>
                       {dept.name}
@@ -698,55 +736,59 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
               </td>
               <td>임원여부</td>
               <td>
-                <select size={1} name="exctv_yn" value={employeeInfo.exctv_yn || ""} onChange={employeeInputChange}>
-                  <option value="N">X</option>
-                  <option value="Y">O</option>
+                <select size={1} name="empl_exctv_yn" value={employeeInfo.empl_exctv_yn || ""} onChange={employeeInputChange}>
+                  <option value="N">N</option>
+                  <option value="Y">Y</option>
                 </select>
               </td>
             </tr>
             <tr>
               <td>직책</td>
               <td>
-                <select size={1} name="rspofc" value={employeeInfo.rspofc || ""} onChange={employeeInputChange}>
+                <select size={1} name="empl_rspofc" value={employeeInfo.empl_rspofc || ""} onChange={employeeInputChange}>
                   {role.map((roles) => (
-                    <option key={roles.lcode} value={roles.CD_VAL}>
-                      {roles.CD_VAL}
-                    </option>
+                    (roles.state === '1') ?
+                      (<option key={roles.ofcps} value={roles.ofcps}>
+                        {roles.ofcps_nm}
+                      </option>) : (null)
                   ))}
                 </select>
               </td>
               <td>고용형태</td>
               <td>
-                <select size={1} name="emplym_form" value={employeeInfo.emplym_form || ""} onChange={employeeInputChange}>
-                  <option value="상용">상용</option>
-                  <option value="계약">계약</option>
-                  <option value="일용">일용</option>
+                <select size={1} name="empl_emplyn_form" value={employeeInfo.empl_emplyn_form || ""} onChange={employeeInputChange}>
+                  {employmentType.map((empl) => (
+                    <option key={empl.scode} value={empl.scode}>
+                      {empl.cd_val}
+                    </option>
+                  ))}
                 </select>
               </td>
             </tr>
             <tr>
               <td>급여형태</td>
               <td>
-                <select size={1} name="salary_form" value={employeeInfo.salary_form || ""} onChange={employeeInputChange}>
-                  <option value="시급">시급</option>
-                  <option value="월급">월급</option>
-                  <option value="연봉">연봉</option>
+                <select size={1} name="empl_salary_form" value={employeeInfo.empl_salary_form || ""} onChange={employeeInputChange}>
+                  {salaryform.map((salary) => (
+                    <option key={salary.scode} value={salary.scode}>
+                      {salary.cd_val}
+                    </option>
+                  ))}
                 </select>
               </td>
               <td>입사일자</td>
-              <td><input type="date" name="encpnd" value={employeeInfo.encpnd || ""} onChange={employeeInputChange} /></td>
+              <td><input type="date" name="empl_encpnd" value={employeeInfo.empl_encpnd || ""} onChange={employeeInputChange} /></td>
             </tr>
             <tr>
               <td>재직상태</td>
               <td>
-                <select size={1} name="hffc_state" value={employeeInfo.hffc_state || ""} onChange={employeeInputChange}>
-                  <option value="재직">재직</option>
-                  <option value="퇴사">퇴사</option>
-                  <option value="휴직">휴직</option>
+                <select size={1} name="empl_hffc_state" value={employeeInfo.empl_hffc_state || ""} onChange={employeeInputChange}>
+                  <option value="1">재직</option>
+                  <option value="2">퇴사</option>
                 </select>
               </td>
               <td>퇴사일자</td>
-              <td><input type="date" name="retire_date" value={employeeInfo.retire_date || ""} onChange={employeeInputChange} /></td>
+              <td><input type="date" name="empl_retire_date" value={employeeInfo.empl_retire_date || ""} onChange={employeeInputChange} /></td>
             </tr>
           </tbody>
         </table>
