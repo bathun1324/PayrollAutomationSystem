@@ -136,9 +136,10 @@ const EmployeeManage = () => {
 
 
   //const newEmployeePage = navigate(`./employeedetail`);
-  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
-  const [searchtext, setSearchtext] = useState([]);
-  const [searchresult, setSearchResult] = useState([]);
+  const [departments, setDepartments] = useState([]); // 부서데이터
+  const [searchtext, setSearchtext] = useState([]); // 검색 데이터
+  const [searchresult, setSearchResult] = useState([]); // 테이블 데이터
+  const [employmentType, setEmploymentType] = useState([]); // 고용형태 데이터
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
@@ -153,7 +154,18 @@ const EmployeeManage = () => {
   }, []);
 
   useEffect(() => {
-    // 백엔드에서 부서 데이터 가져오기
+    // 백엔드에서 고용형태 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_codeEmploymentType/")
+      .then((response) => {
+        setEmploymentType(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
+  useEffect(() => {
     axios.get("http://13.125.117.184:8000/get_employees/")
       .then((response) => {
         setSearchResult(response.data);
@@ -207,7 +219,7 @@ const EmployeeManage = () => {
                   <select size={1} name="department" onChange={handleSelectChange}>
                     <option value="">선택</option>
                     {departments.map((dept) => (
-                      <option key={dept.id} value={dept.nm}>
+                      <option key={dept.id} value={dept.id}>
                         {dept.name}
                       </option>
                     ))}
@@ -223,16 +235,17 @@ const EmployeeManage = () => {
                   <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
                   <select size={1} name="employmentType" onChange={handleSelectChange}>
                     <option value="">선택</option>
-                    <option value="상용">상용</option>
-                    <option value="계약">계약</option>
-                    <option value="일용">일용</option>
+                    {employmentType.map((employmentType) => (
+                      <option key={employmentType.scode} value={employmentType.scode}>
+                        {employmentType.cd_val}
+                      </option>
+                    ))}
                   </select>
                   <span>&nbsp;&nbsp;재직여부:&nbsp;</span>
                   <select size={1} name="employmentStatus" onChange={handleSelectChange}>
                     <option value="">선택</option>
-                    <option value="재직">재직</option>
-                    <option value="퇴사">퇴사</option>
-                    <option value="휴직">휴직</option>
+                    <option value="1">재직</option>
+                    <option value="2">퇴사</option>
                   </select>
                 </CCol>
                 <CCol className="gap-2 d-flex justify-content-end ">
