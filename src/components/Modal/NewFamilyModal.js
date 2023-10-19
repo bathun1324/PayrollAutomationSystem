@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import ModalTemplate from "./ModalTemplate";
 import { useState, useEffect } from "react";
-
+import axios from 'axios';  // axios를 임포트하여 API 호출에 사용
+import { CButton } from '@coreui/react'
 
 const SContainer = styled.div`
   display: flex;
@@ -54,9 +55,9 @@ const SModalTable = styled.div`
   font-size: 1.1em;
   
   table {    
-    width: 90%;
+    width: 100%;
     height: 70%;
-    text-align: right;
+    text-align: center;
   }
   
   
@@ -67,7 +68,11 @@ const SModalTable = styled.div`
     vertical-align: middle;
 
     :nth-child(odd) {
-      background-color: ${({theme}) => theme.colors.blue010};
+      background-color: rgb(234, 234, 234);
+      width: 25%;
+    }
+    :nth-child(even) {
+      width: 25%;
     }
 
 
@@ -84,7 +89,7 @@ const SButtonCotainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 0.8em;
-  width: 80%;
+  width: 90%;
 
   padding: 1.5em 0;
 
@@ -96,7 +101,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -111,7 +116,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -121,16 +126,38 @@ border: none;
 `
 
 
-const NewFamilyModal = ({isOpen, closeModal, parentFunction} ) => {
+const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
+
+  const [fmlyreltn, setFmlyreltn] = useState([]); // 가족관계 데이터
+  useEffect(() => {
+    // 백엔드에서 가족관계 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_codefmlyreltn/")
+      .then((response) => {
+        setFmlyreltn(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+
 
   const [data, setdata] = useState({
-    constnt_type: '',
-    reltn: '',
+    empl_no: '',
+    corp_no: '',
+    dept_no: '',
+    fmly_no: '',
+    reltn: '0001',
     constnt_nm: '',
     brthdy: '',
-    livtgt_yn: 'Y',
-    dednhope_yn: 'Y',
-    dspsn_yn: 'Y'
+    livtgt_yn: '',
+    dednhope_yn: '',
+    dspsn_yn: '',
+    remark: '',
+    reg_dtime: '',
+    reg_id: '',
+    upt_dtime: '',
+    upt_id: '',
   });
 
   const fmlyChange = (event) => {
@@ -149,51 +176,61 @@ const NewFamilyModal = ({isOpen, closeModal, parentFunction} ) => {
           <table>
             <tbody>
               <tr>
-                <td>구성원구분</td>
-                <td><input type="text" name="constnt_type" value={data.constnt_type} onChange={fmlyChange}/></td>
+                <td>번호</td>
+                <td>자동채번됩니다</td>
                 <td>관계</td>
-                <td><input type="text" name="reltn" value={data.reltn} onChange={fmlyChange}/></td>
+                <td>
+                  <select size={1} name="reltn" value='0001' onChange={fmlyChange}>
+                    {fmlyreltn.map((reltn) => (
+                      <option key={reltn.scode} value={reltn.scode}>
+                        {reltn.cd_val}
+                      </option>
+                    ))}
+                  </select></td>
               </tr>
+
+
               <tr>
-                <td>이름</td>
-                <td><input type="text" name="constnt_nm" value={data.constnt_nm} onChange={fmlyChange}/></td>
+                <td>성명</td>
+                <td><input type="text" name="constnt_nm" value={data.constnt_nm} onChange={fmlyChange} /></td>
                 <td>생년월일</td>
-                <td><input type="date" name="brthdy" value={data.brthdy} onChange={fmlyChange}/></td>
+                <td><input type="date" name="brthdy" value={data.brthdy} onChange={fmlyChange} /></td>
               </tr>
               <tr>
+                {/* 동거여부 = 거주여부 */}
                 <td>동거여부</td>
                 <td>
                   <select size={1} name="livtgt_yn" value={data.livtgt_yn} onChange={fmlyChange}>
-                    <option value="Y">O</option>
-                    <option value="N">X</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
                   </select>
                 </td>
                 <td>공제희망여부</td>
-                <td>                
-                  <select size={1} name="dednhope_yn" value={data.dednhope_yn} onChange={fmlyChange}> 
-                    <option value="Y">O</option>
-                    <option value="N">X</option>
+                <td>
+                  <select size={1} name="dednhope_yn" value={data.dednhope_yn} onChange={fmlyChange}>
+                    <option value="O">O</option>
+                    <option value="X">X</option>
                   </select>
                 </td>
-                </tr>
-                <tr>
+              </tr>
+              <tr>
                 <td>장애인여부</td>
-                <td>                
+                <td>
                   <select size={1} name="dspsn_yn" value={data.dspsn_yn} onChange={fmlyChange}>
-                    <option value="Y">O</option>
-                    <option value="N">X</option>
+                    <option value="O">O</option>
+                    <option value="X">X</option>
                   </select>
                 </td>
                 <td></td>
-                <td>                
+                <td>
                 </td>
               </tr>
             </tbody>
           </table>
         </SModalTable>
         <SButtonCotainer>
-          <SCancleButton onClick={closeModal}>취소</SCancleButton>
-          <SSaveButton onClick={() => { closeModal(); parentFunction(data); }}>저장</SSaveButton>
+          <CButton color="dark" variant="outline" onClick={closeModal}>취소</CButton>
+          <CButton color="danger" variant="outline" onClick={() => { closeModal(); parentFunction(data); }}>저장</CButton>
         </SButtonCotainer>
       </SModalBody>
     </SContainer>

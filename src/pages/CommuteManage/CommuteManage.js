@@ -259,7 +259,7 @@ const CommuteManage = () => {
                   </CCol>
                   <CCol className="gap-2 d-flex justify-content-end">
                     <CButton color="dark" variant="outline" onClick={openModal}>검색</CButton>
-                    <CommuteModal isOpen={isModalOpen} closeModal={closeModal} departments={departments}/>
+                    <CommuteModal isOpen={isModalOpen} closeModal={closeModal} departments={departments} />
                     <CButton color="dark" variant="outline">내보내기</CButton>
                     <CButton color="dark" variant="outline">인쇄</CButton>
                   </CCol>
@@ -271,8 +271,8 @@ const CommuteManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <CommuteTimeTable departments={departments}/>
-              <CommuteTable departments={departments}/>
+              <CommuteTimeTable departments={departments} />
+              <CommuteTable departments={departments} />
             </CCard>
           </CContainer>
         </div>

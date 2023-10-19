@@ -94,11 +94,11 @@ const EmployeeDetail = () => {
 
   const { id } = useParams();
 
-  const [table, setTable] = useState([]);
-  const [tableattend, setTableAtend] = useState([]);
-  const [tablesalary, setTableSalary] = useState([]);
-  const [tablefrgnr, setTableFrgnr] = useState([]);
-  const [tablefmly, setTablefmly] = useState([]);
+  const [table, setTable] = useState([]); // HRM_EMPL 기본정보 ~ 부서정보
+  const [tableattend, setTableAtend] = useState([]); // HRM_ATEND 근태정보
+  const [tablesalary, setTableSalary] = useState([]); // HRM_SALARY 급여정보
+  const [tablefrgnr, setTableFrgnr] = useState([]); // HRM_FRGNR 외국인정보
+  const [tablefmly, setTablefmly] = useState([]); // 가족사항
 
   useEffect(() => {
     if (id) {

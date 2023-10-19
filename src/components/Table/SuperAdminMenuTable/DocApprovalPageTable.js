@@ -58,8 +58,8 @@ table tr:nth-child(even) {
   
   
   `;
-  
-  const SNoDataMsg = styled.td`
+
+const SNoDataMsg = styled.td`
   height: 500px;
   padding: 150px;
   
@@ -67,14 +67,14 @@ table tr:nth-child(even) {
   justify-content: center;
   margin-top: 100px;
   `;
-  
-  const PaginationContainer = styled.div`
+
+const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
   `;
-  
+
 const PaginationButton = styled.button`
 display: flex;
 justify-content: center;
@@ -88,7 +88,7 @@ border-radius: 5px;
 background-color: transparent;
 font-size: 1.1em;
 font-weight: 550;
-color:  ${({theme}) => theme.colors.blue090};
+color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const SButtonContainer = styled.div`
@@ -105,13 +105,13 @@ width: 7%;
 height: 25px;
 color: white;
 font-size: 0.7em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
 
 &:hover{  
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   filter: brightness(80%);
 }
 
@@ -121,10 +121,10 @@ ${mobile(css`
 
 `
 const SRejectButton = styled(SApprovalButton)`
-background-color: ${({theme}) => theme.colors.red010};
+background-color: ${({ theme }) => theme.colors.red010};
 
 &:hover{  
-  background-color: ${({theme}) => theme.colors.red010};
+  background-color: ${({ theme }) => theme.colors.red010};
   filter: brightness(80%);
 }
 `
@@ -132,13 +132,13 @@ background-color: ${({theme}) => theme.colors.red010};
 
 const DocApprovalPageTable = () => {
   const navigate = useNavigate();
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
-  
+
   // const [tests, setTest] = useState( [] );
   // useEffect( () =>{
   //   fetch('http://13.125.117.184:8000/test/')
@@ -149,18 +149,18 @@ const DocApprovalPageTable = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  
-// 신청서 종류에 따라 해당 id로 라우팅되게 고치기
-const navigateToVacationForm = () => {
-  navigate('../user/vacation/vacationform');
-};
+
+  // 신청서 종류에 따라 해당 id로 라우팅되게 고치기
+  const navigateToVacationForm = () => {
+    navigate('../user/vacation/vacationform');
+  };
 
   const renderTableRows = () => {
     return currentItems.map((companydata) => (
 
       <tr key={companydata.company.companyId}>
-        <td><input type="checkbox"/></td>
-        <td  onClick={navigateToVacationForm}>{"휴가신청서"}</td>
+        <td><input type="checkbox" /></td>
+        <td onClick={navigateToVacationForm}>{"휴가신청서"}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -188,7 +188,7 @@ const navigateToVacationForm = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -198,7 +198,7 @@ const navigateToVacationForm = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
@@ -212,7 +212,7 @@ const navigateToVacationForm = () => {
       <table>
         <thead>
           <tr>
-            <th><input type="checkbox"/></th>
+            <th><input type="checkbox" /></th>
             <th>종류</th>
             <th>신청인</th>
             <th>부서</th>
@@ -228,16 +228,16 @@ const navigateToVacationForm = () => {
             <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+    </TableContainer>
+  );
+};
 
 
 export default DocApprovalPageTable;
-              
+

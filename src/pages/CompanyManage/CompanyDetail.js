@@ -43,7 +43,7 @@ const SCategory = styled.div`
   padding: 10px 0px;
   font-size: 28px;
   font-weight: 600;
-  color: ${({theme}) => theme.colors.black110};
+  color: ${({ theme }) => theme.colors.black110};
 
 `
 const SButtonContainer = styled.div`
@@ -59,7 +59,7 @@ flex-wrap: wrap;
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -75,12 +75,12 @@ const SSaveBtn = styled.button`
   height: 40px;
   color: white;
   font-size: 0.8em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
   &:hover{  
-    background-color : ${({theme}) => theme.colors.blue010};
+    background-color : ${({ theme }) => theme.colors.blue010};
   }
 `
 
@@ -119,11 +119,11 @@ const CompanyDetail = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-            <CompanyDetailTable companyId={companyId}/>
+            <CompanyDetailTable companyId={companyId} />
           </CCard>
         </div>
       </div>
-    </div> 
+    </div>
 
   )
 

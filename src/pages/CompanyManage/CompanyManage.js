@@ -201,7 +201,7 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <CompanyTable companymanage={companymanage}/>
+              <CompanyTable companymanage={companymanage} />
             </CCard>
           </CContainer>
         </div>

@@ -408,27 +408,27 @@ const AttendanceManage = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-                  <TableContainer>
-      <div>
-        {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
-      </div>
-      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
-        <AgGridReact
-          onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
-          defaultColDef={defaultColDef}
-          rowData={attendancemanage}
-          columnDefs={columnDefs}
-          onSelectionChanged={onSelectionChanged}
-          gridOptions={gridOptions}
-          style={{ textAlign: 'center' }}
-          pagination={true}
-          paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
-          onRowClicked={RowClicked}
-        // domLayout="autoHeight"
-        >
-        </AgGridReact>
-      </div>
-    </TableContainer>
+              <TableContainer>
+                <div>
+                  {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
+                </div>
+                <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+                  <AgGridReact
+                    onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                    defaultColDef={defaultColDef}
+                    rowData={attendancemanage}
+                    columnDefs={columnDefs}
+                    onSelectionChanged={onSelectionChanged}
+                    gridOptions={gridOptions}
+                    style={{ textAlign: 'center' }}
+                    pagination={true}
+                    paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                    onRowClicked={RowClicked}
+                  // domLayout="autoHeight"
+                  >
+                  </AgGridReact>
+                </div>
+              </TableContainer>
             </CCard>
           </CContainer>
         </div>

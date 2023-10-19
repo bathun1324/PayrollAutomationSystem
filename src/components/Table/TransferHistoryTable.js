@@ -44,7 +44,7 @@ const TableContainer = styled.div`
     color: rgb(40, 40, 40);
     cursor: pointer;
     :hover {
-      color: ${({theme}) => (theme.colors.blue090)}
+      color: ${({ theme }) => (theme.colors.blue090)}
     }
   }
 
@@ -81,7 +81,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const TransferHistoryTable = () => {
@@ -93,11 +93,11 @@ const TransferHistoryTable = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
 
-  const [tests, setTest] = useState( [] );
-  useEffect( () =>{
+  const [tests, setTest] = useState([]);
+  useEffect(() => {
     fetch('http://13.125.117.184:8000/test/')
-      .then( res => res.json())
-      .then( data => console.log(data))
+      .then(res => res.json())
+      .then(data => console.log(data))
   }, [])
 
   const handlePageChange = (pageNumber) => {
@@ -108,7 +108,7 @@ const TransferHistoryTable = () => {
     console.log('테이블 출력되는중');
   }
 
-  
+
   const renderTableRows = () => {
     return currentItems.map((companydata) => (
       <tr key={companydata.company.companyId}>
@@ -124,39 +124,39 @@ const TransferHistoryTable = () => {
       </tr>
     ));
   };
-  
+
   const renderPaginationButtons = () => {
     const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-    
+
     const handlePrevPage = () => {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
     };
-    
+
     const handleNextPage = () => {
       if (currentPage < pageNumbers) {
         setCurrentPage(currentPage + 1);
       }
     };
-    
+
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
-          key={index + 1}
-          onClick={() => handlePageChange(index + 1)}
-          active={index + 1 === currentPage}
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            active={index + 1 === currentPage}
           >
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
-  
+
   return (
     <TableContainer>
       <table>
@@ -176,19 +176,19 @@ const TransferHistoryTable = () => {
         <tbody>
           {currentItems.length > 0 ? (
             renderTableRows()
-            ) : (
-              <tr>
+          ) : (
+            <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+    </TableContainer>
+  );
+};
 
 
 export default TransferHistoryTable;

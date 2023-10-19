@@ -51,7 +51,7 @@ const TableContainer = styled.div`
     color: rgb(40, 40, 40);
     cursor: pointer;
     :hover {
-      color: ${({theme}) => (theme.colors.blue090)}
+      color: ${({ theme }) => (theme.colors.blue090)}
     }
   }
 
@@ -88,7 +88,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const WorkTimeTable = () => {
@@ -112,162 +112,162 @@ const WorkTimeTable = () => {
   };
 
 
-  
+
   const renderTableRows = () => {
     return (
       <>
-      <tr>
-        <td>{"정상근로"}</td>
-        <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
+        <tr>
+          <td>{"정상근로"}</td>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <td>{"중식시간"}</td>
-          <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-      </tr>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+        </tr>
         <tr>
           <td>{"석식시간"}</td>
-          <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-      </tr>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+        </tr>
         <tr>
           <td>{"야식시간"}</td>
-          <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td><input type="text" placeholder="ex) 18:00"/></td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-        <td>
-          <select size={1}>
-            <option value={1}>예</option>
-            <option value={2}>아니오</option>
-          </select>
-        </td>
-      </tr>
-        </>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td><input type="text" placeholder="ex) 18:00" /></td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+          <td>
+            <select size={1}>
+              <option value={1}>예</option>
+              <option value={2}>아니오</option>
+            </select>
+          </td>
+        </tr>
+      </>
     );
   };
-  
+
   const renderPaginationButtons = () => {
     const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-    
+
     const handlePrevPage = () => {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
     };
-    
+
     const handleNextPage = () => {
       if (currentPage < pageNumbers) {
         setCurrentPage(currentPage + 1);
       }
     };
-    
+
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
-          key={index + 1}
-          onClick={() => handlePageChange(index + 1)}
-          active={index + 1 === currentPage}
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            active={index + 1 === currentPage}
           >
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
-  
+
   return (
     <TableContainer>
       <table>
@@ -286,16 +286,16 @@ const WorkTimeTable = () => {
         <tbody>
           {currentItems.length > 0 ? (
             renderTableRows()
-            ) : (
-              <tr>
+          ) : (
+            <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+    </TableContainer>
+  );
+};
 
 
 export default WorkTimeTable;

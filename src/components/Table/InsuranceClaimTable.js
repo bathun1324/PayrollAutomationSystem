@@ -103,7 +103,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.7em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const InsuranceClaimTable = () => {
@@ -128,7 +128,7 @@ const InsuranceClaimTable = () => {
   const renderTableRows = () => {
     return currentItems.map((companydata) => (
       <tr key={companydata.company.companyId}>
-        <td><input type="checkbox"/></td>
+        <td><input type="checkbox" /></td>
         <td>{companydata.company.companyId}</td>
         <td>홍길동</td>
         <td></td>
@@ -231,7 +231,7 @@ const InsuranceClaimTable = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -241,186 +241,186 @@ const InsuranceClaimTable = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
 
   return (
     <STableWrapper>
-    <TableContainer>
-      <table>
-        <thead>
-          <tr>
-            <th rowSpan={3}><input type="checkbox"/></th>
-            <th rowSpan={3}>사원번호</th>
-            <th rowSpan={3}>직책</th>
-            <th rowSpan={3}>성명</th>
-            <th rowSpan={3}>입사일</th>
-
-            <th colSpan={6}>합계</th>
-
-            <th colSpan={5}>1월</th>
-            <th colSpan={6}>2월</th>
-            <th colSpan={6}>3월</th>
-            <th colSpan={6}>4월</th>
-            <th colSpan={6}>5월</th>
-            <th colSpan={6}>6월</th>
-            <th colSpan={6}>7월</th>
-            <th colSpan={6}>8월</th>
-            <th colSpan={6}>9월</th>
-            <th colSpan={6}>10월</th>
-            <th colSpan={6}>11월</th>
-            <th colSpan={6}>12월</th>
-
-          </tr>
-          <tr>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            {/* 월별 헤더 시작 */}
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            {/* 1월끝 */}
-            {}
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-
-            <th rowSpan={2}>과세기준</th>
-            <th rowSpan={2}>국민연금</th>
-            <th rowSpan={2}>고용보험</th>
-            <th>건강보험</th>
-            <th>건강보험정산</th>
-            <th>소득세</th>
-
-
-            {/* 월별 헤더 끝 */}
-
-          </tr>
-          <tr>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-            <th>장기요양보험</th>
-            <th>장기요양보험정산</th>
-            <th>지방소득세</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.length > 0 ? (
-            renderTableRows()
-          ) : (
+      <TableContainer>
+        <table>
+          <thead>
             <tr>
-              <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
+              <th rowSpan={3}><input type="checkbox" /></th>
+              <th rowSpan={3}>사원번호</th>
+              <th rowSpan={3}>직책</th>
+              <th rowSpan={3}>성명</th>
+              <th rowSpan={3}>입사일</th>
+
+              <th colSpan={6}>합계</th>
+
+              <th colSpan={5}>1월</th>
+              <th colSpan={6}>2월</th>
+              <th colSpan={6}>3월</th>
+              <th colSpan={6}>4월</th>
+              <th colSpan={6}>5월</th>
+              <th colSpan={6}>6월</th>
+              <th colSpan={6}>7월</th>
+              <th colSpan={6}>8월</th>
+              <th colSpan={6}>9월</th>
+              <th colSpan={6}>10월</th>
+              <th colSpan={6}>11월</th>
+              <th colSpan={6}>12월</th>
+
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                  </STableWrapper>
-                );
-              };
+            <tr>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              {/* 월별 헤더 시작 */}
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              {/* 1월끝 */}
+              { }
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+
+              <th rowSpan={2}>과세기준</th>
+              <th rowSpan={2}>국민연금</th>
+              <th rowSpan={2}>고용보험</th>
+              <th>건강보험</th>
+              <th>건강보험정산</th>
+              <th>소득세</th>
+
+
+              {/* 월별 헤더 끝 */}
+
+            </tr>
+            <tr>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+              <th>장기요양보험</th>
+              <th>장기요양보험정산</th>
+              <th>지방소득세</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.length > 0 ? (
+              renderTableRows()
+            ) : (
+              <tr>
+                <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <PaginationContainer>
+          {renderPaginationButtons()}
+        </PaginationContainer>
+      </TableContainer>
+    </STableWrapper>
+  );
+};
 
 
 export default InsuranceClaimTable;
-              
+

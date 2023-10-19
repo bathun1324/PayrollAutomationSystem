@@ -150,7 +150,7 @@ margin-bottom: 1em;
 
 
 
-const EmployeeDetailFamilyTable = () => {
+const EmployeeDetailFamilyTable = ({ tablefmly }) => {
   const navigate = useNavigate();
 
   //가족사항추가모달
@@ -169,17 +169,21 @@ const EmployeeDetailFamilyTable = () => {
     setCurrentPage(pageNumber);
   };
 
+  useEffect(() => {
+    setFamilyData(tablefmly);
+  }, [tablefmly]);
+
   const parentFunction = (x) => {
     setFamilyData([...familyData, x]);
     console.log(familyData); // 배열에 추가된 상태를 확인할 수 있습니다.
   };
 
+
   const renderTableRows = () => {
     return familyData.map((companydata, index) => (
       <tr key={index + 1}>
         <td><input name="fmly_no" value={index + 1} readOnly /></td>
-        <td><input name="constnt_type" value={companydata.constnt_type} readOnly /></td>
-        <td><input name="reltn" value={companydata.reltn} readOnly /></td>
+        <td><input name="reltn_val" value={companydata.reltn_val} readOnly /></td>
         <td><input name="constnt_nm" value={companydata.constnt_nm} readOnly /></td>
         <td><input name="brthdy" value={companydata.brthdy} readOnly /></td>
         <td><input name="livtgt_yn" value={companydata.livtgt_yn} readOnly /></td>
@@ -243,7 +247,7 @@ const EmployeeDetailFamilyTable = () => {
         <SButtonContainer className="gap-2 d-flex justify-content-end" >
           <CButton color="dark" variant="outline" onClick={openModal}>추가</CButton>
           <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
-          <CButton color="dark" variant="outline" onClick={handlepost}>저장</CButton>
+          <CButton color="danger" variant="outline" onClick={handlepost}>저장</CButton>
         </SButtonContainer>
 
       )}
@@ -251,9 +255,8 @@ const EmployeeDetailFamilyTable = () => {
         <thead>
           <tr>
             <th>번호</th>
-            <th>구성원구분</th>
             <th>관계</th>
-            <th>이름</th>
+            <th>성명</th>
             <th>생년월일</th>
             <th>동거여부</th>
             <th>공제희망여부</th>
