@@ -494,7 +494,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   };
 
   const perm = infos.perm_id;
-  const nav_url = ''
+  let nav_url = ''
   if(perm == "01") {
     nav_url = '/superadmin/company';
   }else if(perm == "11"){

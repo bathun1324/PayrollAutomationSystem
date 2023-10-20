@@ -560,7 +560,7 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
   const perm = infos.perm_id;
-  const nav_url = ''
+  let nav_url = ''
   if(perm == "01") {
     nav_url = '/superadmin/employee';
   }else if(perm == "11"){

@@ -357,7 +357,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
   const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
   const corp_no = infos.corp_no; // 회사 id'
   const login_id = infos.login_id; // 로그인 id
-  const nav_url = ''
+  let nav_url = ''
   if(perm == "01") {
     nav_url = '/superadmin/employee';
   }else if(perm == "11"){

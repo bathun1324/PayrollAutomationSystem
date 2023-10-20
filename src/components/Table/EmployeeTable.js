@@ -175,8 +175,8 @@ const EmployeeTable = ({ employees }) => {
       return;
     }
     else {
-      // const nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
-      const nav_url = './employeedetail/' + selectedRowData.empl_no;
+      // let nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
+      let nav_url = './employeedetail/' + selectedRowData.empl_no;
       navigate(nav_url)
     }
   }

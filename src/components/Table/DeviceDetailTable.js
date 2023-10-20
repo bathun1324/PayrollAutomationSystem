@@ -127,7 +127,7 @@ const DeviceDetailTable = ({ id }) => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
   const perm = infos.perm_id;
-  const nav_url = ''
+  let nav_url = ''
   const navigate = useNavigate();
   const btnClick = () => {
     if(perm == "01") {

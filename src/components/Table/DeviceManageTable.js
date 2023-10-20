@@ -138,7 +138,7 @@ const DeviceManageTable = () => {
 
   const RowClicked = (e) => {
     const selectedRowData = e.data;
-    // const nav_url = '/' + login_id + '/device/devicedetail/' + selectedRowData.device_no;
+    // let nav_url = '/' + login_id + '/device/devicedetail/' + selectedRowData.device_no;
     navigate('./devicedetail');
   }
 
