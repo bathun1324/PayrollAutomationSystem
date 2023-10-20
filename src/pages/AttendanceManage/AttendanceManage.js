@@ -314,6 +314,8 @@ const AttendanceManage = () => {
   // 클릭시 상세페이지로 이동
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
+  const perm = infos.perm_id;
+  const nav_url = ''
   const RowClicked = (e) => {
     const selectedRowData = e.data;
     if (login_id == 'user') {
@@ -321,7 +323,13 @@ const AttendanceManage = () => {
       return;
     }
     else {
-      const nav_url = '/' + login_id + '/commute/'
+      if(perm == "01") {
+        nav_url = '/superadmin/commute';
+      }else if(perm == "11"){
+        nav_url = '/admin/commute';
+      }else{
+        nav_url = '/user/commute';
+      }
       // + selectedRowData.empl_no;
       navigate(nav_url)
     }

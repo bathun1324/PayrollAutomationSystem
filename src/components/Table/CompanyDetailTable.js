@@ -493,7 +493,15 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const nav_url = '/' + login_id + '/company';
+  const perm = infos.perm_id;
+  const nav_url = ''
+  if(perm == "01") {
+    nav_url = '/superadmin/company';
+  }else if(perm == "11"){
+    nav_url = '/admin/company';
+  }else{
+    nav_url = '/user/company';
+  }
 
   return (
     <SWrapper>

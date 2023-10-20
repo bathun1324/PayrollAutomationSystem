@@ -88,7 +88,7 @@ const SSaveBtn = styled.button`
 const EmployeeDetail = () => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_no = infos.empl_no; // 로그인 id 사원번호
-  const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+  const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
   const corp_no = infos.corp_no; // 회사 id
   const navigate = useNavigate();
 

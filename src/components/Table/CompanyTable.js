@@ -177,6 +177,8 @@ export const CompanyTable = ( {companymanage} ) => {
 
     const infos = JSON.parse(localStorage.getItem('user_info'));
     const login_id = infos.login_id;
+    const perm = infos.perm_id;
+    const nav_url = ''
     const navigate = useNavigate();
     const RowClicked = (e) => {
       const selectedRowData = e.data;
@@ -185,7 +187,13 @@ export const CompanyTable = ( {companymanage} ) => {
         return;
       }
       else {
-        const nav_url = '/' + login_id + '/company/companydetail/' + selectedRowData.corp_no;
+        if(perm == "01") {
+          nav_url = '/superadmin/company';
+        }else if(perm == "11"){
+          nav_url = '/admin/company';
+        }else{
+          nav_url = '/user/company';
+        }
         navigate(nav_url)
       }
     }

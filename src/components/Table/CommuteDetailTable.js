@@ -559,7 +559,15 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
 
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
-  const nav_url = '/' + login_id + '/employee';
+  const perm = infos.perm_id;
+  const nav_url = ''
+  if(perm == "01") {
+    nav_url = '/superadmin/employee';
+  }else if(perm == "11"){
+    nav_url = '/admin/employee';
+  }else{
+    nav_url = '/user/employee';
+  }
 
   return (
     <SWrapper>

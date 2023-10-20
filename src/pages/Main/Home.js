@@ -178,7 +178,7 @@ const Home = ({ type }) => {
         localStorage.setItem('user_info', JSON.stringify(user_info));
         const infos = JSON.parse(localStorage.getItem('user_info'));
         const login_id = infos.login_id;
-        const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+        const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
         if (perm == '11') {
           navigate('./admin/employeelist');
         } else if (perm == '01') {

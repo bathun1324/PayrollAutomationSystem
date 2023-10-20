@@ -354,10 +354,17 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
 
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_no = infos.empl_no; // 사원번호
-  const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+  const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
   const corp_no = infos.corp_no; // 회사 id'
   const login_id = infos.login_id; // 로그인 id
-  const nav_url = '/' + login_id + '/employee';
+  const nav_url = ''
+  if(perm == "01") {
+    nav_url = '/superadmin/employee';
+  }else if(perm == "11"){
+    nav_url = '/admin/employee';
+  }else{
+    nav_url = '/user/employee';
+  }
   //정규식필요
   const [loginInfo, setLoginInfo] = useState({
     login_id: login_id,

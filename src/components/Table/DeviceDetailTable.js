@@ -126,9 +126,17 @@ const SButtonContainer = styled.div`
 const DeviceDetailTable = ({ id }) => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
+  const perm = infos.perm_id;
+  const nav_url = ''
   const navigate = useNavigate();
   const btnClick = () => {
-    const nav_url = '/' + login_id + '/device';
+    if(perm == "01") {
+      nav_url = '/superadmin/device';
+    }else if(perm == "11"){
+      nav_url = '/admin/device';
+    }else{
+      nav_url = '/user/device';
+    }
     navigate(nav_url);
   }
   return (
