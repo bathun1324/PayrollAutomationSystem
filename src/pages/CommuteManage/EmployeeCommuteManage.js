@@ -332,6 +332,7 @@ const EmployeeCommuteManage = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               <TableContainer id='printableArea'>
               <div>

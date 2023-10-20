@@ -200,6 +200,7 @@ const CompanyManage = ({ userRole, menuItems, iconMapping }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               <CompanyTable companymanage={companymanage}/>
             </CCard>

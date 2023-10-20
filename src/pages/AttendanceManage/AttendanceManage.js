@@ -407,6 +407,7 @@ const AttendanceManage = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
                   <TableContainer>
       <div>

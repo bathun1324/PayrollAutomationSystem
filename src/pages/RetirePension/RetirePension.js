@@ -350,6 +350,7 @@ const RetirePension = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               <TableContainer id='printableArea'>
                 <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>

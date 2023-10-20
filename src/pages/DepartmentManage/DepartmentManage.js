@@ -125,6 +125,7 @@ const DepartmentManage = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               {/* 신규 삭제 */}
               <NewDepartModal isOpen={isModalOpen} closeModal={closeModal} />

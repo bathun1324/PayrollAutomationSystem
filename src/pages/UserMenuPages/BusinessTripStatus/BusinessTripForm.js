@@ -128,6 +128,7 @@ const BusinessTripForm = ({ userRole, menuItems, iconMapping }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               <BusinessTripFormTable />
             </CCard>

@@ -123,6 +123,7 @@ const VacationForm = ({ userRole, menuItems, iconMapping }) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              marginBottom: '4.5rem'
             }}>
               <VacationFormTable />
             </CCard>

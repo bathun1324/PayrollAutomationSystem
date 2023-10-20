@@ -179,6 +179,7 @@ const DeviceManage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: '4.5rem'
           }}>
             <DeviceManageTable />
           </CCard>

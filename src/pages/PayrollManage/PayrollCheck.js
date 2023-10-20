@@ -185,6 +185,7 @@ const PayrollCheck = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: '4.5rem'
           }}>
             <SInfoContainer>
               <div>※ 퇴사자의 경우 해당 퇴사급여년월까지 조회됩니다.</div>

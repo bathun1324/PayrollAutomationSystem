@@ -259,6 +259,7 @@ const EmployeeManage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: '4.5rem'
           }}>
             <EmployeeTable employees={searchresult} />
           </CCard>

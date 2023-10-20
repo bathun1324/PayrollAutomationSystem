@@ -118,6 +118,7 @@ const CompanyDetail = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: '4.5rem',
           }}>
             <CompanyDetailTable companyId={companyId}/>
           </CCard>

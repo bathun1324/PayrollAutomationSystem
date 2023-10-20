@@ -218,6 +218,7 @@ const EmployeeDetail = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: '4.5rem'
           }}>
             {(perm == "21") ? (<EmployeeDetailTable id={login_no} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)
               : (<EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)}
