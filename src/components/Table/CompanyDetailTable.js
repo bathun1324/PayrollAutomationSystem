@@ -495,11 +495,11 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
 
   const perm = infos.perm_id;
   let nav_url = ''
-  if(perm == "01") {
+  if (perm == "01") {
     nav_url = '/superadmin/company';
-  }else if(perm == "11"){
+  } else if (perm == "11") {
     nav_url = '/admin/company';
-  }else{
+  } else {
     nav_url = '/user/company';
   }
 

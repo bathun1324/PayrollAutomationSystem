@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import axios from 'axios';  // axios를 임포트하여 API 호출에 사용
 import { CButton } from '@coreui/react'
 
+
+
 const SContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -72,11 +74,13 @@ const SModalTable = styled.div`
       width: 25%;
     }
     :nth-child(even) {
+      background-color: white;
       width: 25%;
     }
 
 
   input {
+      background-color: white;
       border: none;
       width: 100%;
       height: 100%;
@@ -126,7 +130,7 @@ border: none;
 `
 
 
-const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
+const NewFamilyModal = ({ isOpen, closeModal, parentFunction, userdata }) => {
 
   const [fmlyreltn, setFmlyreltn] = useState([]); // 가족관계 데이터
   useEffect(() => {
@@ -139,7 +143,10 @@ const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
         console.log(error);
       });
 
+
   }, []);
+
+
 
 
   const [data, setdata] = useState({
@@ -148,11 +155,12 @@ const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
     dept_no: '',
     fmly_no: '',
     reltn: '0001',
+    reltn_val: '',
     constnt_nm: '',
     brthdy: '',
-    livtgt_yn: '',
-    dednhope_yn: '',
-    dspsn_yn: '',
+    livtgt_yn: 'Y',
+    dednhope_yn: 'O',
+    dspsn_yn: 'O',
     remark: '',
     reg_dtime: '',
     reg_id: '',
@@ -168,6 +176,35 @@ const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
     });
   };
 
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+  const corp_no = infos.corp_no; // 회사 id'
+  const login_id = infos.login_id; // 로그인 id
+
+  const [loginInfo, setLoginInfo] = useState({
+    login_id: login_id,
+    corp_no: corp_no,
+  });
+
+  const payload = {
+    data: data,
+    loginInfo: loginInfo,
+    userdata: userdata,
+  }
+
+  const Datapost = () => {
+    closeModal();
+    console.log("data", data);
+    axios.post('http://13.125.117.184:8000/post_employeesfmly/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+      .then(response => {
+        console.log('부서 정보 저장 성공:', response.data);
+      })
+      .catch(error => {
+        console.log('error');
+        console.error('API 호출 에러:', error);
+      });
+  };
+
   return (
     <SContainer style={{ display: isOpen ? "block" : "none" }}>
       <SModalBody>
@@ -180,9 +217,9 @@ const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
                 <td>자동채번됩니다</td>
                 <td>관계</td>
                 <td>
-                  <select size={1} name="reltn" value='0001' onChange={fmlyChange}>
+                  <select size={1} name="reltn" onChange={fmlyChange}>
                     {fmlyreltn.map((reltn) => (
-                      <option key={reltn.scode} value={reltn.scode}>
+                      <option key={reltn.scode} value={reltn.scode} >
                         {reltn.cd_val}
                       </option>
                     ))}
@@ -230,7 +267,7 @@ const NewFamilyModal = ({ isOpen, closeModal, parentFunction }) => {
         </SModalTable>
         <SButtonCotainer>
           <CButton color="dark" variant="outline" onClick={closeModal}>취소</CButton>
-          <CButton color="danger" variant="outline" onClick={() => { closeModal(); parentFunction(data); }}>저장</CButton>
+          <CButton color="danger" variant="outline" onClick={Datapost}>저장</CButton>
         </SButtonCotainer>
       </SModalBody>
     </SContainer>

@@ -68,13 +68,6 @@ const SNoDataMsg = styled.td`
   margin-top: 100px;
 `;
 
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-`;
-
 const PaginationButton = styled.button`
   display: flex;
   justify-content: center;
@@ -99,54 +92,6 @@ const SButtonContainer = styled.div`
   gap: 10px;
 `
 
-const SCancleBtn = styled.button`
-flex-wrap: wrap;
-  width: 80px;
-  height: 40px;
-  color: white;
-  font-size: 0.8em;
-  background-color: ${({ theme }) => theme.colors.blue090};
-  border-radius: 3px;
-  border: none;
-
-
-  &:hover{  
-    background-color : skyblue;
-  }
-`
-
-const SSaveBtn = styled.button`
-  flex-wrap: wrap;
-  width: 80px;
-  height: 40px;
-  color: white;
-  font-size: 0.8em;
-  background-color: ${({ theme }) => theme.colors.blue090};
-  border-radius: 3px;
-  border: none;
-  margin-bottom: 1em;
-
-  &:hover{  
-    background-color : skyblue;
-  }
-`
-
-
-const SAddButton = styled.button`
-flex-wrap: wrap;
-width: 80px;
-height: 40px;
-color: white;
-font-size: 0.8em;
-background-color: ${({ theme }) => theme.colors.blue090};
-border-radius: 3px;
-border: none;
-margin-bottom: 1em;
-
-&:hover{  
-  background-color : skyblue;
-}
-`
 
 
 
@@ -175,20 +120,20 @@ const EmployeeDetailFamilyTable = ({ tablefmly }) => {
 
   const parentFunction = (x) => {
     setFamilyData([...familyData, x]);
-    console.log(familyData); // 배열에 추가된 상태를 확인할 수 있습니다.
+    console.log('테이블에 출력되는 데이터 리스트->', familyData); // 배열에 추가된 상태를 확인할 수 있습니다.
   };
 
 
   const renderTableRows = () => {
-    return familyData.map((companydata, index) => (
+    return familyData.map((familyData, index) => (
       <tr key={index + 1}>
         <td><input name="fmly_no" value={index + 1} readOnly /></td>
-        <td><input name="reltn_val" value={companydata.reltn_val} readOnly /></td>
-        <td><input name="constnt_nm" value={companydata.constnt_nm} readOnly /></td>
-        <td><input name="brthdy" value={companydata.brthdy} readOnly /></td>
-        <td><input name="livtgt_yn" value={companydata.livtgt_yn} readOnly /></td>
-        <td><input name="dednhope_yn" value={companydata.dednhope_yn} readOnly /></td>
-        <td><input name="dspsn_yn" value={companydata.dspsn_yn} readOnly /></td>
+        <td><input name="reltn_val" value={familyData.reltn_val} readOnly /></td>
+        <td><input name="constnt_nm" value={familyData.constnt_nm} readOnly /></td>
+        <td><input name="brthdy" value={familyData.brthdy} readOnly /></td>
+        <td><input name="livtgt_yn" value={familyData.livtgt_yn} readOnly /></td>
+        <td><input name="dednhope_yn" value={familyData.dednhope_yn} readOnly /></td>
+        <td><input name="dspsn_yn" value={familyData.dspsn_yn} readOnly /></td>
       </tr>
     ));
   };
@@ -226,7 +171,7 @@ const EmployeeDetailFamilyTable = ({ tablefmly }) => {
       </>
     );
   };
-
+  // 저장버튼 이벤트 처리
   const handlepost = () => {
     axios.post('http://13.125.117.184:8000/fmly_employees/', familyData)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
@@ -245,9 +190,9 @@ const EmployeeDetailFamilyTable = ({ tablefmly }) => {
     <TableContainer>
       {(login_id == "user") ? null : (
         <SButtonContainer className="gap-2 d-flex justify-content-end" >
-          <CButton color="dark" variant="outline" onClick={openModal}>추가</CButton>
+          <CButton color="danger" variant="outline" onClick={openModal}>추가</CButton>
           <NewFamilyModal isOpen={isModalOpen} closeModal={closeModal} parentFunction={parentFunction} />
-          <CButton color="danger" variant="outline" onClick={handlepost}>저장</CButton>
+          {/* <CButton color="danger" variant="outline" onClick={handlepost}>저장</CButton> */}
         </SButtonContainer>
 
       )}
