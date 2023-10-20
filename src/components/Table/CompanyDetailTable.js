@@ -587,6 +587,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td>부서정보</td>
               <td>
               <select size={1} name="info1" value={corporationinfo.info1 || ""} onChange={corporationInputChange}>
+                <option value="0">선택</option>
                 <option value="1">IT업종</option>
                 <option value="2">유통업종</option>
                 <option value="3">건설업종</option>
@@ -597,6 +598,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td>직급정보</td>
               <td>
               <select size={1} name="info2" value={corporationinfo.info2 || ""} onChange={corporationInputChange}>
+                <option value="0">선택</option>
                 <option value="5">IT업종</option>
                 <option value="6">유통업종</option>
                 <option value="7">건설업종</option>
@@ -609,6 +611,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <td>근태정보</td>
             <td>
             <select size={1} name="info3" value={corporationinfo.info3 || ""} onChange={corporationInputChange}>
+                <option value="0">선택</option>
                 <option value="9">IT업종</option>
                 <option value="10">유통업종</option>
                 <option value="11">건설업종</option>
@@ -619,6 +622,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <td>급여정보</td>
             <td>
             <select size={1} name="info4" value={corporationinfo.info4 || ""} onChange={corporationInputChange}>
+                <option value="0">선택</option>
                 <option value="13">IT업종</option>
                 <option value="14">유통업종</option>
                 <option value="15">건설업종</option>
@@ -641,6 +645,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td>계약형태</td>
               <td>
               <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
+                <option value="0">선택</option>
                 <option value="종신">종신</option>
                 <option value="기간">기간</option>
               </select>
@@ -648,6 +653,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td>상태</td>
               <td>
               <select size={1} name="state" value={cntrctinfo.state || ""} onChange={cntcrtInputChange}>
+                <option value="0">선택</option>
                 <option value="계약">계약</option>
                 <option value="만료">만료</option>
               </select>
@@ -669,6 +675,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td>비콘사용여부</td>
               <td>
               <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
+                <option value="0">선택</option>
                 <option value="Y">Y</option>
                 <option value="N">N</option>
               </select>
@@ -718,7 +725,6 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <input type="flie" accept="image/*" placeholder="내용을 입력해주세요 "/>
           <SFileBtn>파일선택</SFileBtn>
       </SFileContainer>
-      <SLogoimgContainer>로고 이미지 위치</SLogoimgContainer>
       </SCompanyLogo>
     </SWrapper>
   )
