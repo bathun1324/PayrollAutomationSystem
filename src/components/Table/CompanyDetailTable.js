@@ -498,7 +498,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   return (
     <SWrapper>
       <SManagerInfo>
-      <SButtonContainer>
+        <SButtonContainer>
           {companyId ? (
             <CButton color="dark" variant="outline" onClick={handleUpdate}>수정</CButton>
           ) : (
@@ -509,7 +509,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <FaList />
             </CButton>
           ) : (
-            <CButton style={{backgroundColor: 'red', color: 'white', borderColor: 'white'}} variant="outline" onClick={handleSave}>저장</CButton>
+            <CButton style={{ backgroundColor: 'red', color: 'white', borderColor: 'white' }} variant="outline" onClick={handleSave}>저장</CButton>
           )}
         </SButtonContainer>
         <SCategoryContainer>
@@ -551,14 +551,14 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td><input type="text" name="mngr_nm" value={corporationinfo.mngr_nm || ""} onChange={corporationInputChange} /></td>
               <td>직책</td>
               <td>
-              <select size={1} name="ofcps" onChange={corporationInputChange}>
+                <select size={1} name="ofcps" onChange={corporationInputChange}>
                   <option value="">선택</option>
-                    {ofcps.map((dept) => (
-                      <option key={dept.scode} value={dept.cd_val}>
-                        {dept.cd_val}
-                  </option>
-                    ))}
-              </select>
+                  {ofcps.map((dept) => (
+                    <option key={dept.scode} value={dept.cd_val}>
+                      {dept.cd_val}
+                    </option>
+                  ))}
+                </select>
               </td>
             </tr>
             <tr>
@@ -586,50 +586,50 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>부서정보</td>
               <td>
-              <select size={1} name="info1" value={corporationinfo.info1 || ""} onChange={corporationInputChange}>
-                <option value="0">선택</option>
-                <option value="1">IT업종</option>
-                <option value="2">유통업종</option>
-                <option value="3">건설업종</option>
-                <option value="4">서비스업종</option>
-                <option value="17">제조업종</option>
-              </select>
+                <select size={1} name="info1" value={corporationinfo.info1 || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="1">IT업종</option>
+                  <option value="2">유통업종</option>
+                  <option value="3">건설업종</option>
+                  <option value="4">서비스업종</option>
+                  <option value="17">제조업종</option>
+                </select>
               </td>
               <td>직급정보</td>
               <td>
-              <select size={1} name="info2" value={corporationinfo.info2 || ""} onChange={corporationInputChange}>
-                <option value="0">선택</option>
-                <option value="5">IT업종</option>
-                <option value="6">유통업종</option>
-                <option value="7">건설업종</option>
-                <option value="8">서비스업종</option>
-                <option value="18">제조업종</option>
-              </select>
+                <select size={1} name="info2" value={corporationinfo.info2 || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="5">IT업종</option>
+                  <option value="6">유통업종</option>
+                  <option value="7">건설업종</option>
+                  <option value="8">서비스업종</option>
+                  <option value="18">제조업종</option>
+                </select>
               </td>
             </tr>
             <tr>
-            <td>근태정보</td>
-            <td>
-            <select size={1} name="info3" value={corporationinfo.info3 || ""} onChange={corporationInputChange}>
-                <option value="0">선택</option>
-                <option value="9">IT업종</option>
-                <option value="10">유통업종</option>
-                <option value="11">건설업종</option>
-                <option value="12">서비스업종</option>
-                <option value="18">제조업종</option>
-              </select>
-            </td>
-            <td>급여정보</td>
-            <td>
-            <select size={1} name="info4" value={corporationinfo.info4 || ""} onChange={corporationInputChange}>
-                <option value="0">선택</option>
-                <option value="13">IT업종</option>
-                <option value="14">유통업종</option>
-                <option value="15">건설업종</option>
-                <option value="16">서비스업종</option>
-                <option value="20">제조업종</option>
-              </select>
-            </td>
+              <td>근태정보</td>
+              <td>
+                <select size={1} name="info3" value={corporationinfo.info3 || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="9">IT업종</option>
+                  <option value="10">유통업종</option>
+                  <option value="11">건설업종</option>
+                  <option value="12">서비스업종</option>
+                  <option value="18">제조업종</option>
+                </select>
+              </td>
+              <td>급여정보</td>
+              <td>
+                <select size={1} name="info4" value={corporationinfo.info4 || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="13">IT업종</option>
+                  <option value="14">유통업종</option>
+                  <option value="15">건설업종</option>
+                  <option value="16">서비스업종</option>
+                  <option value="20">제조업종</option>
+                </select>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -644,19 +644,19 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>계약형태</td>
               <td>
-              <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
-                <option value="0">선택</option>
-                <option value="종신">종신</option>
-                <option value="기간">기간</option>
-              </select>
+                <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
+                  <option value="0">선택</option>
+                  <option value="종신">종신</option>
+                  <option value="기간">기간</option>
+                </select>
               </td>
               <td>상태</td>
               <td>
-              <select size={1} name="state" value={cntrctinfo.state || ""} onChange={cntcrtInputChange}>
-                <option value="0">선택</option>
-                <option value="계약">계약</option>
-                <option value="만료">만료</option>
-              </select>
+                <select size={1} name="state" value={cntrctinfo.state || ""} onChange={cntcrtInputChange}>
+                  <option value="0">선택</option>
+                  <option value="계약">계약</option>
+                  <option value="만료">만료</option>
+                </select>
               </td>
             </tr>
             <tr>
@@ -674,11 +674,11 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>비콘사용여부</td>
               <td>
-              <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
-                <option value="0">선택</option>
-                <option value="Y">Y</option>
-                <option value="N">N</option>
-              </select>
+                <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
+                  <option value="0">선택</option>
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
               </td>
               <td>비콘설치개수</td>
               <td><input type="text" name="be" value={cntrctinfo.be || ""} onChange={cntcrtInputChange} /></td>
@@ -701,30 +701,30 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             </tr>
             <tr>
               <td>등록일시</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
               <td>수정일시</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
             </tr>
           </tbody>
         </table>
       </SManagerInfo>
       <SNote>
         <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-          <h3>비고</h3>  
+          <GoPrimitiveDot color="#548AFF" />
+          <h3>비고</h3>
         </ SCategoryContainer>
-        <input placeholder="비고 입력란"/>
+        <input placeholder="비고 입력란" />
       </SNote>
       <SCompanyLogo>
-      <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
+        <SCategoryContainer>
+          <GoPrimitiveDot color="#548AFF" />
           <h3>로고</h3>
         </SCategoryContainer>
-          <SFileContainer>
+        <SFileContainer>
           <div>파일명 : </div>
-          <input type="flie" accept="image/*" placeholder="내용을 입력해주세요 "/>
+          <input type="flie" accept="image/*" placeholder="내용을 입력해주세요 " />
           <SFileBtn>파일선택</SFileBtn>
-      </SFileContainer>
+        </SFileContainer>
       </SCompanyLogo>
     </SWrapper>
   )

@@ -363,10 +363,14 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
     login_id: login_id,
     corp_no: corp_no,
   });
-  // hrm_frgnr_dtrmcexp_date = frgnr_info.get('dtrmcexp_date')
-  // hrm_frgnr_dtrmcexp_icny = frgnr_info.get('dtrmcexp_icny')
-  // hrm_frgnr_dtrmcexp_insrnc_amt = frgnr_info.get('dtrmcexp_insrnc_amt')
-  // hrm_frgnr_remark = frgnr_info.get('remark')
+
+  // hrm_atend_base_attendtime = attend_info.get('base_attendtime') or None
+  // hrm_atend_base_lvofctime = attend_info.get('base_lvofctime') or None
+  // hrm_atend_mdwk_workday = attend_info.get('mdwk_workday') or None
+  // hrm_atend_whday = attend_info.get('whday') or None
+  // hrm_atend_crtlwh = attend_info.get('crtlwh') or None
+  // hrm_atend_upt_dtime = now.strftime('%Y-%m-%d %H:%M:%S') or None
+  // hrm_atend_upt_id = login_info.get('login_id')
 
   const [employeeInfo, setEmployeeInfo] = useState({
     corp_no: '',
@@ -559,7 +563,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
     axios.post('http://13.125.117.184:8000/post_employees/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 저장 성공:', response.data);
-        navigate('/admin/employee');
+        navigate(nav_url);
       })
       .catch(error => {
         console.log('error');
@@ -571,7 +575,7 @@ const EmployeeDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr }
     axios.post('http://13.125.117.184:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 수정 성공:', response.data);
-        navigate('/admin/employee');
+        navigate(nav_url);
       })
       .catch(error => {
         console.log('error');
