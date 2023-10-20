@@ -67,7 +67,7 @@ const SModalTable = styled.div`
     vertical-align: middle;
 
     :nth-child(odd) {
-      background-color: ${({theme}) => theme.colors.blue010};
+      background-color: ${({ theme }) => theme.colors.blue010};
     }
 
 
@@ -94,7 +94,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -109,7 +109,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -119,7 +119,7 @@ border: none;
 `
 
 
-const DeleteModal = ({isOpen, closeModal,  selectedDepartmentIds}) => {
+const DeleteModal = ({ isOpen, closeModal, selectedDepartmentIds }) => {
 
   const handleSave = () => {
     axios.post('http://13.125.117.184:8000/delete_departments/', selectedDepartmentIds)  // 백엔드 API 엔드포인트에 맞게 수정

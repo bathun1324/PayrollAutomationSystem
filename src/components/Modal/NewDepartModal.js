@@ -67,7 +67,7 @@ const SModalTable = styled.div`
     vertical-align: middle;
 
     :nth-child(odd) {
-      background-color: ${({theme}) => theme.colors.blue010};
+      background-color: ${({ theme }) => theme.colors.blue010};
     }
 
 
@@ -94,7 +94,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -109,7 +109,7 @@ width: 80px;
 height: 40px;
 color: white;
 font-size: 0.8em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -119,7 +119,7 @@ border: none;
 `
 
 
-const NewDepartModal = ({isOpen, closeModal}) => {
+const NewDepartModal = ({ isOpen, closeModal }) => {
   const [departmentInfo, setDepartmentInfo] = useState({
     deptName: '',
     status: '',
@@ -154,28 +154,28 @@ const NewDepartModal = ({isOpen, closeModal}) => {
       <SModalBody>
         <p>부서 정보를 생성 및 수정합니다.</p>
         <SModalTable>
-        <table>
-          <tbody>
-            <tr>
-              <td>부서명</td>
-              <td><input type="text" name="deptName" value={departmentInfo.deptName} onChange={handleInputChange}/></td>
-              <td>상태</td>
-              <td><input type="text" name="status" value={departmentInfo.status} onChange={handleInputChange}/></td>
-            </tr>
-            <tr>
-              <td>등록일시</td>
-              <td><input type="text" name="regDate" value={departmentInfo.regDate} onChange={handleInputChange}/></td>
-              <td>등록자</td>
-              <td><input type="text" name="regId" value={departmentInfo.regId} onChange={handleInputChange}/></td>
-            </tr>
-            <tr>
-              <td>수정일시</td>
-              <td><input type="text" name="modDate" value={departmentInfo.modDate} onChange={handleInputChange}/></td>
-              <td>수정자</td>
-              <td><input type="text" name="modId" value={departmentInfo.modId} onChange={handleInputChange}/></td>
-            </tr>
-          </tbody>
-        </table>
+          <table>
+            <tbody>
+              <tr>
+                <td>부서명</td>
+                <td><input type="text" name="deptName" value={departmentInfo.deptName} onChange={handleInputChange} /></td>
+                <td>상태</td>
+                <td><input type="text" name="status" value={departmentInfo.status} onChange={handleInputChange} /></td>
+              </tr>
+              <tr>
+                <td>등록일시</td>
+                <td><input type="text" name="regDate" value={departmentInfo.regDate} onChange={handleInputChange} /></td>
+                <td>등록자</td>
+                <td><input type="text" name="regId" value={departmentInfo.regId} onChange={handleInputChange} /></td>
+              </tr>
+              <tr>
+                <td>수정일시</td>
+                <td><input type="text" name="modDate" value={departmentInfo.modDate} onChange={handleInputChange} /></td>
+                <td>수정자</td>
+                <td><input type="text" name="modId" value={departmentInfo.modId} onChange={handleInputChange} /></td>
+              </tr>
+            </tbody>
+          </table>
         </SModalTable>
         <SButtonCotainer>
           <SCancleButton onClick={closeModal}>취소</SCancleButton>

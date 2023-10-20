@@ -178,11 +178,12 @@ const Home = ({ type }) => {
         localStorage.setItem('user_info', JSON.stringify(user_info));
         const infos = JSON.parse(localStorage.getItem('user_info'));
         const login_id = infos.login_id;
-        if (login_id == 'admin') {
+        const perm = infos.perm; // 권한 id (관리자:01, 운영자:11, 사용자:21)
+        if (perm == '11') {
           navigate('./admin/employeelist');
-        } else if (login_id == 'superadmin') {
+        } else if (perm == '01') {
           navigate('./superadmin/employeelist');
-        } else if (login_id == 'user') {
+        } else if (perm == '21') {
           navigate('./user/employee');
         }
 

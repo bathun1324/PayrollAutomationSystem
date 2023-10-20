@@ -61,7 +61,7 @@ const TableContainer = styled.div`
     color: rgb(40, 40, 40);
     cursor: pointer;
     :hover {
-      color: ${({theme}) => (theme.colors.blue090)}
+      color: ${({ theme }) => (theme.colors.blue090)}
     }
 
     :last-child {
@@ -104,7 +104,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const DayOffTable = () => {
@@ -128,61 +128,61 @@ const DayOffTable = () => {
     setCurrentPage(pageNumber);
   };
 
-const renderTableRows = () => {
+  const renderTableRows = () => {
     return currentItems.map((companydata) => (
       <tr key={companydata.company.companyId}>
-        <td><input type="checkbox"/></td>
-        <td><input type="text" placeholder="2020-01-01"/></td>
-        <td><input type="text" placeholder="ex) 설날"/></td>
+        <td><input type="checkbox" /></td>
+        <td><input type="text" placeholder="2020-01-01" /></td>
+        <td><input type="text" placeholder="ex) 설날" /></td>
         <td>
           <select size={1}>
             <option value={1}>유급</option>
             <option value={1}>무급</option>
           </select>
-          </td>
-        <td><input type="text"/></td>
+        </td>
+        <td><input type="text" /></td>
       </tr>
     ));
   };
-  
+
   const renderPaginationButtons = () => {
     const pageNumbers = Math.ceil(CompanyDummy.length / itemsPerPage);
-    
+
     const handlePrevPage = () => {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
     };
-    
+
     const handleNextPage = () => {
       if (currentPage < pageNumbers) {
         setCurrentPage(currentPage + 1);
       }
     };
-    
+
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
-          key={index + 1}
-          onClick={() => handlePageChange(index + 1)}
-          active={index + 1 === currentPage}
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            active={index + 1 === currentPage}
           >
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
-  
+
   return (
     <TableContainer>
       <table>
         <thead>
           <tr>
-            <th><input type="checkbox"/></th>
+            <th><input type="checkbox" /></th>
             <th>날짜</th>
             <th>휴일명</th>
             <th>구분</th>
@@ -192,19 +192,19 @@ const renderTableRows = () => {
         <tbody>
           {currentItems.length > 0 ? (
             renderTableRows()
-            ) : (
-              <tr>
+          ) : (
+            <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+    </TableContainer>
+  );
+};
 
 
 export default DayOffTable;

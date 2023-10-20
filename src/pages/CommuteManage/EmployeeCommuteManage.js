@@ -335,26 +335,26 @@ const EmployeeCommuteManage = () => {
               marginBottom: '4.5rem'
             }}>
               <TableContainer id='printableArea'>
-              <div>
-                {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
+                <div>
+                  {/* <SNewButton onClick={onBtnExport}>Download CSV export file</SNewButton>
         <SNewButton onClick={onBtPrint}>print</SNewButton>
         <SNewButton onClick={() => autoSizeAll(false)}>autosize</SNewButton> */}
-              </div>
+                </div>
 
-              <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
-                <AgGridReact
-                  onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
-                  defaultColDef={defaultColDef}
-                  rowData={commutemanage}
-                  columnDefs={columnDefs}
-                  gridOptions={gridOptions}
-                  style={{ textAlign: 'center' }}
-                  pagination={true}
-                  paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
-                >
-                </AgGridReact>
-              </div>
-            </TableContainer>
+                <div id="myGrid" className="ag-theme-alpine" style={{ height: 550, width: '100%' }}>
+                  <AgGridReact
+                    onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
+                    defaultColDef={defaultColDef}
+                    rowData={commutemanage}
+                    columnDefs={columnDefs}
+                    gridOptions={gridOptions}
+                    style={{ textAlign: 'center' }}
+                    pagination={true}
+                    paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
+                  >
+                  </AgGridReact>
+                </div>
+              </TableContainer>
             </CCard>
           </CContainer>
         </div>

@@ -613,13 +613,13 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
               <td><input type="text" name="email" value={employeeInfo.email || ""} onChange={employeeInputChange} />
               </td>
               <td>근무스케줄</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
             </tr>
             <tr>
               <td>출근시각</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
               <td>퇴근시각</td>
-              <td><input type="date"/></td>
+              <td><input type="date" /></td>
             </tr>
           </tbody>
         </table>
@@ -633,21 +633,21 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
           <tbody>
             <tr>
               <td>외출</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
               <td>복귀</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
             </tr>
             <tr>
               <td>출근판정</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
               <td>퇴근판정</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
             </tr>
             <tr>
               <td>지각시간</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
               <td>외출시간</td>
-              <td><input readOnly placeholder="변경불가"/></td>
+              <td><input readOnly placeholder="변경불가" /></td>
             </tr>
           </tbody>
         </table>
@@ -661,35 +661,35 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
           <tbody>
             <tr>
               <td>조기출근</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
               <td>연장근무</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
             </tr>
             <tr>
               <td>야간근무</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
               <td>휴일근무</td>
-              <td><input type="text"/></td>
+              <td><input type="text" /></td>
             </tr>
           </tbody>
         </table>
       </SManagerInfo>
-        <SCategoryContainer>
-          <GoPrimitiveDot color = "#548AFF" />
-          <h3>근무시간 합계</h3>  
-        </ SCategoryContainer>
-        <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
-          <tbody>
-            <tr>
-              <td>실제근무시간</td>
-              <td><input type="text"/></td>
-            </tr>
-            <tr>
-              <td>비고</td>
-              <td><input type="textarea" style={{width:'150px', height:'150px'}}/></td>
-            </tr>
-          </tbody>
-        </table>
+      <SCategoryContainer>
+        <GoPrimitiveDot color="#548AFF" />
+        <h3>근무시간 합계</h3>
+      </ SCategoryContainer>
+      <table style={{ border: '2px solid rgb(210, 210, 214)' }}  >
+        <tbody>
+          <tr>
+            <td>실제근무시간</td>
+            <td><input type="text" /></td>
+          </tr>
+          <tr>
+            <td>비고</td>
+            <td><input type="textarea" style={{ width: '150px', height: '150px' }} /></td>
+          </tr>
+        </tbody>
+      </table>
     </SWrapper>
   )
 }

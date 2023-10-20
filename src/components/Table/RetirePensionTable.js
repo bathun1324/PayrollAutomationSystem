@@ -80,7 +80,7 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
 `;
 
 const RetirePensionTable = () => {
@@ -92,11 +92,11 @@ const RetirePensionTable = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
 
-  const [tests, setTest] = useState( [] );
-  useEffect( () =>{
+  const [tests, setTest] = useState([]);
+  useEffect(() => {
     fetch('http://13.125.117.184:8000/test/')
-      .then( res => res.json())
-      .then( data => console.log(data))
+      .then(res => res.json())
+      .then(data => console.log(data))
   }, [])
 
   const handlePageChange = (pageNumber) => {
@@ -135,7 +135,7 @@ const RetirePensionTable = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -145,7 +145,7 @@ const RetirePensionTable = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
@@ -154,7 +154,7 @@ const RetirePensionTable = () => {
     <TableContainer>
       <table>
         <thead>
-        <tr>
+          <tr>
             <th colSpan={4}></th>
             <th colSpan={4}>납입부담금</th>
           </tr>
@@ -176,16 +176,16 @@ const RetirePensionTable = () => {
             <tr>
               <SNoDataMsg colSpan="10">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+    </TableContainer>
+  );
+};
 
 
 export default RetirePensionTable;
-              
+

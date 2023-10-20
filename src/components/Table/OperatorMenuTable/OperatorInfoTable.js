@@ -82,10 +82,10 @@ const PaginationButton = styled.button`
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 550;
-  color:  ${({theme}) => theme.colors.blue090};
+  color:  ${({ theme }) => theme.colors.blue090};
   `;
-  
-  const SCalcContainer = styled.div`
+
+const SCalcContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: ;
@@ -119,7 +119,7 @@ const SCalcButton = styled.button`
   
   color: white;
   font-size: 0.7em;
-  background-color: ${({theme}) => theme.colors.blue090};
+  background-color: ${({ theme }) => theme.colors.blue090};
   border-radius: 3px;
   border: none;
 
@@ -141,7 +141,7 @@ gap: 2px;
 
 color: white;
 font-size: 0.7em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -163,7 +163,7 @@ gap: 2px;
 
 color: white;
 font-size: 0.7em;
-background-color: ${({theme}) => theme.colors.blue090};
+background-color: ${({ theme }) => theme.colors.blue090};
 border-radius: 3px;
 border: none;
 
@@ -183,7 +183,7 @@ const SBasicInfo = styled.div`
   margin: 2em 0;
   gap: 0.5em;
 `
-  
+
 
 
 const SDotContainer = styled.div`
@@ -203,7 +203,7 @@ const SDotContainer = styled.div`
 
 `
 
-const SBasicInfoTable= styled.div`
+const SBasicInfoTable = styled.div`
   width: 90%;
   padding: 20px 0px;
   border-top: 3px solid #ccc;
@@ -267,26 +267,26 @@ const OperatorInfoTable = () => {
     setSelectedOperatorData(companyData);
   };
 
-  
+
   // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = CompanyDummy.slice(indexOfFirstItem, indexOfLastItem);
-  
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  
+
   // api통신 예시
   // const [tests, setTest] = useState( [] );
   // useEffect( () =>{
-    //   fetch('http://13.125.117.184:8000/test/')
-    //     .then( res => res.json())
+  //   fetch('http://13.125.117.184:8000/test/')
+  //     .then( res => res.json())
   //     .then( data => console.log(data))
   // }, [])
-  
+
   const [companyData, setOperatorData] = useState(CompanyDummy); // 초기 회사 데이터
 
   const handleSave = () => {
@@ -334,7 +334,7 @@ const OperatorInfoTable = () => {
 
     return (
       <>
-        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handlePrevPage}><IoIosArrowDropleftCircle size={45} /></PaginationButton>
         {Array.from({ length: pageNumbers }, (_, index) => (
           <PaginationButton
             key={index + 1}
@@ -344,7 +344,7 @@ const OperatorInfoTable = () => {
             {index + 1}
           </PaginationButton>
         ))}
-        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45}/></PaginationButton>
+        <PaginationButton onClick={handleNextPage}><IoIosArrowDroprightCircle size={45} /></PaginationButton>
       </>
     );
   };
@@ -370,64 +370,64 @@ const OperatorInfoTable = () => {
             <tr>
               <SNoDataMsg colSpan="5">조회할 항목이 없습니다.</SNoDataMsg>
             </tr>
-                      )}
-                      </tbody>
-                    </table>
-                    <PaginationContainer>
-                      {renderPaginationButtons()}
-                    </PaginationContainer>
-                    {selectedOperatorData && (
-                        <SBasicInfo>
-                          <SDotContainer>
-                            <GoPrimitiveDot color = "#548AFF" />
-                            <div>운영자 상세</div>
-                          </SDotContainer>
-                          <SBasicInfoTable>
-                            <SButtonContainer>
-                              <SSaveButton onClick={handleSave}>저장</SSaveButton>
-                            </SButtonContainer>
-                            <table>
-                            <tbody>
-                              <tr>
-                                <td>운영자명</td>
-                                <td>                   
-                                <input
-                                  type="text"
-                                  value={selectedOperatorData?.company.manager || ""}
-                                  onChange={(e) =>
-                                    setSelectedOperatorData((prevData) => ({
-                                      ...prevData,
-                                      company: {
-                                        ...prevData.company,
-                                        manager: e.target.value,
-                                      },
-                                    }))
-                                  }
-                                />
-                                </td>
-                                <td>직책</td>
-                                <td><input type="text"/></td>
-                              </tr>
-                              <tr>
-                                <td>운영자ID</td>
-                                <td><input type="date"/></td>
-                                <td>상태</td>
-                                <td><input type="text"/></td>
-                              </tr>
-                              <tr>
-                                <td>등록일시</td>
-                                <td><input type="text"/></td>
-                                <td>변경일시</td>
-                                <td><input type="text"/></td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </SBasicInfoTable>
-                        </SBasicInfo>
-                        )}
-                  </TableContainer>
-                );
-              };
+          )}
+        </tbody>
+      </table>
+      <PaginationContainer>
+        {renderPaginationButtons()}
+      </PaginationContainer>
+      {selectedOperatorData && (
+        <SBasicInfo>
+          <SDotContainer>
+            <GoPrimitiveDot color="#548AFF" />
+            <div>운영자 상세</div>
+          </SDotContainer>
+          <SBasicInfoTable>
+            <SButtonContainer>
+              <SSaveButton onClick={handleSave}>저장</SSaveButton>
+            </SButtonContainer>
+            <table>
+              <tbody>
+                <tr>
+                  <td>운영자명</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={selectedOperatorData?.company.manager || ""}
+                      onChange={(e) =>
+                        setSelectedOperatorData((prevData) => ({
+                          ...prevData,
+                          company: {
+                            ...prevData.company,
+                            manager: e.target.value,
+                          },
+                        }))
+                      }
+                    />
+                  </td>
+                  <td>직책</td>
+                  <td><input type="text" /></td>
+                </tr>
+                <tr>
+                  <td>운영자ID</td>
+                  <td><input type="date" /></td>
+                  <td>상태</td>
+                  <td><input type="text" /></td>
+                </tr>
+                <tr>
+                  <td>등록일시</td>
+                  <td><input type="text" /></td>
+                  <td>변경일시</td>
+                  <td><input type="text" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </SBasicInfoTable>
+        </SBasicInfo>
+      )}
+    </TableContainer>
+  );
+};
 
 
 export default OperatorInfoTable;
