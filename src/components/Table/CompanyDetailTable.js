@@ -669,7 +669,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
             <tr>
               <td>계약형태</td>
               <td>
-                <select size={1} name="cntrct_form" value={corporationinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="cntrct_form" value={corporationinfo.cntrct_form || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="종신">종신</option>
                   <option value="기간">기간</option>
@@ -677,7 +677,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
               </td>
               <td>상태</td>
               <td>
-                <select size={1} name="state" value={corporationinfo.state || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="state" value={corporationinfo.state || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="계약">계약</option>
                   <option value="만료">만료</option>
@@ -686,27 +686,27 @@ const CompanyDetailTable = ({ table, companyId }) => {
             </tr>
             <tr>
               <td>계약일자</td>
-              <td><input type="date" name="cntrct_date" value={corporationinfo.cntrct_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="cntrct_date" value={corporationinfo.cntrct_date || ""} onChange={corporationInputChange} /></td>
               <td>만료일자</td>
-              <td><input type="date" name="exp_date" value={corporationinfo.exp_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="exp_date" value={corporationinfo.exp_date || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>결제일자</td>
-              <td><input type="date" name="pmt_date" value={corporationinfo.pmt_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="pmt_date" value={corporationinfo.pmt_date || ""} onChange={corporationInputChange} /></td>
               <td>해지일자</td>
-              <td><input type="date" name="ter_date" value={corporationinfo.ter_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="ter_date" value={corporationinfo.ter_date || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>비콘사용여부</td>
               <td>
-                <select size={1} name="tml_use_yn" value={corporationinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="tml_use_yn" value={corporationinfo.tml_use_yn || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="Y">Y</option>
                   <option value="N">N</option>
                 </select>
               </td>
               <td>비콘설치개수</td>
-              <td><input type="text" name="be" value={corporationinfo.be || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="text" name="be" value={corporationinfo.be || ""} onChange={corporationInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -720,7 +720,11 @@ const CompanyDetailTable = ({ table, companyId }) => {
           <tbody>
             <tr>
               <td>월차정산기준</td>
-              <td><input type="text" placeholder="회계년도 / 입사월" name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={cntcrtInputChange} /></td>
+              <select size={1} name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="Y">회계년도</option>
+                  <option value="N">입사월</option>
+              </select>
               <td></td>
               <td></td>
             </tr>
