@@ -144,7 +144,7 @@ const EmployeeManage = () => {
   const corp_no = infos.corp_no; // 회사 id'
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    let url = `http://13.125.117.184:8000/get_departments/?department=${corp_no}`
+    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
     axios.get(url)
       .then((response) => {
         console.log('get_departments data->', response.data)

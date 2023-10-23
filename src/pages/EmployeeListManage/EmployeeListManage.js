@@ -90,8 +90,10 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
+    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
+    axios.get(url)
       .then((response) => {
+        console.log('get_departments data->', response.data)
         setDepartments(response.data);
       })
       .catch((error) => {

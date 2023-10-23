@@ -299,6 +299,23 @@ const EmployeeCommuteManage = () => {
     }
   }, []);
 
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const corp_no = infos.corp_no; // 회사 id'
+  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
+    axios.get(url)
+      .then((response) => {
+        console.log('get_departments data->', response.data)
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
 
   return (
     <div>
@@ -317,7 +334,15 @@ const EmployeeCommuteManage = () => {
                     <span>&nbsp;&nbsp;~&nbsp;</span>
                     <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;부서명:&nbsp;</span>
-                    <input size={200} name="dept_nm" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <select size={1} name="dept_nm" onChange={handleSelectChange}>
+                      <option value="">선택해주세요</option>
+                      {departments.map((dept) => (
+                        <option key={dept.id} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <input size={200} name="dept_nm" style={{ width: '110px' }} onChange={handleSelectChange} /> */}
                     <span>&nbsp;&nbsp;출/퇴근 여부:&nbsp;</span>
                     <input size={200} name="action" style={{ width: '110px' }} onChange={handleSelectChange} /></CCol>
                   <CCol className="gap-2 d-flex justify-content-end ">

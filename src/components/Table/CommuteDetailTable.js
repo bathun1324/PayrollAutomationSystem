@@ -505,15 +505,18 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
   const [departments, setDepartments] = useState([]);
 
   const corp_no = infos.corp_no; // 회사 id'
-
   useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}')
+    // 백엔드에서 부서 데이터 가져오기
+    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
+    axios.get(url)
       .then((response) => {
+        console.log('get_departments data->', response.data)
         setDepartments(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
+
   }, []);
 
   const [role, setRole] = useState([]);

@@ -192,19 +192,7 @@ const SCompanyTable = styled.div`
 const AttendanceManage = () => {
 
   const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
-  const corp_no = infos.corp_no; // 회사 id'
 
-  useEffect(() => {
-    // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
-      .then((response) => {
-        setDepartments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-  }, []);
 
   const [attendancemanage, setAttendanceManage] = useState([]); // departments 변수를 useState로 정의
   const [searchtext, setSearchtext] = useState([]);
@@ -335,6 +323,21 @@ const AttendanceManage = () => {
       navigate(nav_url)
     }
   }
+
+  const corp_no = infos.corp_no; // 회사 id'
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
+    axios.get(url)
+      .then((response) => {
+        console.log('get_departments data->', response.data)
+        setDepartments(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
 
   const handleSearchClick = () => {
     let url
