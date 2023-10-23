@@ -95,7 +95,7 @@ const CompanyDetail = () => {
 
   useEffect(() => {
     if (companyId) {
-      axios.get(`http://13.125.117.184:8000/get_detailtable/?cmpy_detail=${companyId}`)
+      axios.get(`http://13.125.117.184:8000/get_corporationinfo/?cmpy_detail=${companyId}`)
         .then((response) => {
           setTable(response.data);
         })
@@ -120,7 +120,7 @@ const CompanyDetail = () => {
             alignItems: 'center',
             marginBottom: '4.5rem',
           }}>
-            <CompanyDetailTable companyId={companyId} />
+            <CompanyDetailTable companyId={companyId} table={table}/>
           </CCard>
         </div>
       </div>

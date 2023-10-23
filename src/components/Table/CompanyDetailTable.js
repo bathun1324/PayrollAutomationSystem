@@ -349,7 +349,7 @@ const SCompanyLogo = styled.div`
 
 
 
-const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablefrgnr }) => {
+const CompanyDetailTable = ({ table, companyId }) => {
 
   const navigate = useNavigate();
 
@@ -388,6 +388,16 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     info2: '',
     info3: '',
     info4: '',
+    logo_id: '',
+    remark: '',
+    cntrct_form: '',
+    state: '',
+    cntrct_date: '',
+    exp_date: '',
+    pmt_date: '',
+    ter_date: '',
+    mtyvc_stl_std: '',
+    tml_use_yn: '',
     gen2: login_id,
   });
 
@@ -409,12 +419,6 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     exp_date: '',
     mtyvc_stl_std: '',
   });
-
-  useEffect(() => {
-    if (tableattend && tableattend[0]) {
-      setCntrctInfo({ ...tableattend[0] });
-    }
-  }, [tableattend]);
 
   const corporationInputChange = (event) => {
     const { name, value } = event.target;
@@ -476,7 +480,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   };
 
   const handleUpdate = () => {
-    axios.post('http://13.125.117.184:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_corporationupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 수정 성공:', response.data);
         navigate('/superadmin/company');
@@ -559,10 +563,10 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td><input type="text" name="mngr_nm" value={corporationinfo.mngr_nm || ""} onChange={corporationInputChange} /></td>
               <td>직책</td>
               <td>
-                <select size={1} name="ofcps" onChange={corporationInputChange}>
+                <select size={1} name="ofcps" value={corporationinfo.ofcps || ""} onChange={corporationInputChange}>
                   <option value="">선택</option>
                   {ofcps.map((dept) => (
-                    <option key={dept.scode} value={dept.cd_val}>
+                    <option key={dept.scode} value={dept.scode}>
                       {dept.cd_val}
                     </option>
                   ))}
@@ -600,7 +604,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
                   <option value="2">유통업종</option>
                   <option value="3">건설업종</option>
                   <option value="4">서비스업종</option>
-                  <option value="17">제조업종</option>
+                  <option value="19">제조업종</option>
                 </select>
               </td>
               <td>직급정보</td>
@@ -652,7 +656,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>계약형태</td>
               <td>
-                <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="cntrct_form" value={corporationinfo.cntrct_form || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="종신">종신</option>
                   <option value="기간">기간</option>
@@ -660,7 +664,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               </td>
               <td>상태</td>
               <td>
-                <select size={1} name="state" value={cntrctinfo.state || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="state" value={corporationinfo.state || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="계약">계약</option>
                   <option value="만료">만료</option>
@@ -669,27 +673,27 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             </tr>
             <tr>
               <td>계약일자</td>
-              <td><input type="date" name="cntcrt_date" value={cntrctinfo.cntcrt_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="cntcrt_date" value={corporationinfo.cntcrt_date || ""} onChange={corporationInputChange} /></td>
               <td>만료일자</td>
-              <td><input type="date" name="exp_date" value={cntrctinfo.exp_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="exp_date" value={corporationinfo.exp_date || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>결제일자</td>
-              <td><input type="date" name="pmt_date" value={cntrctinfo.pmt_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="pmt_date" value={corporationinfo.pmt_date || ""} onChange={corporationInputChange} /></td>
               <td>해지일자</td>
-              <td><input type="date" name="ter_date" value={cntrctinfo.ter_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="ter_date" value={corporationinfo.ter_date || ""} onChange={corporationInputChange} /></td>
             </tr>
             <tr>
               <td>비콘사용여부</td>
               <td>
-                <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="tml_use_yn" value={corporationinfo.tml_use_yn || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="Y">Y</option>
                   <option value="N">N</option>
                 </select>
               </td>
               <td>비콘설치개수</td>
-              <td><input type="text" name="be" value={cntrctinfo.be || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="text" name="be" value={corporationinfo.be || ""} onChange={corporationInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -703,7 +707,13 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <tbody>
             <tr>
               <td>월차정산기준</td>
-              <td><input type="text" placeholder="회계년도 / 입사월" name="mtyvc_stl_std" value={cntrctinfo.mtyvc_stl_std || ""} onChange={cntcrtInputChange} /></td>
+              <td>
+              <select size={1} name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={corporationInputChange}>
+                  <option value="0">선택</option>
+                  <option value="Y">회계년도</option>
+                  <option value="N">입사월</option>
+                </select>
+              </td>
               <td></td>
               <td></td>
             </tr>
@@ -721,7 +731,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <GoPrimitiveDot color="#548AFF" />
           <h3>비고</h3>
         </ SCategoryContainer>
-        <input placeholder="비고 입력란" />
+        <input type="text" name="remark" value={corporationinfo.remark || ""} onChange={corporationInputChange} placeholder='비고입력란'/>
       </SNote>
       <SCompanyLogo>
         <SCategoryContainer>
