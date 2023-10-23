@@ -135,6 +135,7 @@ const RetiredEmployeeListManage = () => {
   const [departments, setDepartments] = useState([]);
   const [searchtext, setSearchtext] = useState([]);
   const [searchresult, setSearchResult] = useState([]);
+  const infos = JSON.parse(localStorage.getItem('user_info'));
   const corp_no = infos.corp_no; // 회사 id'
 
   useEffect(() => {
