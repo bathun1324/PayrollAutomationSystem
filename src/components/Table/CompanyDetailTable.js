@@ -708,7 +708,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
             <tr>
               <td>월차정산기준</td>
               <td>
-              <select size={1} name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={corporationInputChange}>
+                <select size={1} name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="Y">회계년도</option>
                   <option value="N">입사월</option>
@@ -731,7 +731,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
           <GoPrimitiveDot color="#548AFF" />
           <h3>비고</h3>
         </ SCategoryContainer>
-        <input type="text" name="remark" value={corporationinfo.remark || ""} onChange={corporationInputChange} placeholder='비고입력란'/>
+        <input type="text" name="remark" value={corporationinfo.remark || ""} onChange={corporationInputChange} placeholder='비고입력란' />
       </SNote>
       <SCompanyLogo>
         <SCategoryContainer>

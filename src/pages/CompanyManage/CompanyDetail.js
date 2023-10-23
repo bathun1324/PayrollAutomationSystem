@@ -120,7 +120,7 @@ const CompanyDetail = () => {
             alignItems: 'center',
             marginBottom: '4.5rem',
           }}>
-            <CompanyDetailTable companyId={companyId} table={table}/>
+            <CompanyDetailTable companyId={companyId} table={table} />
           </CCard>
         </div>
       </div>
