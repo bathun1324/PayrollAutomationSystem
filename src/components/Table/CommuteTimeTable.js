@@ -156,7 +156,7 @@ const SCalcHeader = styled.div`
   }
   `
   
-const CommuteTimeTable = ( {attendance} ) => {
+const CommuteTimeTable = ( {departments} ) => {
 
     // 그리드
     const gridRef = useRef();
@@ -253,7 +253,7 @@ const CommuteTimeTable = ( {attendance} ) => {
       <div className="ag-theme-alpine" style={{ height: '93px', width: '90%' }}>
         <AgGridReact
           onGridReady={onGridReady}
-          rowData={attendance}
+          rowData={departments}
           columnDefs={columnDefs}
           onSelectionChanged={onSelectionChanged}
           style={{ textAlign: 'center'}}
@@ -268,7 +268,7 @@ const CommuteTimeTable = ( {attendance} ) => {
         <div className="ag-theme-alpine" style={{ height: '93px', width: '90%' }}>
           <AgGridReact
             onGridReady={onGridReady}
-            rowData={attendance}
+            rowData={departments}
             columnDefs={columnDefs2}
             onSelectionChanged={onSelectionChanged}
             style={{ textAlign: 'center' }}

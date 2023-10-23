@@ -95,7 +95,7 @@ const PaginationButton = styled.button`
   color:  ${({theme}) => theme.colors.blue090};
 `;
 
-const CommuteTable = ( {attendance} ) => {
+const CommuteTable = ( {departments} ) => {
     // 그리드
     const gridRef = useRef();
     const [columnDefs] = useState([
@@ -213,7 +213,7 @@ const CommuteTable = ( {attendance} ) => {
                 <AgGridReact
                   onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
                   defaultColDef={defaultColDef}
-                  rowData={attendance}
+                  rowData={departments}
                   columnDefs={columnDefs}
                   onSelectionChanged={onSelectionChanged}
                   gridOptions={gridOptions}
