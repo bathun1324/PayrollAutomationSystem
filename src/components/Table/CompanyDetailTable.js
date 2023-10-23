@@ -720,11 +720,13 @@ const CompanyDetailTable = ({ table, companyId }) => {
           <tbody>
             <tr>
               <td>월차정산기준</td>
+              <td>
               <select size={1} name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={corporationInputChange}>
                   <option value="0">선택</option>
                   <option value="Y">회계년도</option>
                   <option value="N">입사월</option>
               </select>
+              </td>
               <td></td>
               <td></td>
             </tr>
