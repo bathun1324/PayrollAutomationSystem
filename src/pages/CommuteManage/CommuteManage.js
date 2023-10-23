@@ -159,6 +159,8 @@ const SCompanyTable = styled.div`
 const CommuteManage = () => {
   const [searchtext, setSearchtext] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [departments, setDepartments] = useState([]);
+  const [attendance, setAttendance] = useState([]);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -168,19 +170,28 @@ const CommuteManage = () => {
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_attendace/")
+    axios.get("http://13.125.117.184:8000/get_departments/")
       .then((response) => {
         setDepartments(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-
   }, []);
-  // 라디오버튼
+
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_attendace/")
+      .then((response) => {
+        setAttendance(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  
   const [selectedOption, setSelectedOption] = useState();
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
@@ -272,8 +283,8 @@ const CommuteManage = () => {
               alignItems: 'center',
               marginBottom: '4.5rem'
             }}>
-              <CommuteTimeTable departments={departments} />
-              <CommuteTable departments={departments} />
+              <CommuteTimeTable attendance={attendance}/>
+              <CommuteTable attendance={attendance}/>
             </CCard>
           </CContainer>
         </div>

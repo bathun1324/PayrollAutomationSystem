@@ -349,7 +349,7 @@ const SCompanyLogo = styled.div`
 
 
 
-const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablefrgnr }) => {
+const CompanyDetailTable = ({ table, companyId }) => {
 
   const navigate = useNavigate();
 
@@ -361,6 +361,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   const [searchtext, setSearchtext] = useState([]);
   const [codes, setCode] = useState([]);
   const [ofcps, setOfcps] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -388,6 +389,16 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     info2: '',
     info3: '',
     info4: '',
+    logo_id: '',
+    remark: '',
+    cntrct_form: '',
+    state: '',
+    cntrct_date: '',
+    exp_date: '',
+    pmt_date: '',
+    ter_date: '',
+    mtyvc_stl_std: '',
+    tml_use_yn: '',
     gen2: login_id,
   });
 
@@ -409,12 +420,6 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
     exp_date: '',
     mtyvc_stl_std: '',
   });
-
-  useEffect(() => {
-    if (tableattend && tableattend[0]) {
-      setCntrctInfo({ ...tableattend[0] });
-    }
-  }, [tableattend]);
 
   const corporationInputChange = (event) => {
     const { name, value } = event.target;
@@ -464,19 +469,27 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   }, []);
 
   const handleSave = () => {
-    axios.post('http://13.125.117.184:8000/post_corporation/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
-      .then(response => {
-        console.log('부서 정보 저장 성공:', response.data);
-        navigate('/superadmin/company');
-      })
-      .catch(error => {
-        console.log('error');
-        console.error('API 호출 에러:', error);
-      });
+    const formData = new FormData();
+    formData.append('file', selectedFile); // selectedFile은 사용자가 선택한 파일입니다.
+    formData.append('corporationinfo', JSON.stringify(corporationinfo)); // 다른 데이터도 함께 전송할 수 있습니다.
+    formData.append('cntrctinfo', JSON.stringify(cntrctinfo)); // 다른 데이터도 함께 전송할 수 있습니다.
+  
+    axios.post('http://13.125.117.184:8000/post_corporation/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(response => {
+      console.log('부서 정보 및 파일 저장 성공:', response.data);
+      navigate('/superadmin/company');
+    })
+    .catch(error => {
+      console.error('API 호출 에러:', error);
+    });
   };
 
   const handleUpdate = () => {
-    axios.post('http://13.125.117.184:8000/post_employeesupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
+    axios.post('http://13.125.117.184:8000/post_corporationupdate/', payload)  // 백엔드 API 엔드포인트에 맞게 수정
       .then(response => {
         console.log('부서 정보 수정 성공:', response.data);
         navigate('/superadmin/company');
@@ -502,6 +515,10 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
   }else{
     nav_url = '/user/company';
   }
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   return (
     <SWrapper>
@@ -559,10 +576,10 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               <td><input type="text" name="mngr_nm" value={corporationinfo.mngr_nm || ""} onChange={corporationInputChange} /></td>
               <td>직책</td>
               <td>
-                <select size={1} name="ofcps" onChange={corporationInputChange}>
+                <select size={1} name="ofcps" value={corporationinfo.ofcps || ""} onChange={corporationInputChange}>
                   <option value="">선택</option>
                   {ofcps.map((dept) => (
-                    <option key={dept.scode} value={dept.cd_val}>
+                    <option key={dept.scode} value={dept.scode}>
                       {dept.cd_val}
                     </option>
                   ))}
@@ -624,7 +641,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
                   <option value="10">유통업종</option>
                   <option value="11">건설업종</option>
                   <option value="12">서비스업종</option>
-                  <option value="18">제조업종</option>
+                  <option value="19">제조업종</option>
                 </select>
               </td>
               <td>급여정보</td>
@@ -652,7 +669,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             <tr>
               <td>계약형태</td>
               <td>
-                <select size={1} name="cntrct_form" value={cntrctinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="cntrct_form" value={corporationinfo.cntrct_form || ""} onChange={cntcrtInputChange}>
                   <option value="0">선택</option>
                   <option value="종신">종신</option>
                   <option value="기간">기간</option>
@@ -660,7 +677,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
               </td>
               <td>상태</td>
               <td>
-                <select size={1} name="state" value={cntrctinfo.state || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="state" value={corporationinfo.state || ""} onChange={cntcrtInputChange}>
                   <option value="0">선택</option>
                   <option value="계약">계약</option>
                   <option value="만료">만료</option>
@@ -669,27 +686,27 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
             </tr>
             <tr>
               <td>계약일자</td>
-              <td><input type="date" name="cntcrt_date" value={cntrctinfo.cntcrt_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="cntrct_date" value={corporationinfo.cntrct_date || ""} onChange={cntcrtInputChange} /></td>
               <td>만료일자</td>
-              <td><input type="date" name="exp_date" value={cntrctinfo.exp_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="exp_date" value={corporationinfo.exp_date || ""} onChange={cntcrtInputChange} /></td>
             </tr>
             <tr>
               <td>결제일자</td>
-              <td><input type="date" name="pmt_date" value={cntrctinfo.pmt_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="pmt_date" value={corporationinfo.pmt_date || ""} onChange={cntcrtInputChange} /></td>
               <td>해지일자</td>
-              <td><input type="date" name="ter_date" value={cntrctinfo.ter_date || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="date" name="ter_date" value={corporationinfo.ter_date || ""} onChange={cntcrtInputChange} /></td>
             </tr>
             <tr>
               <td>비콘사용여부</td>
               <td>
-                <select size={1} name="tml_use_yn" value={cntrctinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
+                <select size={1} name="tml_use_yn" value={corporationinfo.tml_use_yn || ""} onChange={cntcrtInputChange}>
                   <option value="0">선택</option>
                   <option value="Y">Y</option>
                   <option value="N">N</option>
                 </select>
               </td>
               <td>비콘설치개수</td>
-              <td><input type="text" name="be" value={cntrctinfo.be || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="text" name="be" value={corporationinfo.be || ""} onChange={cntcrtInputChange} /></td>
             </tr>
           </tbody>
         </table>
@@ -703,7 +720,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
           <tbody>
             <tr>
               <td>월차정산기준</td>
-              <td><input type="text" placeholder="회계년도 / 입사월" name="mtyvc_stl_std" value={cntrctinfo.mtyvc_stl_std || ""} onChange={cntcrtInputChange} /></td>
+              <td><input type="text" placeholder="회계년도 / 입사월" name="mtyvc_stl_std" value={corporationinfo.mtyvc_stl_std || ""} onChange={cntcrtInputChange} /></td>
               <td></td>
               <td></td>
             </tr>
@@ -730,8 +747,7 @@ const CompanyDetailTable = ({ table, companyId, tableattend, tablesalary, tablef
         </SCategoryContainer>
         <SFileContainer>
           <div>파일명 : </div>
-          <input type="flie" accept="image/*" placeholder="내용을 입력해주세요 " />
-          <SFileBtn>파일선택</SFileBtn>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
         </SFileContainer>
       </SCompanyLogo>
     </SWrapper>
