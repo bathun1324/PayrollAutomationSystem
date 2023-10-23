@@ -504,8 +504,10 @@ const CommuteDetailTable = ({ table, id, tableattend, tablesalary, tablefrgnr })
 
   const [departments, setDepartments] = useState([]);
 
+  const corp_no = infos.corp_no; // 회사 id'
+
   useEffect(() => {
-    axios.get('http://13.125.117.184:8000/get_departments/')
+    axios.get('http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}')
       .then((response) => {
         setDepartments(response.data);
       })

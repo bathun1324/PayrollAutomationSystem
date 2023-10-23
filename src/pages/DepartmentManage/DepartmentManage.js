@@ -26,10 +26,12 @@ const DepartmentManage = () => {
   const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
   const [searchtext, setSearchtext] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const corp_no = infos.corp_no; // 회사 id'
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
       .then((response) => {
         setDepartments(response.data);
       })
@@ -41,7 +43,7 @@ const DepartmentManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
       .then((response) => {
         setSearchResults(response.data);
       })
@@ -57,7 +59,7 @@ const DepartmentManage = () => {
     if (searchtext) {
       url = `http://13.125.117.184:8000/search_departments/?department_id=${searchtext}`
     } else {
-      url = "http://13.125.117.184:8000/get_departments/"
+      url = "http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}"
     }
 
     axios.get(url)

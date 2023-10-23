@@ -197,11 +197,12 @@ const BusinessTripStatus = ({ userRole, menuItems, iconMapping }) => {
     console.log(name, value);
     setSearchtext(prevState => ({ ...prevState, [name]: value }));
   };
-
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const corp_no = infos.corp_no; // 회사 id'
   const [departments, setDepartments] = useState([]); // departments 변수를 useState로 정의
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
       .then((response) => {
         setDepartments(response.data);
       })

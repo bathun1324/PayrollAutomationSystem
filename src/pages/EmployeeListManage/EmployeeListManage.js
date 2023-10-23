@@ -73,6 +73,8 @@ const EmployeeListManage = () => {
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const infos = JSON.parse(localStorage.getItem('user_info'));
+  const corp_no = infos.corp_no; // 회사 id'
 
   useEffect(() => {
     // 시작할때 테이블 가져오기
@@ -88,7 +90,7 @@ const EmployeeListManage = () => {
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    axios.get("http://13.125.117.184:8000/get_departments/")
+    axios.get("http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}")
       .then((response) => {
         setDepartments(response.data);
       })
