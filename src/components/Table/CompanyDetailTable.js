@@ -673,7 +673,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
             </tr>
             <tr>
               <td>계약일자</td>
-              <td><input type="date" name="cntcrt_date" value={corporationinfo.cntcrt_date || ""} onChange={corporationInputChange} /></td>
+              <td><input type="date" name="cntrct_date" value={corporationinfo.cntrct_date || ""} onChange={corporationInputChange} /></td>
               <td>만료일자</td>
               <td><input type="date" name="exp_date" value={corporationinfo.exp_date || ""} onChange={corporationInputChange} /></td>
             </tr>
