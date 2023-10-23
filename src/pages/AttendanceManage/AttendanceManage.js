@@ -323,11 +323,11 @@ const AttendanceManage = () => {
       return;
     }
     else {
-      if(perm == "01") {
+      if (perm == "01") {
         nav_url = '/superadmin/commute';
-      }else if(perm == "11"){
+      } else if (perm == "11") {
         nav_url = '/admin/commute';
-      }else{
+      } else {
         nav_url = '/user/commute';
       }
       // + selectedRowData.empl_no;

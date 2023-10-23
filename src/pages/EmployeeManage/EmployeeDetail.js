@@ -203,7 +203,7 @@ const EmployeeDetail = () => {
           console.log(error);
         });
     }
-  }, []);
+  }, [tablefmly]);
 
 
 
@@ -220,9 +220,9 @@ const EmployeeDetail = () => {
             alignItems: 'center',
             marginBottom: '4.5rem'
           }}>
-            {(perm == "21") ? (<EmployeeDetailTable id={login_no} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)
-              : (<EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} />)}
-            <EmployeeDetailFamilyTable tablefmly={tablefmly} />
+            {(perm == "21") ? (<EmployeeDetailTable id={login_no} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} tablefmly={tablefmly} />)
+              : (<EmployeeDetailTable id={id} table={table} tableattend={tableattend} tablesalary={tablesalary} tablefrgnr={tablefrgnr} tablefmly={tablefmly} />)}
+            {/* <EmployeeDetailFamilyTable tablefmly={tablefmly} /> */}
           </CCard>
         </div>
       </div>
