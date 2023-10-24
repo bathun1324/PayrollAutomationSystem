@@ -198,7 +198,7 @@ const CommuteManage = () => {
       });
 
   }, []);
-  
+
   // 라디오버튼
   const [selectedOption, setSelectedOption] = useState();
   const handleOptionChange = (e) => {

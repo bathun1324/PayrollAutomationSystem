@@ -9,6 +9,7 @@ import EmployeeTable from "../../components/Table/EmployeeTable";
 import { CCardBody, CContainer, CSpinner, CCard, CRow, CCol, CButton, CInputGroup, CFormInput } from '@coreui/react'
 import '../../components/Table/styles.css'
 import AppSidebar from "../../components/SideNav/AppSidebar";
+import { info } from "sass";
 
 
 const SWrapper = styled.div`
@@ -142,18 +143,27 @@ const EmployeeManage = () => {
   const [employmentType, setEmploymentType] = useState([]); // 고용형태 데이터
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const corp_no = infos.corp_no; // 회사 id'
+  const perm = infos.perm_id; // 권한 id (관리자:01, 운영자:11, 사용자:21)
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
-    let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
-    axios.get(url)
-      .then((response) => {
-        console.log('get_departments data->', response.data)
-        setDepartments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+    if (perm == '01') {
+      axios.get(`http://13.125.117.184:8000/get_departments/`)
+        .then((response) => {
+          setDepartments(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    else {
+      axios.get(`http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`)
+        .then((response) => {
+          setDepartments(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -169,13 +179,24 @@ const EmployeeManage = () => {
   }, []);
 
   useEffect(() => {
-    axios.get("http://13.125.117.184:8000/get_employees/")
-      .then((response) => {
-        setSearchResult(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (perm == '01') {
+      axios.get(`http://13.125.117.184:8000/get_employees/`)
+        .then((response) => {
+          setSearchResult(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    else {
+      axios.get(`http://13.125.117.184:8000/get_employees/?corp_no=${corp_no}`)
+        .then((response) => {
+          setSearchResult(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
   }, []);
 
@@ -184,14 +205,21 @@ const EmployeeManage = () => {
     let url
 
     if (searchtext) {
-      url = `http://13.125.117.184:8000/search_employees/?department=${searchtext.department}&employeeName=${searchtext.employeeName}&foreigner=${searchtext.foreigner}&employmentType=${searchtext.employmentType}&employmentStatus=${searchtext.employmentStatus}`
+      if (perm == '01') {
+        url = `http://13.125.117.184:8000/search_employees/?department=${searchtext.department}&employeeName=${searchtext.employeeName}&foreigner=${searchtext.foreigner}&employmentType=${searchtext.employmentType}&employmentStatus=${searchtext.employmentStatus}`
+      } else {
+        url = `http://13.125.117.184:8000/search_employees/?department=${searchtext.department}&employeeName=${searchtext.employeeName}&foreigner=${searchtext.foreigner}&employmentType=${searchtext.employmentType}&employmentStatus=${searchtext.employmentStatus}&corp_no=${corp_no}`
+      }
     } else {
-      url = "http://13.125.117.184:8000/get_employees/"
+      if (perm == '01') {
+        url = `http://13.125.117.184:8000/get_employees/`
+      } else {
+        url = `http://13.125.117.184:8000/get_employees/?corp_no=${corp_no}`
+      }
     }
 
     axios.get(url)
       .then((response) => {
-        console.log("여기");
         console.log(response.data);
         setSearchResult(response.data);
       })
@@ -211,61 +239,62 @@ const EmployeeManage = () => {
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <Header breadcrumb={'인사관리 > 사원정보'} />
-        <div className="body flex-grow-1 px-5" >
-          {/* style={{ backgroundColor: 'white' }} */}
-          <h2 className="gap-2 mb-4">사원정보</h2>
-          <CCard className="mb-4">
-            <CCardBody>
-              <CRow>
-                <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-10 d-flex justify-content-start">
-                  <span>부서명:&nbsp;</span>
-                  <select size={1} name="department" onChange={handleSelectChange}>
-                    <option value="">선택</option>
-                    {departments.map((dept) => (
-                      <option key={dept.id} value={dept.id}>
-                        {dept.name}
-                      </option>
-                    ))}
-                  </select>
-                  <span>&nbsp;&nbsp;사원명:&nbsp;</span>
-                  <input size={200} name="employeeName" style={{ width: '110px' }} onChange={handleSelectChange} />
-                  <span>&nbsp;&nbsp;외국인여부:&nbsp;</span>
-                  <select size={1} name="foreigner" onChange={handleSelectChange}>
-                    <option value="">선택</option>
-                    <option value="N">내국인</option>
-                    <option value="Y">외국인</option>
-                  </select>
-                  <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
-                  <select size={1} name="employmentType" onChange={handleSelectChange}>
-                    <option value="">선택</option>
-                    {employmentType.map((empl) => (
-                      <option key={empl.scode} value={empl.scode}>
-                        {empl.cd_val}
-                      </option>
-                    ))}
-                  </select>
-                  <span>&nbsp;&nbsp;재직여부:&nbsp;</span>
-                  <select size={1} name="employmentStatus" onChange={handleSelectChange}>
-                    <option value="">선택</option>
-                    <option value="1">재직</option>
-                    <option value="2">퇴사</option>
-                  </select>
-                </CCol>
-                <CCol className="gap-2 d-flex justify-content-end ">
-                  <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
-                  <CButton color="dark" variant="outline" onClick={() => handleNewEmployeeClick()}>신규</CButton>
-                </CCol>
-              </CRow>
-            </CCardBody>
-          </CCard>
-          <CCard style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '4.5rem'
-          }}>
-            <EmployeeTable employees={searchresult} />
-          </CCard>
+        <div className="body flex-grow-1 px-3">
+          <CContainer lg>
+            <h2 className="gap-2 mb-4">사원정보</h2>
+            <CCard className="mb-4">
+              <CCardBody>
+                <CRow>
+                  <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-10 d-flex justify-content-start">
+                    <span>부서명:&nbsp;</span>
+                    <select size={1} name="department" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      {departments.map((dept, index) => (
+                        <option key={index} value={dept.id}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;&nbsp;사원명:&nbsp;</span>
+                    <input size={200} name="employeeName" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <span>&nbsp;&nbsp;외국인여부:&nbsp;</span>
+                    <select size={1} name="foreigner" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      <option value="N">내국인</option>
+                      <option value="Y">외국인</option>
+                    </select>
+                    <span>&nbsp;&nbsp;고용형태:&nbsp;</span>
+                    <select size={1} name="employmentType" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      {employmentType.map((empl) => (
+                        <option key={empl.scode} value={empl.scode}>
+                          {empl.cd_val}
+                        </option>
+                      ))}
+                    </select>
+                    <span>&nbsp;&nbsp;재직여부:&nbsp;</span>
+                    <select size={1} name="employmentStatus" onChange={handleSelectChange}>
+                      <option value="">선택</option>
+                      <option value="1">재직</option>
+                      <option value="2">퇴사</option>
+                    </select>
+                  </CCol>
+                  <CCol className="gap-2 d-flex justify-content-end ">
+                    <CButton color="dark" variant="outline" onClick={handleSearchClick}>검색</CButton>
+                    <CButton color="dark" variant="outline" onClick={() => handleNewEmployeeClick()}>신규</CButton>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CCard style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '4.5rem'
+            }}>
+              <EmployeeTable employees={searchresult} />
+            </CCard>
+          </CContainer>
         </div>
       </div>
     </div>

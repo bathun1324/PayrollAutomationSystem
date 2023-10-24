@@ -35,7 +35,7 @@ const DepartmentManage = () => {
     let url = `http://13.125.117.184:8000/get_departments/?corp_no=${corp_no}`
     axios.get(url)
       .then((response) => {
-        console.log('get_departments data->', response.data)
+
         setDepartments(response.data);
       })
       .catch((error) => {

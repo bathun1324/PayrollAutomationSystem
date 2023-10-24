@@ -96,17 +96,17 @@ const EmployeeTable = ({ employees }) => {
         const numB = parseFloat(valueB);
         return numA - numB;
       },
-      initialWidth: 150, // 열 너비
+      initialWidth: 130, // 열 너비
     },
     { field: 'empl_nm', headerName: '사원명', initialWidth: 100 },
-    { field: 'empl_rspofc', headerName: '직책', initialWidth: 150 },
-    { field: 'empl_frgnr_yn', headerName: '외국인여부', initialWidth: 130 },
-    { field: 'empl_gender', headerName: '성별', initialWidth: 100 },
-    { field: 'dept_nm', headerName: '부서명', initialWidth: 200 },
-    { field: 'empl_emplyn_form', headerName: '고용형태', initialWidth: 160 },
-    { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 160 },
-    { field: 'empl_hffc_state', headerName: '재직상태', initialWidth: 160 },
-    { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 160 },
+    { field: 'empl_rspofc', headerName: '직책', initialWidth: 130 },
+    { field: 'empl_frgnr_val', headerName: '외국인여부', initialWidth: 130 },
+    { field: 'empl_gender_val', headerName: '성별', initialWidth: 100 },
+    { field: 'dept_nm', headerName: '부서명', initialWidth: 130 },
+    { field: 'empl_emplyn_form', headerName: '고용형태', initialWidth: 130 },
+    { field: 'empl_encpnd', headerName: '입사일자', initialWidth: 150 },
+    { field: 'empl_hffc_state', headerName: '재직상태', initialWidth: 140 },
+    { field: 'empl_retire_date', headerName: '퇴사일자', initialWidth: 150 },
   ]);
 
 
@@ -168,25 +168,23 @@ const EmployeeTable = ({ employees }) => {
   const infos = JSON.parse(localStorage.getItem('user_info'));
   const login_id = infos.login_id;
   const navigate = useNavigate();
-  const RowClicked = (e) => {
-    const selectedRowData = e.data;
-    if (login_id == 'user') {
-      alert('접근 권한이 없습니다.');
-      return;
-    }
-    else {
-      // let nav_url = '/' + login_id + '/employee/employeedetail/' + selectedRowData.empl_no;
-      let nav_url = './employeedetail/' + selectedRowData.empl_no;
+  const CellClicked = (event) => {
+    // 셀의 정보
+    const clickedCell = event.data[event.colDef.field];
+    // 셀의 열 이름
+    const clickedColumn = event.colDef.field;
+    if (clickedColumn === 'empl_no') {
+      let nav_url = './employeedetail/' + clickedCell;
       navigate(nav_url)
     }
-  }
+  };
 
   return (
     <TableContainer>
       <div>
         {/* <button onClick={onBtnExport}>Download CSV export file</button> */}
       </div>
-      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+      <div className="ag-theme-alpine" style={{ height: 540, width: '100%' }}>
         <AgGridReact
           onGridReady={onGridReady} // onGridReady 이벤트 핸들러 설정
           defaultColDef={defaultColDef}
@@ -197,7 +195,7 @@ const EmployeeTable = ({ employees }) => {
           style={{ textAlign: 'center' }}
           pagination={true}
           paginationPageSize={10}   // gridRef.current.paginationSetPageSize(10);
-          onRowClicked={RowClicked}
+          onCellClicked={CellClicked}
         // domLayout="autoHeight"
         >
         </AgGridReact>
