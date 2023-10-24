@@ -185,6 +185,20 @@ const CommuteManage = () => {
       });
 
   }, []);
+
+  const [attendance, setAttendance] = useState([]); // departments 변수를 useState로 정의
+  useEffect(() => {
+    // 백엔드에서 부서 데이터 가져오기
+    axios.get("http://13.125.117.184:8000/get_commutemanage/")
+      .then((response) => {
+        setAttendance(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }, []);
+  
   // 라디오버튼
   const [selectedOption, setSelectedOption] = useState();
   const handleOptionChange = (e) => {
@@ -277,8 +291,8 @@ const CommuteManage = () => {
               alignItems: 'center',
               marginBottom: '4.5rem'
             }}>
-              <CommuteTimeTable departments={departments} />
-              <CommuteTable departments={departments} />
+              <CommuteTimeTable attendance={attendance} />
+              <CommuteTable attendance={attendance} />
             </CCard>
           </CContainer>
         </div>

@@ -197,6 +197,16 @@ const AttendanceManage = () => {
   const [attendancemanage, setAttendanceManage] = useState([]); // departments 변수를 useState로 정의
   const [searchtext, setSearchtext] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [startDate, setStartDate] = useState(getToday());
+  const [endDate, setEndDate] = useState(getToday());
+
+  function getToday() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   useEffect(() => {
     // 백엔드에서 부서 데이터 가져오기
@@ -394,9 +404,9 @@ const AttendanceManage = () => {
                 <CRow>
                   <CCol style={{ fontSize: '17px', alignItems: "center" }} className="col-8 d-flex justify-content-start">
                     <span>검색기간:&nbsp;</span>
-                    <input size={200} type="date" name="start_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <input size={200} type="date" name="start_date" value={startDate} style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;~&nbsp;</span>
-                    <input size={200} type="date" name="end_date" style={{ width: '110px' }} onChange={handleSelectChange} />
+                    <input size={200} type="date" name="end_date" value={endDate} style={{ width: '110px' }} onChange={handleSelectChange} />
                     <span>&nbsp;&nbsp;부서명:&nbsp;</span>
                     <select name="dept_nm" size={1} onChange={handleSelectChange}>
                       <option value="">선택해주세요</option>

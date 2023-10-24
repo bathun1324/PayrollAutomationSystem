@@ -604,7 +604,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
                   <option value="2">유통업종</option>
                   <option value="3">건설업종</option>
                   <option value="4">서비스업종</option>
-                  <option value="19">제조업종</option>
+                  <option value="17">제조업종</option>
                 </select>
               </td>
               <td>직급정보</td>
@@ -628,7 +628,7 @@ const CompanyDetailTable = ({ table, companyId }) => {
                   <option value="10">유통업종</option>
                   <option value="11">건설업종</option>
                   <option value="12">서비스업종</option>
-                  <option value="18">제조업종</option>
+                  <option value="19">제조업종</option>
                 </select>
               </td>
               <td>급여정보</td>
